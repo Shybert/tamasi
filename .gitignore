@@ -1,0 +1,9 @@
+# logs
+logs
+*.log
+
+# Node
+node_modules/
+
+# VS Code
+.vscode/

@@ -1,0 +1,27 @@
+{
+  "name": "dsdt",
+  "version": "0.1.0",
+  "description": "A death counter and timer application & overlay built for Dark Souls.",
+  "main": "app/main.js",
+  "scripts": {
+    "start": "electron .",
+    "tsc": "tsc",
+    "standard": "standard"
+  },
+  "author": "Shybert",
+  "license": "GNU GPLv3",
+  "devDependencies": {
+    "electron": "^2.0.0-beta.4",
+    "eslint-plugin-typescript": "^0.10.0",
+    "standard": "^11.0.1",
+    "typescript": "^2.7.2",
+    "typescript-eslint-parser": "^14.0.0"
+  },
+  "standard": {
+    "parser": "typescript-eslint-parser",
+    "plugins": [
+      "typescript"
+    ]
+  },
+  "dependencies": {}
+}
