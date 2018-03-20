@@ -1,9 +1,9 @@
-const {app, BrowserWindow} = require('electron')
-const path = require('path')
-const url = require('url')
+import * as path from 'path'
+import * as url from 'url'
+import {app, BrowserWindow} from 'electron'
 
 // Keeping a global reference of the windows
-let winIndex
+let winIndex: any
 
 function createMainWindow () {
   winIndex = new BrowserWindow()
