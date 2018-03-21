@@ -1,9 +1,16 @@
+// import * as path from 'path'
+// import * as url from 'url'
+// import {app, BrowserWindow} from 'electron'
 import * as path from 'path'
 import * as url from 'url'
+import * as fs from 'fs-extra'
 import {app, BrowserWindow} from 'electron'
 
 // Keeping a global reference of the windows
 let winIndex: any
+
+// Copy storage if it doesn't exist yet
+copyStorage()
 
 function createMainWindow () {
   winIndex = new BrowserWindow()
@@ -35,3 +42,15 @@ app.on('activate', () => {
     createMainWindow()
   }
 })
+
+// Functions
+// Copy the storage files to userdata
+async function copyStorage (): Promise<void> {
+  try {
+    console.log('Copying storage/ to userData')
+    await fs.copy('app/storage', path.join(app.getPath('userData'), 'storage'), {overwrite: false})
+    console.log('Copied storage/ to userData')
+  } catch (err) {
+    console.log(`Error while copying storage: ${err}`)
+  }
+}
