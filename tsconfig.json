@@ -1,7 +1,10 @@
 {
     "compilerOptions": {
-        "target": "es6",
+        "target": "es2017",
         "module": "commonjs",
+        "esModuleInterop": true,
+        "noImplicitAny": true,
+        "moduleResolution": "node",
         "outDir": "app",
         "rootDir": "src",
         "sourceMap": true
