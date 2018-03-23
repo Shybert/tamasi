@@ -1,12 +1,13 @@
 {
   "games": {
     "des": {
-
+      "name": "Demon's Souls"
     },
     "ds1": {
-
+      "name": "Dark Souls 1"
     },
     "ds2": {
+      "name": "Dark Souls 2",
       "bosses": {
         "lastGiant": {
           "name": "The Last Giant"
@@ -134,6 +135,7 @@
       }
     },
     "ds3": {
+      "name": "Dark Souls 3",
       "bosses": {
         "iudex": {
           "name": "Iudex Gundyr"
@@ -195,7 +197,7 @@
       }
     },
     "bb": {
-
+      "name": "Bloodborne"
     }
   }
 }
