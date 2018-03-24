@@ -193,6 +193,24 @@
         },
         "cinder": {
           "name": "Soul of Cinder"
+        },
+        "friede": {
+          "name": "Sister Friede"
+        },
+        "gravetender": {
+          "name": "Champion's Gravetender & Gravetender Greatwolf"
+        },
+        "demonPrince": {
+          "name": "The Demon Prince"
+        },
+        "midir": {
+          "name": "Darkeater Midir"
+        },
+        "spearChurch": {
+          "name": "Spear of the Church"
+        },
+        "gael": {
+          "name": "Slave Knight Gael"
         }
       }
     },
