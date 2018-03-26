@@ -1,14 +1,12 @@
 /* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
+import * as storageInterface from './interfaces/storageInterface'
 const Store = require('electron-store')
 const store = new Store({name: 'data', cwd: 'storage'})
 
 interface GameName {
   id: string,
   name: string
-}
-interface GameInfo {
-  name: string
-  bosses: Object
 }
 
 // Initially getting all game info

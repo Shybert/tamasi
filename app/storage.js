@@ -2,10 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 /* eslint-disable no-undef */
 const Store = require('electron-store');
-const store = new Store({ name: 'data', cwd: 'storage' });
+const storageData = new Store({ name: 'data', cwd: 'storage' });
+const storageSaves = new Store({ name: 'saves', cwd: 'storage' });
 // Initially getting all game info
 console.log('Fetching game info');
-const gameInfo = store.get('games');
+const gameInfo = storageData.get('games');
 console.log('Fetched game info');
 async function getGameNames() {
     try {
@@ -27,4 +28,7 @@ async function getGameNames() {
     }
 }
 exports.getGameNames = getGameNames;
+async function createSave() {
+}
+exports.createSave = createSave;
 //# sourceMappingURL=storage.js.map
