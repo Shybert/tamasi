@@ -10,5 +10,8 @@ interface Bosses {
 }
 
 interface Save {
+  name: string
   bosses: Bosses
 }
+
+export {BossInfo, Bosses, Save}
