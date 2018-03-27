@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 import {remote} from 'electron'
+import * as storage from './storage'
 
 // Getting the global game ID
 const id: string = remote.getGlobal('sharedObject').id
@@ -20,5 +21,5 @@ const createSaveButton: HTMLElement = document.getElementById('createSaveButton'
 createSaveButton.addEventListener('click', (): void => {
   console.log('New save creation')
   const newSaveName: string = (document.getElementById('newSaveName') as HTMLInputElement).value
-  console.log(`New save name: ${newSaveName}`)
+  storage.createSave(newSaveName)
 })
