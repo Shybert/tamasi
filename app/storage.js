@@ -30,6 +30,11 @@ async function getGameNames() {
     }
 }
 exports.getGameNames = getGameNames;
+async function getSaves(gameId) {
+    console.log('Fetching list of saves');
+    return storageSaves.get(`games.${gameId}`);
+}
+exports.getSaves = getSaves;
 async function createSave(name) {
     try {
         const gameId = electron_1.remote.getGlobal('sharedObject').id;

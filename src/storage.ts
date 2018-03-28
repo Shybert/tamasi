@@ -38,6 +38,11 @@ async function getGameNames (): Promise<Array<GameName>> {
   }
 }
 
+async function getSaves (gameId: string): Promise<Array<saves.Save>> {
+  console.log('Fetching list of saves')
+  return storageSaves.get(`games.${gameId}`)
+}
+
 async function createSave (name: string): Promise<void> {
   try {
     const gameId: string = remote.getGlobal('sharedObject').id
@@ -77,4 +82,4 @@ async function createSave (name: string): Promise<void> {
 }
 
 // Exports
-export {getGameNames, createSave, GameName}
+export {getGameNames, getSaves, createSave, GameName}
