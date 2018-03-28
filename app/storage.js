@@ -37,9 +37,16 @@ async function getSaves(gameId) {
 exports.getSaves = getSaves;
 async function createSave(name) {
     try {
+        let saveName = name;
         const gameId = electron_1.remote.getGlobal('sharedObject').id;
         const savePath = `games.${gameId}`;
-        console.log(`Creating new save with the name '${name}' for game ID '${gameId}'`);
+        // Check if a name has been provided
+        if (!saveName) {
+            // No name provided for save, use default name
+            console.log('No name provided for save');
+            saveName = storageData.get(`games.${gameId}.name`);
+        }
+        console.log(`Creating new save with the name '${saveName}' for game ID '${gameId}'`);
         // Check if game has had an entry yet
         if (!storageSaves.has(savePath)) {
             console.log("Game hasn't been inserted yet");
@@ -56,7 +63,7 @@ async function createSave(name) {
         console.log('Inserted time property to each boss');
         // Insert the info
         const saveInfo = {
-            name,
+            name: saveName,
             bosses: bossList
         };
         // Fetching the saves array, pushing to it, and then inserting it again

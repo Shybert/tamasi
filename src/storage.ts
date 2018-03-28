@@ -45,9 +45,18 @@ async function getSaves (gameId: string): Promise<Array<saves.Save>> {
 
 async function createSave (name: string): Promise<void> {
   try {
+    let saveName: string = name
     const gameId: string = remote.getGlobal('sharedObject').id
     const savePath: string = `games.${gameId}`
-    console.log(`Creating new save with the name '${name}' for game ID '${gameId}'`)
+
+    // Check if a name has been provided
+    if (!saveName) {
+      // No name provided for save, use default name
+      console.log('No name provided for save')
+      saveName = storageData.get(`games.${gameId}.name`)
+    }
+
+    console.log(`Creating new save with the name '${saveName}' for game ID '${gameId}'`)
 
     // Check if game has had an entry yet
     if (!storageSaves.has(savePath)) {
@@ -67,7 +76,7 @@ async function createSave (name: string): Promise<void> {
 
     // Insert the info
     const saveInfo: saves.Save = {
-      name,
+      name: saveName,
       bosses: bossList
     }
     // Fetching the saves array, pushing to it, and then inserting it again
