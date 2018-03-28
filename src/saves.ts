@@ -22,22 +22,31 @@ newSaveButton.addEventListener('click', (): void => {
 
 // Detecting new save submits
 const createSaveButton: HTMLElement = document.getElementById('createSaveButton')
-createSaveButton.addEventListener('click', (): void => {
+createSaveButton.addEventListener('click', async (): Promise<void> => {
   console.log('New save creation')
   const newSaveName: string = (document.getElementById('newSaveName') as HTMLInputElement).value
-  storage.createSave(newSaveName)
+  await storage.createSave(newSaveName)
+
+  // Re-display the save list
+  displaySaveList()
+  // Hide the overlay
+  document.getElementById('newSaveOverlay').style.display = 'none'
+  console.log('New save overlay hidden')
 })
 
 // Function for displaying save list
 async function displaySaveList () {
   console.log('Displaying/Updating saves list')
   const saves: Array<saves.Save> = await storage.getSaves(id)
+  const saveList: HTMLElement = document.getElementById('saveList')
+  saveList.innerHTML = ''
+  console.log('Removed old save list elements')
 
   for (let i = 0; i < saves.length; i += 1) {
-    const saveList: HTMLElement = document.getElementById('saveList')
     const li: HTMLElement = document.createElement('li')
     const name: Text = document.createTextNode(saves[i].name)
     li.appendChild(name)
     saveList.appendChild(li)
   }
+  console.log('Inserted save list elements')
 }

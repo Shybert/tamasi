@@ -25,21 +25,29 @@ newSaveButton.addEventListener('click', () => {
 });
 // Detecting new save submits
 const createSaveButton = document.getElementById('createSaveButton');
-createSaveButton.addEventListener('click', () => {
+createSaveButton.addEventListener('click', async () => {
     console.log('New save creation');
     const newSaveName = document.getElementById('newSaveName').value;
-    storage.createSave(newSaveName);
+    await storage.createSave(newSaveName);
+    // Re-display the save list
+    displaySaveList();
+    // Hide the overlay
+    document.getElementById('newSaveOverlay').style.display = 'none';
+    console.log('New save overlay hidden');
 });
 // Function for displaying save list
 async function displaySaveList() {
     console.log('Displaying/Updating saves list');
     const saves = await storage.getSaves(id);
+    const saveList = document.getElementById('saveList');
+    saveList.innerHTML = '';
+    console.log('Removed old save list elements');
     for (let i = 0; i < saves.length; i += 1) {
-        const saveList = document.getElementById('saveList');
         const li = document.createElement('li');
         const name = document.createTextNode(saves[i].name);
         li.appendChild(name);
         saveList.appendChild(li);
     }
+    console.log('Inserted save list elements');
 }
 //# sourceMappingURL=saves.js.map
