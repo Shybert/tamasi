@@ -55,6 +55,11 @@ async function createSave(name) {
             storageSaves.set(savePath, []);
             console.log('Initialized game');
         }
+        // Check if boss list is empty
+        if (!gameInfo.bosses) {
+            console.log('Boss list for game is empty, aborting save creation');
+            return;
+        }
         // Import boss list for the game
         const bossList = gameInfo.bosses; // eslint-disable-line no-use-before-define
         console.log('Imported boss list for the game');

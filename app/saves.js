@@ -42,6 +42,11 @@ async function displaySaveList() {
     const saveList = document.getElementById('saveList');
     saveList.innerHTML = '';
     console.log('Removed old save list elements');
+    // Check if game has been inserted yet / any saves have been made
+    if (!saves || saves.length === 0) {
+        console.log('No saves created yet');
+        return;
+    }
     for (let i = 0; i < saves.length; i += 1) {
         const li = document.createElement('li');
         const name = document.createTextNode(saves[i].name);
