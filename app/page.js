@@ -26,4 +26,19 @@ async function displayHomePage() {
     }
 }
 exports.displayHomePage = displayHomePage;
+async function displaySavesPage() {
+    try {
+        console.log('Displaying saves page');
+        // Hide other pages
+        document.getElementById('home').style.display = 'none';
+        console.log('Hid other pages');
+        // Display saves page
+        document.getElementById('saves').style.display = 'block';
+        console.log('Displayed saves page');
+    }
+    catch (err) {
+        console.error('Error while displaying saves page', err);
+    }
+}
+exports.displaySavesPage = displaySavesPage;
 //# sourceMappingURL=page.js.map
