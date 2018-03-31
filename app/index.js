@@ -7,6 +7,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 }
 Object.defineProperty(exports, "__esModule", { value: true });
-const home = __importStar(require("./home"));
-home.displayGameList();
+const page = __importStar(require("./page"));
+page.displayHomePage();
 //# sourceMappingURL=index.js.map

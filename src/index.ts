@@ -1,2 +1,2 @@
-import * as home from './home'
-home.displayGameList()
+import * as page from './page'
+page.displayHomePage()
