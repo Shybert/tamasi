@@ -1,10 +1,6 @@
 /* eslint-disable no-undef */
+import * as page from './page'
 import * as storage from './storage'
-
-// Extend the event interface to be able to get the ID of the selected element
-interface GameNameClick extends Event {
-  target: HTMLElement & EventTarget
-}
 
 async function displayGameList (): Promise<void> {
   try {
@@ -26,12 +22,11 @@ async function displayGameList (): Promise<void> {
       li.appendChild(text)
 
       // Listening for clicks on the game names for opening the save window
-      li.addEventListener('click', (event: GameNameClick): void => {
-        const id: string = event.target.id
-        console.log(`Game with ID '${id}' clicked`)
-        // Open save window...
-        //
-        //
+      li.addEventListener('click', (): void => {
+        const gameId: string = li.id
+        sessionStorage.setItem('gameId', gameId)
+        console.log(`Set game ID '${gameId}' in sessionStorage`)
+        page.displaySavesPage()
       })
 
       gamesList.appendChild(li)

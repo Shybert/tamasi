@@ -8,6 +8,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 }
 Object.defineProperty(exports, "__esModule", { value: true });
 /* eslint-disable no-undef */
+const page = __importStar(require("./page"));
 const storage = __importStar(require("./storage"));
 async function displayGameList() {
     try {
@@ -26,12 +27,11 @@ async function displayGameList() {
             li.setAttribute('id', gameNames[i].id);
             li.appendChild(text);
             // Listening for clicks on the game names for opening the save window
-            li.addEventListener('click', (event) => {
-                const id = event.target.id;
-                console.log(`Game with ID '${id}' clicked`);
-                // Open save window...
-                //
-                //
+            li.addEventListener('click', () => {
+                const gameId = li.id;
+                sessionStorage.setItem('gameId', gameId);
+                console.log(`Set game ID '${gameId}' in sessionStorage`);
+                page.displaySavesPage();
             });
             gamesList.appendChild(li);
         }
