@@ -3,11 +3,35 @@
   <head>
     <title>Dark Souls DT</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./main.css">
   </head>
   <body>
-    <h1>DARK SOULS DT</h1>
+    <nav>
+      <button id="homeButton">Home</button>      
+    </nav>
 
-    <ul id="gamesList"></ul>
+    <div id="content">
+      <div id="index">
+        <h1>DARK SOULS DT</h1>
+
+        <ul id="gamesList"></ul>        
+      </div>
+
+      <div id="saves">
+        <div id="newSaveOverlay" style="display: none">
+          <h2>New save</h2>
+          <input type="text" placeholder="New save name" id="newSaveName">
+          <button id="createSaveButton" type="button">Create new save</button>
+        </div>
+      
+        <h1>Save window</h1>
+    
+        <h2>Save List</h2>
+        <ul id="saveList"></ul>
+    
+        <button id="newSaveButton" type="button">New Save</button>
+      </div>
+    </div>
 
     <script>const exports = {};</script>
     <script src="index.js"></script>
