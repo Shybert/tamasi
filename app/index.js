@@ -7,6 +7,15 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 }
 Object.defineProperty(exports, "__esModule", { value: true });
+/* eslint-disable no-undef */
 const page = __importStar(require("./page"));
+const saves = __importStar(require("./saves"));
+// New save creation event listeners
+// Detecting new save button presses
+const newSaveButton = document.getElementById('newSaveButton');
+newSaveButton.addEventListener('click', saves.displayNewSaveOverlay);
+// Detecting new save submits
+const createSaveButton = document.getElementById('createSaveButton');
+createSaveButton.addEventListener('click', saves.newSaveClicked);
 page.displayHomePage();
 //# sourceMappingURL=index.js.map
