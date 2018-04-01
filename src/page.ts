@@ -1,4 +1,5 @@
 import * as home from './home'
+import * as saves from './saves'
 
 async function displayHomePage () {
   try {
@@ -29,6 +30,7 @@ async function displaySavesPage () {
     console.log('Hid other pages')
 
     // Display saves page
+    saves.displaySaveList()
     document.getElementById('saves').style.display = 'block'
     console.log('Displayed saves page')
   } catch (err) {

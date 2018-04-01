@@ -8,6 +8,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 }
 Object.defineProperty(exports, "__esModule", { value: true });
 const home = __importStar(require("./home"));
+const saves = __importStar(require("./saves"));
 async function displayHomePage() {
     try {
         console.log('Displaying home page');
@@ -33,6 +34,7 @@ async function displaySavesPage() {
         document.getElementById('home').style.display = 'none';
         console.log('Hid other pages');
         // Display saves page
+        saves.displaySaveList();
         document.getElementById('saves').style.display = 'block';
         console.log('Displayed saves page');
     }
