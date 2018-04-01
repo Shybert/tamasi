@@ -47,7 +47,6 @@ async function displaySaveList() {
         console.log('Removed old save list elements');
         // Fetch the array of saves
         const saves = await storage.getSaves(gameId);
-        console.log('Fetched new array of saves', saves);
         // Check if game has been inserted yet / any saves have been made
         if (!saves || saves.length === 0) {
             console.log('No saves created yet');

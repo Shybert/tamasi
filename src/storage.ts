@@ -1,5 +1,4 @@
 /* eslint-disable no-undef */
-import {remote} from 'electron'
 import * as data from './interface/data' // eslint-disable-line no-unused-vars
 import * as saves from './interface/saves' // eslint-disable-line no-unused-vars
 const Store = require('electron-store')
@@ -26,19 +25,20 @@ async function getGameNames (): Promise<Array<GameName>> {
       gameNames.push(gameName)
     })
 
-    console.log('Finished fetching game names')
     return gameNames
   } catch (err) {
-    console.error(`Error while fetching game info: ${err}`)
+    console.error('Error while fetching game info:', err)
   }
 }
 
 async function getSaves (gameId: string): Promise<Array<saves.Save>> {
   try {
     console.log('Fetching list of saves')
-    return storageSaves.get(`games.${gameId}`)
+    const saveList: Array<saves.Save> = await storageSaves.get(`games.${gameId}`)
+    console.log('Fetched list of saves', saveList)
+    return saveList
   } catch (err) {
-    console.error(`Error while fetching list of saves: ${err}`)
+    console.error('Error while fetching list of saves:', err)
   }
 }
 
@@ -47,7 +47,7 @@ async function createSave (name: string): Promise<void> {
     console.log('Creating a new save')
 
     let saveName: string = name
-    const gameId: string = remote.getGlobal('sharedObject').id
+    const gameId: string = sessionStorage.getItem('gameId')
     const gameInfo: data.Game = storageData.get(`games.${gameId}`)
     const savePath: string = `games.${gameId}`
 
@@ -89,11 +89,11 @@ async function createSave (name: string): Promise<void> {
     const saves = storageSaves.get(savePath)
     saves.push(saveInfo)
     storageSaves.set(savePath, saves)
-    console.log('Inserted new save info')
+    console.log('Inserted new save information')
 
     console.log('Created new save')
   } catch (err) {
-    console.error(`Error while creating new save: ${err}`)
+    console.error('Error while creating new save', err)
   }
 }
 

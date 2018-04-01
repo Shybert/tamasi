@@ -42,7 +42,6 @@ async function displaySaveList (): Promise<void> {
 
     // Fetch the array of saves
     const saves: Array<saves.Save> = await storage.getSaves(gameId)
-    console.log('Fetched new array of saves', saves)
 
     // Check if game has been inserted yet / any saves have been made
     if (!saves || saves.length === 0) {
