@@ -7,52 +7,63 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 }
 Object.defineProperty(exports, "__esModule", { value: true });
-/* eslint-disable no-undef */
-const electron_1 = require("electron");
 const storage = __importStar(require("./storage"));
-// Getting the global game ID
-const id = electron_1.remote.getGlobal('sharedObject').id;
-console.log(`Global game ID: ${id}`);
-// Call function for displaying save list
-displaySaveList();
-// Detecting new save button presses
-const newSaveButton = document.getElementById('newSaveButton');
-newSaveButton.addEventListener('click', () => {
-    console.log('New save button pressed');
-    const newSaveOverlay = document.getElementById('newSaveOverlay');
-    console.log('Showing the new save overlay');
-    newSaveOverlay.style.display = 'block';
-});
-// Detecting new save submits
-const createSaveButton = document.getElementById('createSaveButton');
-createSaveButton.addEventListener('click', async () => {
-    console.log('New save creation');
-    const newSaveName = document.getElementById('newSaveName').value;
-    await storage.createSave(newSaveName);
-    // Re-display the save list
-    displaySaveList();
-    // Hide the overlay
-    document.getElementById('newSaveOverlay').style.display = 'none';
-    console.log('New save overlay hidden');
-});
-// Function for displaying save list
-async function displaySaveList() {
-    console.log('Displaying/Updating saves list');
-    const saves = await storage.getSaves(id);
-    const saveList = document.getElementById('saveList');
-    saveList.innerHTML = '';
-    console.log('Removed old save list elements');
-    // Check if game has been inserted yet / any saves have been made
-    if (!saves || saves.length === 0) {
-        console.log('No saves created yet');
-        return;
+// Displaying new save overlay
+async function displayNewSaveOverlay() {
+    try {
+        console.log("Showing the 'new save' overlay");
+        const newSaveOverlay = document.getElementById('newSaveOverlay');
+        newSaveOverlay.style.display = 'block';
     }
-    for (let i = 0; i < saves.length; i += 1) {
-        const li = document.createElement('li');
-        const name = document.createTextNode(saves[i].name);
-        li.appendChild(name);
-        saveList.appendChild(li);
+    catch (err) {
+        console.error("Error while displaying the 'new save' overlay", err);
     }
-    console.log('Inserted save list elements');
 }
+exports.displayNewSaveOverlay = displayNewSaveOverlay;
+// New save button clicked
+async function newSaveClicked() {
+    try {
+        const newSaveName = document.getElementById('newSaveName').value;
+        await storage.createSave(newSaveName);
+        // Re-display the save list
+        displaySaveList();
+        // Hide the overlay
+        document.getElementById('newSaveOverlay').style.display = 'none';
+        console.log("'New save' overlay hidden");
+    }
+    catch (err) {
+        console.error('Error while submitting new save', err);
+    }
+}
+exports.newSaveClicked = newSaveClicked;
+// Displaying save list
+async function displaySaveList() {
+    try {
+        console.log('Displaying/Updating saves list');
+        const saveList = document.getElementById('saveList');
+        const gameId = sessionStorage.getItem('gameId');
+        // Clear current list of saves
+        saveList.innerHTML = '';
+        console.log('Removed old save list elements');
+        // Fetch the array of saves
+        const saves = await storage.getSaves(gameId);
+        // Check if game has been inserted yet / any saves have been made
+        if (!saves || saves.length === 0) {
+            console.log('No saves created yet');
+            return;
+        }
+        // Insert the elements
+        for (let i = 0; i < saves.length; i += 1) {
+            const li = document.createElement('li');
+            const name = document.createTextNode(saves[i].name);
+            li.appendChild(name);
+            saveList.appendChild(li);
+        }
+        console.log('Inserted save list elements');
+    }
+    catch (err) {
+        console.error('Error when displaying save list', err);
+    }
+}
+exports.displaySaveList = displaySaveList;
 //# sourceMappingURL=saves.js.map

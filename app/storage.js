@@ -1,7 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-/* eslint-disable no-undef */
-const electron_1 = require("electron");
 const Store = require('electron-store');
 const storageData = new Store({ name: 'data', cwd: 'storage' });
 const storageSaves = new Store({ name: 'saves', cwd: 'storage' });
@@ -18,21 +16,22 @@ async function getGameNames() {
             };
             gameNames.push(gameName);
         });
-        console.log('Finished fetching game names');
         return gameNames;
     }
     catch (err) {
-        console.error(`Error while fetching game info: ${err}`);
+        console.error('Error while fetching game info:', err);
     }
 }
 exports.getGameNames = getGameNames;
 async function getSaves(gameId) {
     try {
         console.log('Fetching list of saves');
-        return storageSaves.get(`games.${gameId}`);
+        const saveList = await storageSaves.get(`games.${gameId}`);
+        console.log('Fetched list of saves', saveList);
+        return saveList;
     }
     catch (err) {
-        console.error(`Error while fetching list of saves: ${err}`);
+        console.error('Error while fetching list of saves:', err);
     }
 }
 exports.getSaves = getSaves;
@@ -40,7 +39,7 @@ async function createSave(name) {
     try {
         console.log('Creating a new save');
         let saveName = name;
-        const gameId = electron_1.remote.getGlobal('sharedObject').id;
+        const gameId = sessionStorage.getItem('gameId');
         const gameInfo = storageData.get(`games.${gameId}`);
         const savePath = `games.${gameId}`;
         // Check if a name has been provided
@@ -77,11 +76,11 @@ async function createSave(name) {
         const saves = storageSaves.get(savePath);
         saves.push(saveInfo);
         storageSaves.set(savePath, saves);
-        console.log('Inserted new save info');
+        console.log('Inserted new save information');
         console.log('Created new save');
     }
     catch (err) {
-        console.error(`Error while creating new save: ${err}`);
+        console.error('Error while creating new save', err);
     }
 }
 exports.createSave = createSave;
