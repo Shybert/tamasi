@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import * as home from './home'
 import * as saves from './saves'
 
@@ -5,9 +6,7 @@ async function displayHomePage () {
   try {
     console.log('Displaying home page')
 
-    // Hide other pages
-    document.getElementById('saves').style.display = 'none'
-    console.log('Hid other pages')
+    hidePages()
 
     // (Re)load the list of games
     home.displayGameList()
@@ -25,9 +24,7 @@ async function displaySavesPage () {
   try {
     console.log('Displaying saves page')
 
-    // Hide other pages
-    document.getElementById('home').style.display = 'none'
-    console.log('Hid other pages')
+    hidePages()
 
     // Display saves page
     saves.displaySaveList()
@@ -35,6 +32,22 @@ async function displaySavesPage () {
     console.log('Displayed saves page')
   } catch (err) {
     console.error('Error while displaying saves page', err)
+  }
+}
+
+// The single function for hiding all the pages
+async function hidePages () {
+  try {
+    console.log('Hiding pages')
+
+    // Fetch all child nodes for the 'content' div, since these are the pages
+    const pages: HTMLCollection = document.getElementById('content').children
+    // Loop through the pages and hide them
+    for (let i = 0; i < pages.length; i += 1) {
+      (pages[i] as HTMLElement).style.display = 'none'
+    }
+  } catch (err) {
+    console.error('Error while hiding pages:', err)
   }
 }
 

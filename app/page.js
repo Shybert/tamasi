@@ -7,14 +7,13 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 }
 Object.defineProperty(exports, "__esModule", { value: true });
+/* eslint-disable no-undef */
 const home = __importStar(require("./home"));
 const saves = __importStar(require("./saves"));
 async function displayHomePage() {
     try {
         console.log('Displaying home page');
-        // Hide other pages
-        document.getElementById('saves').style.display = 'none';
-        console.log('Hid other pages');
+        hidePages();
         // (Re)load the list of games
         home.displayGameList();
         console.log('(Re)loaded games list');
@@ -30,9 +29,7 @@ exports.displayHomePage = displayHomePage;
 async function displaySavesPage() {
     try {
         console.log('Displaying saves page');
-        // Hide other pages
-        document.getElementById('home').style.display = 'none';
-        console.log('Hid other pages');
+        hidePages();
         // Display saves page
         saves.displaySaveList();
         document.getElementById('saves').style.display = 'block';
@@ -43,4 +40,19 @@ async function displaySavesPage() {
     }
 }
 exports.displaySavesPage = displaySavesPage;
+// The single function for hiding all the pages
+async function hidePages() {
+    try {
+        console.log('Hiding pages');
+        // Fetch all child nodes for the 'content' div, since these are the pages
+        const pages = document.getElementById('content').children;
+        // Loop through the pages and hide them
+        for (let i = 0; i < pages.length; i += 1) {
+            pages[i].style.display = 'none';
+        }
+    }
+    catch (err) {
+        console.error('Error while hiding pages:', err);
+    }
+}
 //# sourceMappingURL=page.js.map
