@@ -40,22 +40,23 @@ async function displaySaveList (): Promise<void> {
     saveList.innerHTML = ''
     console.log('Removed old save list elements')
 
-    // Fetch the array of saves
-    const saves: Array<saves.Save> = await storage.getSaves(gameId)
+    // Fetch saves
+    const savesObj: saves.Saves = await storage.getSaves(gameId)
+    console.log()
 
-    // Check if game has been inserted yet / any saves have been made
-    if (!saves || saves.length === 0) {
+    // Abort displaying if no saves have been created yet
+    if (!savesObj) {
       console.log('No saves created yet')
       return
     }
 
     // Insert the elements
-    for (let i = 0; i < saves.length; i += 1) {
+    Object.values(savesObj).forEach((save: saves.Save): void => {
       const li: HTMLElement = document.createElement('li')
-      const name: Text = document.createTextNode(saves[i].name)
+      const name: Text = document.createTextNode(save.name)
       li.appendChild(name)
       saveList.appendChild(li)
-    }
+    })
     console.log('Inserted save list elements')
   } catch (err) {
     console.error('Error when displaying save list', err)

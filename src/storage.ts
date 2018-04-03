@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+import * as crypto from 'crypto'
 import * as data from './interface/data' // eslint-disable-line no-unused-vars
 import * as saves from './interface/saves' // eslint-disable-line no-unused-vars
 const Store = require('electron-store')
@@ -31,10 +32,10 @@ async function getGameNames (): Promise<Array<GameName>> {
   }
 }
 
-async function getSaves (gameId: string): Promise<Array<saves.Save>> {
+async function getSaves (gameId: string): Promise<saves.Saves> {
   try {
     console.log('Fetching list of saves')
-    const saveList: Array<saves.Save> = await storageSaves.get(`games.${gameId}`)
+    const saveList: saves.Saves = await storageSaves.get(`games.${gameId}`)
     console.log('Fetched list of saves', saveList)
     return saveList
   } catch (err) {
@@ -50,6 +51,8 @@ async function createSave (name: string): Promise<void> {
     const gameId: string = sessionStorage.getItem('gameId')
     const gameInfo: data.Game = storageData.get(`games.${gameId}`)
     const savePath: string = `games.${gameId}`
+    // Generate an ID for the save
+    const saveId: string = crypto.randomBytes(16).toString('hex')
 
     // Check if a name has been provided
     if (!saveName) {
@@ -58,21 +61,14 @@ async function createSave (name: string): Promise<void> {
       saveName = gameInfo.name
     }
 
-    // Check if game has had an entry yet
-    if (!storageSaves.has(savePath)) {
-      console.log("Game hasn't been inserted yet")
-      storageSaves.set(savePath, [])
-      console.log('Initialized game')
-    }
-
-    // Check if boss list is empty
+    // Abort save creation if boss list is empty
     if (!gameInfo.bosses) {
       console.log('Boss list for game is empty, aborting save creation')
       return
     }
 
     // Import boss list for the game
-    const bossList: saves.Bosses = gameInfo.bosses as saves.Bosses // eslint-disable-line no-use-before-define
+    const bossList: saves.Bosses = gameInfo.bosses as saves.Bosses
     console.log('Imported boss list for the game')
     // Insert a 'time' property to each boss
     Object.keys(bossList).forEach((key: string): void => {
@@ -85,10 +81,8 @@ async function createSave (name: string): Promise<void> {
       name: saveName,
       bosses: bossList
     }
-    // Fetching the saves array, pushing to it, and then inserting it again
-    const saves = storageSaves.get(savePath)
-    saves.push(saveInfo)
-    storageSaves.set(savePath, saves)
+    // Write the created save to saves.json
+    storageSaves.set(`${savePath}.${saveId}`, saveInfo)
     console.log('Inserted new save information')
 
     console.log('Created new save')

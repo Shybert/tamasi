@@ -45,20 +45,21 @@ async function displaySaveList() {
         // Clear current list of saves
         saveList.innerHTML = '';
         console.log('Removed old save list elements');
-        // Fetch the array of saves
-        const saves = await storage.getSaves(gameId);
-        // Check if game has been inserted yet / any saves have been made
-        if (!saves || saves.length === 0) {
+        // Fetch saves
+        const savesObj = await storage.getSaves(gameId);
+        console.log();
+        // Abort displaying if no saves have been created yet
+        if (!savesObj) {
             console.log('No saves created yet');
             return;
         }
         // Insert the elements
-        for (let i = 0; i < saves.length; i += 1) {
+        Object.values(savesObj).forEach((save) => {
             const li = document.createElement('li');
-            const name = document.createTextNode(saves[i].name);
+            const name = document.createTextNode(save.name);
             li.appendChild(name);
             saveList.appendChild(li);
-        }
+        });
         console.log('Inserted save list elements');
     }
     catch (err) {

@@ -14,4 +14,8 @@ interface Save {
   bosses: Bosses
 }
 
-export {BossInfo, Bosses, Save}
+interface Saves {
+  [x: string]: Save
+}
+
+export {BossInfo, Bosses, Save, Saves}
