@@ -1,5 +1,14 @@
 "use strict";
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+}
 Object.defineProperty(exports, "__esModule", { value: true });
+/* eslint-disable no-undef */
+const crypto = __importStar(require("crypto"));
 const Store = require('electron-store');
 const storageData = new Store({ name: 'data', cwd: 'storage' });
 const storageSaves = new Store({ name: 'saves', cwd: 'storage' });
@@ -42,17 +51,13 @@ async function createSave(name) {
         const gameId = sessionStorage.getItem('gameId');
         const gameInfo = storageData.get(`games.${gameId}`);
         const savePath = `games.${gameId}`;
+        // Generate an ID for the save
+        const saveId = crypto.randomBytes(16).toString('hex');
         // Check if a name has been provided
         if (!saveName) {
             // No name provided for save, use default name
             console.log('No name provided for save');
             saveName = gameInfo.name;
-        }
-        // Check if game has had an entry yet
-        if (!storageSaves.has(savePath)) {
-            console.log("Game hasn't been inserted yet");
-            storageSaves.set(savePath, []);
-            console.log('Initialized game');
         }
         // Check if boss list is empty
         if (!gameInfo.bosses) {
@@ -73,9 +78,7 @@ async function createSave(name) {
             bosses: bossList
         };
         // Fetching the saves array, pushing to it, and then inserting it again
-        const saves = storageSaves.get(savePath);
-        saves.push(saveInfo);
-        storageSaves.set(savePath, saves);
+        storageSaves.set(`${savePath}.${saveId}`, saveInfo);
         console.log('Inserted new save information');
         console.log('Created new save');
     }

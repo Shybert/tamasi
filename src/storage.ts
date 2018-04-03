@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+import * as crypto from 'crypto'
 import * as data from './interface/data' // eslint-disable-line no-unused-vars
 import * as saves from './interface/saves' // eslint-disable-line no-unused-vars
 const Store = require('electron-store')
@@ -50,19 +51,14 @@ async function createSave (name: string): Promise<void> {
     const gameId: string = sessionStorage.getItem('gameId')
     const gameInfo: data.Game = storageData.get(`games.${gameId}`)
     const savePath: string = `games.${gameId}`
+    // Generate an ID for the save
+    const saveId: string = crypto.randomBytes(16).toString('hex')
 
     // Check if a name has been provided
     if (!saveName) {
       // No name provided for save, use default name
       console.log('No name provided for save')
       saveName = gameInfo.name
-    }
-
-    // Check if game has had an entry yet
-    if (!storageSaves.has(savePath)) {
-      console.log("Game hasn't been inserted yet")
-      storageSaves.set(savePath, [])
-      console.log('Initialized game')
     }
 
     // Check if boss list is empty
@@ -86,9 +82,7 @@ async function createSave (name: string): Promise<void> {
       bosses: bossList
     }
     // Fetching the saves array, pushing to it, and then inserting it again
-    const saves = storageSaves.get(savePath)
-    saves.push(saveInfo)
-    storageSaves.set(savePath, saves)
+    storageSaves.set(`${savePath}.${saveId}`, saveInfo)
     console.log('Inserted new save information')
 
     console.log('Created new save')
