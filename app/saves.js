@@ -48,7 +48,7 @@ async function displaySaveList() {
         // Fetch saves
         const savesObj = await storage.getSaves(gameId);
         console.log();
-        // Check if game has been inserted yet / any saves have been made
+        // Abort displaying if no saves have been created yet
         if (!savesObj) {
             console.log('No saves created yet');
             return;

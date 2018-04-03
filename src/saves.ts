@@ -44,14 +44,14 @@ async function displaySaveList (): Promise<void> {
     const savesObj: saves.Saves = await storage.getSaves(gameId)
     console.log()
 
-    // Check if game has been inserted yet / any saves have been made
+    // Abort displaying if no saves have been created yet
     if (!savesObj) {
       console.log('No saves created yet')
       return
     }
 
     // Insert the elements
-    Object.values(savesObj).forEach((save: saves.Save) => {
+    Object.values(savesObj).forEach((save: saves.Save): void => {
       const li: HTMLElement = document.createElement('li')
       const name: Text = document.createTextNode(save.name)
       li.appendChild(name)

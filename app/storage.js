@@ -59,13 +59,13 @@ async function createSave(name) {
             console.log('No name provided for save');
             saveName = gameInfo.name;
         }
-        // Check if boss list is empty
+        // Abort save creation if boss list is empty
         if (!gameInfo.bosses) {
             console.log('Boss list for game is empty, aborting save creation');
             return;
         }
         // Import boss list for the game
-        const bossList = gameInfo.bosses; // eslint-disable-line no-use-before-define
+        const bossList = gameInfo.bosses;
         console.log('Imported boss list for the game');
         // Insert a 'time' property to each boss
         Object.keys(bossList).forEach((key) => {
@@ -77,7 +77,7 @@ async function createSave(name) {
             name: saveName,
             bosses: bossList
         };
-        // Fetching the saves array, pushing to it, and then inserting it again
+        // Write the created save to saves.json
         storageSaves.set(`${savePath}.${saveId}`, saveInfo);
         console.log('Inserted new save information');
         console.log('Created new save');
