@@ -51,12 +51,12 @@ async function displaySaveList (): Promise<void> {
     }
 
     // Insert the elements
-    for (let i = 0; i < saves.length; i += 1) {
+    Object.values(savesObj).forEach((save: saves.Save) => {
       const li: HTMLElement = document.createElement('li')
-      const name: Text = document.createTextNode(saves[i].name)
+      const name: Text = document.createTextNode(save.name)
       li.appendChild(name)
       saveList.appendChild(li)
-    }
+    })
     console.log('Inserted save list elements')
   } catch (err) {
     console.error('Error when displaying save list', err)

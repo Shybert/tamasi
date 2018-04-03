@@ -7,8 +7,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 }
 Object.defineProperty(exports, "__esModule", { value: true });
-/* eslint-disable no-undef */
-const saves = __importStar(require("./interface/saves")); // eslint-disable-line no-unused-vars
 const storage = __importStar(require("./storage"));
 // Displaying new save overlay
 async function displayNewSaveOverlay() {
@@ -56,12 +54,12 @@ async function displaySaveList() {
             return;
         }
         // Insert the elements
-        for (let i = 0; i < saves.length; i += 1) {
+        Object.values(savesObj).forEach((save) => {
             const li = document.createElement('li');
-            const name = document.createTextNode(saves[i].name);
+            const name = document.createTextNode(save.name);
             li.appendChild(name);
             saveList.appendChild(li);
-        }
+        });
         console.log('Inserted save list elements');
     }
     catch (err) {
