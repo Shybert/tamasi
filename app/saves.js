@@ -7,6 +7,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 }
 Object.defineProperty(exports, "__esModule", { value: true });
+/* eslint-disable no-undef */
+const saves = __importStar(require("./interface/saves")); // eslint-disable-line no-unused-vars
 const storage = __importStar(require("./storage"));
 // Displaying new save overlay
 async function displayNewSaveOverlay() {
@@ -45,10 +47,11 @@ async function displaySaveList() {
         // Clear current list of saves
         saveList.innerHTML = '';
         console.log('Removed old save list elements');
-        // Fetch the array of saves
-        const saves = await storage.getSaves(gameId);
+        // Fetch saves
+        const savesObj = await storage.getSaves(gameId);
+        console.log();
         // Check if game has been inserted yet / any saves have been made
-        if (!saves || saves.length === 0) {
+        if (!savesObj) {
             console.log('No saves created yet');
             return;
         }

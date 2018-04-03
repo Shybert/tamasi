@@ -32,10 +32,10 @@ async function getGameNames (): Promise<Array<GameName>> {
   }
 }
 
-async function getSaves (gameId: string): Promise<Array<saves.Save>> {
+async function getSaves (gameId: string): Promise<saves.Saves> {
   try {
     console.log('Fetching list of saves')
-    const saveList: Array<saves.Save> = await storageSaves.get(`games.${gameId}`)
+    const saveList: saves.Saves = await storageSaves.get(`games.${gameId}`)
     console.log('Fetched list of saves', saveList)
     return saveList
   } catch (err) {

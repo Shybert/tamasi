@@ -40,11 +40,12 @@ async function displaySaveList (): Promise<void> {
     saveList.innerHTML = ''
     console.log('Removed old save list elements')
 
-    // Fetch the array of saves
-    const saves: Array<saves.Save> = await storage.getSaves(gameId)
+    // Fetch saves
+    const savesObj: saves.Saves = await storage.getSaves(gameId)
+    console.log()
 
     // Check if game has been inserted yet / any saves have been made
-    if (!saves || saves.length === 0) {
+    if (!savesObj) {
       console.log('No saves created yet')
       return
     }
