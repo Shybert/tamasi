@@ -54,10 +54,12 @@ async function displaySaveList() {
             return;
         }
         // Insert the elements
-        Object.values(savesObj).forEach((save) => {
+        Object.entries(savesObj).forEach(([saveId, save]) => {
             const li = document.createElement('li');
             const name = document.createTextNode(save.name);
             li.appendChild(name);
+            // Set ID of element to ID of save for opening the overlay
+            li.setAttribute('id', saveId);
             saveList.appendChild(li);
         });
         console.log('Inserted save list elements');
