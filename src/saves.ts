@@ -51,10 +51,12 @@ async function displaySaveList (): Promise<void> {
     }
 
     // Insert the elements
-    Object.values(savesObj).forEach((save: saves.Save): void => {
+    Object.entries(savesObj).forEach(([saveId, save]): void => {
       const li: HTMLElement = document.createElement('li')
       const name: Text = document.createTextNode(save.name)
       li.appendChild(name)
+      // Set the ID of the element to the save ID so it can be used when opening the overlay
+      li.setAttribute('id', saveId)
       saveList.appendChild(li)
     })
     console.log('Inserted save list elements')
