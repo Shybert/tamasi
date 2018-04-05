@@ -48,7 +48,7 @@ async function createSave (name: string): Promise<void> {
     console.log('Creating a new save')
 
     let saveName: string = name
-    const gameId: string = sessionStorage.getItem('gameId')
+    const gameId: string = localStorage.getItem('gameId')
     const gameInfo: data.Game = storageData.get(`games.${gameId}`)
     const savePath: string = `games.${gameId}`
     // Generate an ID for the save

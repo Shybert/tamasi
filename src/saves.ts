@@ -35,7 +35,7 @@ async function displaySaveList (): Promise<void> {
   try {
     console.log('Displaying/Updating saves list')
     const saveList: HTMLElement = document.getElementById('saveList')
-    const gameId: string = sessionStorage.getItem('gameId')
+    const gameId: string = localStorage.getItem('gameId')
 
     // Clear current list of saves
     saveList.innerHTML = ''
@@ -63,6 +63,8 @@ async function displaySaveList (): Promise<void> {
       // Listen for click for opening overlay
       li.addEventListener('click', (): void => {
         console.log('Save name clicked')
+        // Set the save ID in localStorage so it can be found by the overlay
+        window.localStorage.setItem('saveId', li.getAttribute('id'))
         page.displayOverlayPage()
       })
     })

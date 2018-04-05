@@ -48,7 +48,7 @@ async function createSave(name) {
     try {
         console.log('Creating a new save');
         let saveName = name;
-        const gameId = sessionStorage.getItem('gameId');
+        const gameId = localStorage.getItem('gameId');
         const gameInfo = storageData.get(`games.${gameId}`);
         const savePath = `games.${gameId}`;
         // Generate an ID for the save

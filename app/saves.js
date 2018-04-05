@@ -42,7 +42,7 @@ async function displaySaveList() {
     try {
         console.log('Displaying/Updating saves list');
         const saveList = document.getElementById('saveList');
-        const gameId = sessionStorage.getItem('gameId');
+        const gameId = localStorage.getItem('gameId');
         // Clear current list of saves
         saveList.innerHTML = '';
         console.log('Removed old save list elements');
@@ -65,6 +65,8 @@ async function displaySaveList() {
             // Listen for click for opening overlay
             li.addEventListener('click', () => {
                 console.log('Save name clicked');
+                // Set the save ID in localStorage so it can be found by the overlay
+                window.localStorage.setItem('saveId', li.getAttribute('id'));
                 page.displayOverlayPage();
             });
         });

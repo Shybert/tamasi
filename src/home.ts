@@ -24,8 +24,8 @@ async function displayGameList (): Promise<void> {
       // Listening for clicks on the game names for opening the save window
       li.addEventListener('click', (): void => {
         const gameId: string = li.id
-        sessionStorage.setItem('gameId', gameId)
-        console.log(`Set game ID '${gameId}' in sessionStorage`)
+        localStorage.setItem('gameId', gameId)
+        console.log(`Set game ID '${gameId}' in localStorage`)
         page.displaySavesPage()
       })
 

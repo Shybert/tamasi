@@ -29,8 +29,8 @@ async function displayGameList() {
             // Listening for clicks on the game names for opening the save window
             li.addEventListener('click', () => {
                 const gameId = li.id;
-                sessionStorage.setItem('gameId', gameId);
-                console.log(`Set game ID '${gameId}' in sessionStorage`);
+                localStorage.setItem('gameId', gameId);
+                console.log(`Set game ID '${gameId}' in localStorage`);
                 page.displaySavesPage();
             });
             gamesList.appendChild(li);
