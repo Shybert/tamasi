@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+import {ipcRenderer} from 'electron'
 import * as home from './home'
 import * as saves from './saves'
 
@@ -35,6 +36,17 @@ async function displaySavesPage () {
   }
 }
 
+async function displayOverlayPage () {
+  try {
+    console.log('Displaying overlay')
+
+    // Send load overlay message to main process
+    ipcRenderer.send('loadOverlay')
+  } catch (err) {
+    console.error('Error while displaying overlay:', err)
+  }
+}
+
 // The single function for hiding all the pages
 async function hidePages () {
   try {
@@ -51,4 +63,4 @@ async function hidePages () {
   }
 }
 
-export {displayHomePage, displaySavesPage}
+export {displayHomePage, displaySavesPage, displayOverlayPage}

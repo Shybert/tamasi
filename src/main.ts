@@ -1,10 +1,11 @@
 import * as path from 'path'
 import * as url from 'url'
 import * as fs from 'fs-extra'
-import {app, BrowserWindow} from 'electron'
+import {app, BrowserWindow, ipcMain} from 'electron'
 
 // Keeping a global reference of the windows
 let winMain: any
+let winOverlay: any
 
 // Copy storage if it doesn't exist yet
 copyStorage()
@@ -41,6 +42,26 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
   if (winMain === null) {
     createWindow()
+  }
+})
+
+// Listen for opening overlay
+ipcMain.on('loadOverlay', async (): Promise<void> => {
+  try {
+    winOverlay = new BrowserWindow()
+
+    winOverlay.loadURL(url.format({
+      pathname: path.join(__dirname, 'overlay.html'),
+      protocol: 'file:',
+      slashes: true
+    }))
+
+    // Dereference window when closed
+    winOverlay.on('closed', () => {
+      winOverlay = null
+    })
+  } catch (err) {
+    console.error('Error while loading overlay:', err)
   }
 })
 

@@ -13,6 +13,7 @@ const fs = __importStar(require("fs-extra"));
 const electron_1 = require("electron");
 // Keeping a global reference of the windows
 let winMain;
+let winOverlay;
 // Copy storage if it doesn't exist yet
 copyStorage();
 async function createWindow() {
@@ -43,6 +44,24 @@ electron_1.app.on('window-all-closed', () => {
 electron_1.app.on('activate', () => {
     if (winMain === null) {
         createWindow();
+    }
+});
+// Listen for opening overlay
+electron_1.ipcMain.on('loadOverlay', async () => {
+    try {
+        winOverlay = new electron_1.BrowserWindow();
+        winOverlay.loadURL(url.format({
+            pathname: path.join(__dirname, 'overlay.html'),
+            protocol: 'file:',
+            slashes: true
+        }));
+        // Dereference window when closed
+        winOverlay.on('closed', () => {
+            winOverlay = null;
+        });
+    }
+    catch (err) {
+        console.error('Error while loading overlay:', err);
     }
 });
 // Functions

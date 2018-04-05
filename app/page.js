@@ -8,6 +8,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 }
 Object.defineProperty(exports, "__esModule", { value: true });
 /* eslint-disable no-undef */
+const electron_1 = require("electron");
 const home = __importStar(require("./home"));
 const saves = __importStar(require("./saves"));
 async function displayHomePage() {
@@ -40,6 +41,17 @@ async function displaySavesPage() {
     }
 }
 exports.displaySavesPage = displaySavesPage;
+async function displayOverlayPage() {
+    try {
+        console.log('Displaying overlay');
+        // Send load overlay message to main process
+        electron_1.ipcRenderer.send('loadOverlay');
+    }
+    catch (err) {
+        console.error('Error while displaying overlay:', err);
+    }
+}
+exports.displayOverlayPage = displayOverlayPage;
 // The single function for hiding all the pages
 async function hidePages() {
     try {

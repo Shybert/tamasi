@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 import * as saves from './interface/saves' // eslint-disable-line no-unused-vars
 import * as storage from './storage'
+import * as page from './page'
 
 // Displaying new save overlay
 async function displayNewSaveOverlay (): Promise<void> {
@@ -58,6 +59,12 @@ async function displaySaveList (): Promise<void> {
       // Set ID of element to ID of save for opening the overlay
       li.setAttribute('id', saveId)
       saveList.appendChild(li)
+
+      // Listen for click for opening overlay
+      li.addEventListener('click', (): void => {
+        console.log('Save name clicked')
+        page.displayOverlayPage()
+      })
     })
     console.log('Inserted save list elements')
   } catch (err) {
