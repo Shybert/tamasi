@@ -73,8 +73,9 @@ async function createSave (name: string): Promise<void> {
     // Insert a 'time' property to each boss
     Object.keys(bossList).forEach((key: string): void => {
       bossList[key].time = 0
+      bossList[key].deaths = 0
     })
-    console.log('Inserted time property to each boss')
+    console.log('Inserted time and death property to each boss')
 
     // Insert the info
     const saveInfo: saves.Save = {

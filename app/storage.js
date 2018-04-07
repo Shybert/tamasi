@@ -70,8 +70,9 @@ async function createSave(name) {
         // Insert a 'time' property to each boss
         Object.keys(bossList).forEach((key) => {
             bossList[key].time = 0;
+            bossList[key].deaths = 0;
         });
-        console.log('Inserted time property to each boss');
+        console.log('Inserted time and death property to each boss');
         // Insert the info
         const saveInfo = {
             name: saveName,

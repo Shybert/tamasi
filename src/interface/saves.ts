@@ -2,7 +2,8 @@
 
 interface BossInfo {
   name: string,
-  time: number
+  time: number,
+  deaths: number
 }
 
 interface Bosses {
