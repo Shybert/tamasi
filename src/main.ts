@@ -15,7 +15,7 @@ async function createWindow () {
     winMain = new BrowserWindow()
 
     winMain.loadURL(url.format({
-      pathname: path.join(__dirname, 'index.html'),
+      pathname: path.join(__dirname, '../index.html'),
       protocol: 'file:',
       slashes: true
     }))
@@ -51,7 +51,7 @@ ipcMain.on('loadOverlay', async (): Promise<void> => {
     winOverlay = new BrowserWindow()
 
     winOverlay.loadURL(url.format({
-      pathname: path.join(__dirname, 'overlay.html'),
+      pathname: path.join(__dirname, '../overlay.html'),
       protocol: 'file:',
       slashes: true
     }))

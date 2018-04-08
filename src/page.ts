@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import {ipcRenderer} from 'electron'
-import * as home from './home'
-import * as saves from './saves'
+import * as homePage from './homePage'
+import * as savesPage from './savesPage'
 
 async function displayHomePage () {
   try {
@@ -10,7 +10,7 @@ async function displayHomePage () {
     hidePages()
 
     // (Re)load the list of games
-    home.displayGameList()
+    homePage.displayGameList()
     console.log('(Re)loaded games list')
 
     // Display home page
@@ -28,7 +28,7 @@ async function displaySavesPage () {
     hidePages()
 
     // Display saves page
-    saves.displaySaveList()
+    savesPage.displaySaveList()
     document.getElementById('saves').style.display = 'block'
     console.log('Displayed saves page')
   } catch (err) {
