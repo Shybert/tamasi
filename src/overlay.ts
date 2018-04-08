@@ -27,22 +27,28 @@ async function displaySaveInfo (): Promise<void> {
     const saveInfoElement: HTMLElement = document.getElementById('saveInfo')
     Object.values(saveInfo.bosses).forEach((bossInfo): void => {
       const liParent: HTMLElement = document.createElement('li')
-      const ul: HTMLElement = document.createElement('ul')
-      const liBossName: HTMLElement = document.createElement('li')
-      const liBossTime: HTMLElement = document.createElement('li')
+      const ulBossInfo: HTMLElement = document.createElement('ul')
 
-      // Put boss name into a text node and append it to the boss name li
+      // Append boss name
       const bossName: Text = document.createTextNode(`Name: ${bossInfo.name}`)
+      const liBossName: HTMLElement = document.createElement('li')
       liBossName.appendChild(bossName)
+      ulBossInfo.appendChild(liBossName)
 
-      // Put time into a text node and append it to the time li
+      // Append timer
       const bossTime: Text = document.createTextNode(`Time: ${bossInfo.time}`)
+      const liBossTime: HTMLElement = document.createElement('li')
       liBossTime.appendChild(bossTime)
+      ulBossInfo.appendChild(liBossTime)
 
+      // Append deaths
+      const bossDeaths: Text = document.createTextNode(`Deaths: ${bossInfo.deaths}`)
+      const liBossDeaths: HTMLElement = document.createElement('li')
+      liBossDeaths.appendChild(bossDeaths)
+      ulBossInfo.appendChild(liBossDeaths)
+
+      liParent.appendChild(ulBossInfo)
       saveInfoElement.appendChild(liParent)
-      liParent.appendChild(ul)
-      ul.appendChild(liBossName)
-      ul.appendChild(liBossTime)
     })
     console.log('Displayed save information')
   } catch (err) {

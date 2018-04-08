@@ -22,19 +22,24 @@ async function displaySaveInfo() {
         const saveInfoElement = document.getElementById('saveInfo');
         Object.values(saveInfo.bosses).forEach((bossInfo) => {
             const liParent = document.createElement('li');
-            const ul = document.createElement('ul');
-            const liBossName = document.createElement('li');
-            const liBossTime = document.createElement('li');
-            // Put boss name into a text node and append it to the boss name li
+            const ulBossInfo = document.createElement('ul');
+            // Append boss name
             const bossName = document.createTextNode(`Name: ${bossInfo.name}`);
+            const liBossName = document.createElement('li');
             liBossName.appendChild(bossName);
-            // Put time into a text node and append it to the time li
+            ulBossInfo.appendChild(liBossName);
+            // Append timer
             const bossTime = document.createTextNode(`Time: ${bossInfo.time}`);
+            const liBossTime = document.createElement('li');
             liBossTime.appendChild(bossTime);
+            ulBossInfo.appendChild(liBossTime);
+            // Append deaths
+            const bossDeaths = document.createTextNode(`Deaths: ${bossInfo.deaths}`);
+            const liBossDeaths = document.createElement('li');
+            liBossDeaths.appendChild(bossDeaths);
+            ulBossInfo.appendChild(liBossDeaths);
+            liParent.appendChild(ulBossInfo);
             saveInfoElement.appendChild(liParent);
-            liParent.appendChild(ul);
-            ul.appendChild(liBossName);
-            ul.appendChild(liBossTime);
         });
         console.log('Displayed save information');
     }
