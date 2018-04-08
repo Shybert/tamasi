@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
-import * as saves from './interface/saves' // eslint-disable-line no-unused-vars
-import * as storage from './storage'
+import * as saves from '../interface/saves' // eslint-disable-line no-unused-vars
+import * as storage from '../storage'
 import * as page from './page'
 
 // Displaying new save overlay

@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
-import * as page from './page'
-import * as savesPage from './savesPage'
+import * as page from './page/page'
+import * as savesPage from './page/saves-page'
 
 // Event listeners
 // Detecting new save button presses

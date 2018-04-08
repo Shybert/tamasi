@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import * as page from './page'
-import * as storage from './storage'
+import * as storage from '../storage'
 
 async function displayGameList (): Promise<void> {
   try {
