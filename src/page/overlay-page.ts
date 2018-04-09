@@ -1,4 +1,4 @@
-import * as saves from '../interface/saves' // eslint-disable-line no-unused-vars
+import * as saves from '../storage/saves' // eslint-disable-line no-unused-vars
 const Store = require('electron-store')
 const storageSaves = new Store({name: 'saves', cwd: 'storage'})
 

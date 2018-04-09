@@ -6,4 +6,5 @@ logs
 node_modules/
 
 # Compiled ts files
-app/js/
+*.js
+*.js.map

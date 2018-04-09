@@ -5,7 +5,7 @@
         "esModuleInterop": true,
         "noImplicitAny": true,
         "moduleResolution": "node",
-        "outDir": "app/js",
+        "outDir": "app",
         "rootDir": "src",
         "sourceMap": true
     },

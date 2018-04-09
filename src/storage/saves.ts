@@ -1,41 +1,34 @@
 /* eslint-disable no-undef */
 import * as crypto from 'crypto'
-import * as data from './interface/data' // eslint-disable-line no-unused-vars
-import * as saves from './interface/saves' // eslint-disable-line no-unused-vars
+import * as data from './data' // eslint-disable-line no-unused-vars
 const Store = require('electron-store')
-const storageData = new Store({name: 'data', cwd: 'storage'})
-const storageSaves = new Store({name: 'saves', cwd: 'storage'})
+const savesJSON = new Store({name: 'saves', cwd: 'storage'})
 
-interface GameName {
-  id: string,
+// saves.json interface
+interface BossInfo {
+  name: string,
+  time: number,
+  deaths: number
+}
+
+interface Bosses {
+  [x: string]: BossInfo
+}
+
+interface Save {
   name: string
+  bosses: Bosses
 }
 
-async function getGameNames (): Promise<Array<GameName>> {
-  try {
-    console.log('Fetching game names')
-    const gameInfo: data.Games = storageData.get(`games`)
-    const gameNames: Array<GameName> = []
-
-    console.log('Putting names and IDs into an array')
-    Object.entries(gameInfo).forEach(([key, value]): void => {
-      const gameName: GameName = {
-        id: key,
-        name: value.name
-      }
-      gameNames.push(gameName)
-    })
-
-    return gameNames
-  } catch (err) {
-    console.error('Error while fetching game info:', err)
-  }
+interface Saves {
+  [x: string]: Save
 }
 
-async function getSaves (gameId: string): Promise<saves.Saves> {
+// Functions
+async function getSaves (gameId: string): Promise<Saves> {
   try {
     console.log('Fetching list of saves')
-    const saveList: saves.Saves = await storageSaves.get(`games.${gameId}`)
+    const saveList: Saves = await savesJSON.get(`games.${gameId}`)
     console.log('Fetched list of saves', saveList)
     return saveList
   } catch (err) {
@@ -49,7 +42,7 @@ async function createSave (name: string): Promise<void> {
 
     let saveName: string = name
     const gameId: string = localStorage.getItem('gameId')
-    const gameInfo: data.Game = storageData.get(`games.${gameId}`)
+    const gameInfo: data.Game = await data.getGameInfo(gameId)
     const savePath: string = `games.${gameId}`
     // Generate an ID for the save
     const saveId: string = crypto.randomBytes(16).toString('hex')
@@ -68,7 +61,7 @@ async function createSave (name: string): Promise<void> {
     }
 
     // Import boss list for the game
-    const bossList: saves.Bosses = gameInfo.bosses as saves.Bosses
+    const bossList: Bosses = gameInfo.bosses as Bosses
     console.log('Imported boss list for the game')
     // Insert a 'time' property to each boss
     Object.keys(bossList).forEach((key: string): void => {
@@ -78,12 +71,12 @@ async function createSave (name: string): Promise<void> {
     console.log('Inserted time and death property to each boss')
 
     // Insert the info
-    const saveInfo: saves.Save = {
+    const saveInfo: Save = {
       name: saveName,
       bosses: bossList
     }
     // Write the created save to saves.json
-    storageSaves.set(`${savePath}.${saveId}`, saveInfo)
+    savesJSON.set(`${savePath}.${saveId}`, saveInfo)
     console.log('Inserted new save information')
 
     console.log('Created new save')
@@ -92,5 +85,4 @@ async function createSave (name: string): Promise<void> {
   }
 }
 
-// Exports
-export {getGameNames, getSaves, createSave, GameName}
+export {BossInfo, Bosses, Save, Saves, getSaves, createSave}

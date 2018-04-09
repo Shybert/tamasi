@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import * as page from './page'
-import * as storage from '../storage'
+import * as data from '../storage/data'
 
 async function displayGameList (): Promise<void> {
   try {
@@ -11,7 +11,7 @@ async function displayGameList (): Promise<void> {
     console.log('Cleared gamesList element')
 
     // Fetch the list of game names
-    const gameNames: Array<storage.GameName> = await storage.getGameNames()
+    const gameNames: Array<data.GameName> = await data.getGameNames()
     console.log('Fetched list of game names', gameNames)
 
     // Create the elements
