@@ -5,6 +5,6 @@ logs
 # Node
 node_modules/
 
-# Compiled ts files
+# Compiled js files
 *.js
 *.js.map
