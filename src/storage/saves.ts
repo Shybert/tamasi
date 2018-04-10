@@ -36,6 +36,17 @@ async function getSaves (gameId: string): Promise<Saves> {
   }
 }
 
+async function getSaveInfo (gameId: string, saveId: string): Promise<Save> {
+  try {
+    console.log('Fetching save info')
+    const saveInfo: Save = await savesJSON.get(`games.${gameId}.${saveId}`)
+    console.log('Fetched save info', saveInfo)
+    return saveInfo
+  } catch (err) {
+    console.error('Erorr while fetching save info:', err)
+  }
+}
+
 async function createSave (name: string): Promise<void> {
   try {
     console.log('Creating a new save')
@@ -85,4 +96,4 @@ async function createSave (name: string): Promise<void> {
   }
 }
 
-export {BossInfo, Bosses, Save, Saves, getSaves, createSave}
+export {BossInfo, Bosses, Save, Saves, getSaves, getSaveInfo, createSave}

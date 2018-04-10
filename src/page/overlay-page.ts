@@ -1,6 +1,4 @@
 import * as saves from '../storage/saves' // eslint-disable-line no-unused-vars
-const Store = require('electron-store')
-const storageSaves = new Store({name: 'saves', cwd: 'storage'})
 
 // Fetch the save ID and game ID for saving
 const gameId: string = window.localStorage.getItem('gameId')
@@ -16,7 +14,7 @@ displaySaveInfo()
 
 async function displaySaveInfo (): Promise<void> {
   try {
-    const saveInfo: saves.Save = await storageSaves.get(`games.${gameId}.${saveId}`)
+    const saveInfo: saves.Save = await saves.getSaveInfo(gameId, saveId)
     console.log('Fetched save information', saveInfo)
 
     // Display the name of the save
