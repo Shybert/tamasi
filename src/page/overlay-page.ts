@@ -23,7 +23,7 @@ async function displaySaveInfo (): Promise<void> {
 
     // Display boss information
     const saveInfoElement: HTMLElement = document.getElementById('saveInfo')
-    Object.values(saveInfo.bosses).forEach((bossInfo): void => {
+    Object.values(saveInfo.bosses).forEach((bossInfo, index): void => {
       const liParent: HTMLElement = document.createElement('li')
       const ulBossInfo: HTMLElement = document.createElement('ul')
 
@@ -47,6 +47,12 @@ async function displaySaveInfo (): Promise<void> {
 
       liParent.appendChild(ulBossInfo)
       saveInfoElement.appendChild(liParent)
+
+      // Set boss as active if it is the first boss
+      if (index === 0) {
+        liParent.classList.add('active')
+        console.log('Set first boss as active boss')
+      }
     })
     console.log('Displayed save information')
   } catch (err) {
