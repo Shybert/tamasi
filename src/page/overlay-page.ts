@@ -19,6 +19,19 @@ remote.globalShortcut.register('PageUp', (): void => {
 remote.globalShortcut.register('PageDown', (): void => {
   selectBoss('next')
 })
+remote.globalShortcut.register('Home', async (): Promise<void> => {
+  console.log('Increase death counter button pressed')
+  // Get the ID of the currently selected boss
+  const currentlySelectedBoss: HTMLElement = document.getElementsByClassName('active')[0] as HTMLElement // eslint-disable-line no-undef
+  const bossId: string = currentlySelectedBoss.id
+  console.log('Currently selected boss:', bossId)
+
+  // Increase death counter and get new death count
+  const newDeathCount: number = await saves.increaseDeathCounter(gameId, saveId, bossId)
+  // Display new death amount
+  currentlySelectedBoss.getElementsByClassName('deaths')[0].innerHTML = `Deaths: ${newDeathCount}`
+  console.log('New death count displayed')
+})
 
 displaySaveInfo()
 
@@ -40,18 +53,21 @@ async function displaySaveInfo (): Promise<void> {
       // Append boss name
       const bossName: Text = document.createTextNode(`Name: ${bossInfo.name}`)
       const liBossName: HTMLElement = document.createElement('li')
+      liBossName.classList.add('name')
       liBossName.appendChild(bossName)
       ulBossInfo.appendChild(liBossName)
 
       // Append timer
       const bossTime: Text = document.createTextNode(`Time: ${bossInfo.time}`)
       const liBossTime: HTMLElement = document.createElement('li')
+      liBossTime.classList.add('time')
       liBossTime.appendChild(bossTime)
       ulBossInfo.appendChild(liBossTime)
 
       // Append deaths
       const bossDeaths: Text = document.createTextNode(`Deaths: ${bossInfo.deaths}`)
       const liBossDeaths: HTMLElement = document.createElement('li')
+      liBossDeaths.classList.add('deaths')
       liBossDeaths.appendChild(bossDeaths)
       ulBossInfo.appendChild(liBossDeaths)
 

@@ -96,4 +96,21 @@ async function createSave (name: string): Promise<void> {
   }
 }
 
-export {BossInfo, Bosses, Save, Saves, getSaves, getSaveInfo, createSave}
+async function increaseDeathCounter (gameId: string, saveId: string, bossId: string): Promise<number> {
+  try {
+    console.log('Increasing death counter')
+    const currentDeaths: number = savesJSON.get(`games.${gameId}.${saveId}.bosses.${bossId}.deaths`)
+    console.log('Current deaths:', currentDeaths)
+
+    // Set deaths to current deaths + 1
+    const newDeaths: number = currentDeaths + 1
+    savesJSON.set(`games.${gameId}.${saveId}.bosses.${bossId}.deaths`, newDeaths)
+    console.log('Increased death counter, new deaths:', newDeaths)
+
+    return newDeaths
+  } catch (err) {
+    console.error('Error while increasing death counter:', err)
+  }
+}
+
+export {BossInfo, Bosses, Save, Saves, getSaves, getSaveInfo, createSave, increaseDeathCounter}
