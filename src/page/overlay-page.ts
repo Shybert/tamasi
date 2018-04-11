@@ -1,3 +1,4 @@
+import {remote} from 'electron'
 import * as saves from '../storage/saves' // eslint-disable-line no-unused-vars
 
 // Fetch the save ID and game ID for saving
@@ -9,6 +10,15 @@ console.log('Game ID / Save ID', gameId, saveId)
 if (!gameId || !saveId) {
   console.warn('Game ID or save ID missing!')
 }
+
+// Register keyboard shortcuts
+// try/catch the entire thing?
+remote.globalShortcut.register('PageUp', (): void => {
+  selectBoss('previous')
+})
+remote.globalShortcut.register('PageDown', (): void => {
+  selectBoss('next')
+})
 
 displaySaveInfo()
 
@@ -57,5 +67,29 @@ async function displaySaveInfo (): Promise<void> {
     console.log('Displayed save information')
   } catch (err) {
     console.error('Error while displaying save information:', err)
+  }
+}
+
+async function selectBoss (direction: 'previous' | 'next'): Promise<void> {
+  try {
+    console.log(`Selecting ${direction} boss`)
+
+    // Find the element with the active class
+    const liWithActiveClass: HTMLElement = document.getElementsByClassName('active')[0] as HTMLElement // eslint-disable-line no-undef
+    // Remove 'active' class
+    liWithActiveClass.classList.remove('active')
+
+    // Check which direction to move in the list
+    if (direction === 'previous') {
+      // Add 'active' class to the previous element
+      liWithActiveClass.previousElementSibling.classList.add('active')
+    } else if (direction === 'next') {
+      // Add 'active' class to the next element
+      liWithActiveClass.nextElementSibling.classList.add('active')
+    }
+
+    console.log(`Selected ${direction} boss`)
+  } catch (err) {
+    console.error(`Error while selecting ${direction} boss:`, err)
   }
 }
