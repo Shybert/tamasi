@@ -33,7 +33,7 @@ async function displaySaveInfo (): Promise<void> {
 
     // Display boss information
     const saveInfoElement: HTMLElement = document.getElementById('saveInfo')
-    Object.values(saveInfo.bosses).forEach((bossInfo, index): void => {
+    Object.entries(saveInfo.bosses).forEach(([bossId, bossInfo], index): void => {
       const liParent: HTMLElement = document.createElement('li')
       const ulBossInfo: HTMLElement = document.createElement('ul')
 
@@ -54,6 +54,9 @@ async function displaySaveInfo (): Promise<void> {
       const liBossDeaths: HTMLElement = document.createElement('li')
       liBossDeaths.appendChild(bossDeaths)
       ulBossInfo.appendChild(liBossDeaths)
+
+      // Add boss ID as the ID of the parent li
+      liParent.id = bossId
 
       liParent.appendChild(ulBossInfo)
       saveInfoElement.appendChild(liParent)
