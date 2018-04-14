@@ -1,5 +1,7 @@
 import {remote} from 'electron'
 import * as saves from '../storage/saves' // eslint-disable-line no-unused-vars
+import {Timer} from '../timer'
+const timer = new Timer()
 
 // Fetch the save ID and game ID for saving
 const gameId: string = window.localStorage.getItem('gameId')
@@ -31,6 +33,15 @@ remote.globalShortcut.register('Home', async (): Promise<void> => {
   // Display new death amount
   currentlySelectedBoss.getElementsByClassName('deaths')[0].innerHTML = `Deaths: ${newDeathCount}`
   console.log('New death count displayed')
+})
+
+// Catch start timer button presses
+document.getElementById('startTimerButton').addEventListener('click', async (): Promise<void> => {
+  timer.start()
+})
+// Catch stop timer button presses
+document.getElementById('stopTimerButton').addEventListener('click', async (): Promise<void> => {
+  timer.stop()
 })
 
 displaySaveInfo()

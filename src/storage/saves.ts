@@ -43,7 +43,19 @@ async function getSaveInfo (gameId: string, saveId: string): Promise<Save> {
     console.log('Fetched save info', saveInfo)
     return saveInfo
   } catch (err) {
-    console.error('Erorr while fetching save info:', err)
+    console.error('Error while fetching save info:', err)
+  }
+}
+
+async function getBossTimer (gameId: string, saveId: string, bossId: string): Promise<number> {
+  try {
+    console.log('Fetching current boss time')
+    const savesInfo: Saves = await savesJSON.get(`games.${gameId}`)
+    const bossTime: number = savesInfo[saveId].bosses[bossId].time
+    console.log('Fetched current boss time:', bossTime)
+    return bossTime
+  } catch (err) {
+    console.error('Error while fetching current boss time:', err)
   }
 }
 
@@ -113,4 +125,4 @@ async function increaseDeathCounter (gameId: string, saveId: string, bossId: str
   }
 }
 
-export {BossInfo, Bosses, Save, Saves, getSaves, getSaveInfo, createSave, increaseDeathCounter}
+export {BossInfo, Bosses, Save, Saves, getSaves, getSaveInfo, getBossTimer, createSave, increaseDeathCounter}
