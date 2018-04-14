@@ -35,13 +35,9 @@ remote.globalShortcut.register('Home', async (): Promise<void> => {
   console.log('New death count displayed')
 })
 
-// Catch start timer button presses
-document.getElementById('startTimerButton').addEventListener('click', async (): Promise<void> => {
-  timer.start()
-})
-// Catch stop timer button presses
-document.getElementById('stopTimerButton').addEventListener('click', async (): Promise<void> => {
-  timer.stop()
+// Catch timer button presses
+document.getElementById('timerButton').addEventListener('click', async (): Promise<void> => {
+  timer.switch()
 })
 
 displaySaveInfo()
