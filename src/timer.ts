@@ -4,11 +4,11 @@ class Timer {
   private interval: any
   private milliseconds: number = 0
 
-  public switch () {
+  public switch (timeElement: HTMLElement) {
     if (!this.interval) {
-      console.log('Starting timer')
+      console.log('Starting timer, timer element:', timeElement)
       // Using arrow function to get around the setInterval 'this' problem
-      this.interval = setInterval(() => this.timer(), 1000)
+      this.interval = setInterval(() => this.timer(timeElement), 1000)
     } else if (this.interval) {
       console.log('Stopping timer')
       clearInterval(this.interval)
@@ -17,8 +17,10 @@ class Timer {
     }
   }
 
-  private timer () {
+  private timer (timeElement: HTMLElement) {
     this.milliseconds += 1
+    // Display new time on the element
+    timeElement.innerHTML = `Time: ${this.milliseconds}`
     console.log('Currently elapsed time:', this.milliseconds)
   }
 

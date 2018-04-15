@@ -37,7 +37,9 @@ remote.globalShortcut.register('Home', async (): Promise<void> => {
 
 // Catch timer button presses
 document.getElementById('timerButton').addEventListener('click', async (): Promise<void> => {
-  timer.switch()
+  // Get the correct timer element
+  const timerElement: HTMLElement = document.getElementsByClassName('active')[0].getElementsByClassName('time')[0] as HTMLElement // eslint-disable-line no-undef
+  timer.switch(timerElement)
 })
 
 displaySaveInfo()
