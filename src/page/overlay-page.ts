@@ -37,9 +37,10 @@ remote.globalShortcut.register('Home', async (): Promise<void> => {
 
 // Catch timer button presses
 document.getElementById('timerButton').addEventListener('click', async (): Promise<void> => {
-  // Get the correct timer element
+  // Get the correct timer element and boss ID
   const timerElement: HTMLElement = document.getElementsByClassName('active')[0].getElementsByClassName('time')[0] as HTMLElement // eslint-disable-line no-undef
-  timer.switch(timerElement)
+  const bossId: string = document.getElementsByClassName('active')[0].id
+  timer.switch(timerElement, gameId, saveId, bossId)
 })
 
 displaySaveInfo()

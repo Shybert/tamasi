@@ -125,4 +125,13 @@ async function increaseDeathCounter (gameId: string, saveId: string, bossId: str
   }
 }
 
-export {BossInfo, Bosses, Save, Saves, getSaves, getSaveInfo, getBossTimer, createSave, increaseDeathCounter}
+async function increaseTime (gameId: string, saveId: string, bossId: string, time: number): Promise<void> {
+  try {
+    console.log('Increasing time')
+    savesJSON.set(`games.${gameId}.${saveId}.bosses.${bossId}.time`, time)
+  } catch (err) {
+    console.error('Errorw while increasing time', err)
+  }
+}
+
+export {BossInfo, Bosses, Save, Saves, getSaves, getSaveInfo, getBossTimer, createSave, increaseDeathCounter, increaseTime}
