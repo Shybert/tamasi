@@ -1,12 +1,13 @@
 import {remote} from 'electron'
 import * as saves from '../storage/saves' // eslint-disable-line no-unused-vars
 import {Timer} from '../timer'
-const timer = new Timer()
 
 // Fetch the save ID and game ID for saving
 const gameId: string = window.localStorage.getItem('gameId')
 const saveId: string = window.localStorage.getItem('saveId')
 console.log('Game ID / Save ID', gameId, saveId)
+// Initialize timer with the fetched game ID / save ID
+const timer = new Timer(gameId, saveId)
 
 // Check if game ID or save ID is undefined
 if (!gameId || !saveId) {
@@ -39,7 +40,7 @@ remote.globalShortcut.register('End', async (): Promise<void> => {
   // Get the correct timer element and boss ID
   const timerElement: HTMLElement = document.getElementsByClassName('active')[0].getElementsByClassName('time')[0] as HTMLElement // eslint-disable-line no-undef
   const bossId: string = document.getElementsByClassName('active')[0].id
-  timer.switch(timerElement, gameId, saveId, bossId)
+  timer.switch(timerElement, bossId)
 })
 
 displaySaveInfo()
