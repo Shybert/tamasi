@@ -34,9 +34,8 @@ remote.globalShortcut.register('Home', async (): Promise<void> => {
   currentlySelectedBoss.getElementsByClassName('deaths')[0].innerHTML = `Deaths: ${newDeathCount}`
   console.log('New death count displayed')
 })
-
-// Catch timer button presses
-document.getElementById('timerButton').addEventListener('click', async (): Promise<void> => {
+remote.globalShortcut.register('End', async (): Promise<void> => {
+  console.log('Switch timer button pressed')
   // Get the correct timer element and boss ID
   const timerElement: HTMLElement = document.getElementsByClassName('active')[0].getElementsByClassName('time')[0] as HTMLElement // eslint-disable-line no-undef
   const bossId: string = document.getElementsByClassName('active')[0].id
