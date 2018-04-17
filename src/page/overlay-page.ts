@@ -16,10 +16,10 @@ if (!gameId || !saveId) {
 
 // Register keyboard shortcuts
 // try/catch the entire thing?
-remote.globalShortcut.register('PageUp', (): void => {
+remote.globalShortcut.register('PageUp', async (): Promise<void> => {
   selectBoss('previous')
 })
-remote.globalShortcut.register('PageDown', (): void => {
+remote.globalShortcut.register('PageDown', async (): Promise<void> => {
   selectBoss('next')
 })
 remote.globalShortcut.register('Home', async (): Promise<void> => {
@@ -105,6 +105,8 @@ async function selectBoss (direction: 'previous' | 'next'): Promise<void> {
 
     // Find the element with the active class
     const liWithActiveClass: HTMLElement = document.getElementsByClassName('active')[0] as HTMLElement // eslint-disable-line no-undef
+    // Make sure timer has been stopped
+    timer.stop(liWithActiveClass.id)
     // Remove 'active' class
     liWithActiveClass.classList.remove('active')
 

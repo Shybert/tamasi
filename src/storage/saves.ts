@@ -47,7 +47,7 @@ async function getSaveInfo (gameId: string, saveId: string): Promise<Save> {
   }
 }
 
-async function getBossTimer (gameId: string, saveId: string, bossId: string): Promise<number> {
+async function getBossTime (gameId: string, saveId: string, bossId: string): Promise<number> {
   try {
     console.log('Fetching current boss time')
     const savesInfo: Saves = await savesJSON.get(`games.${gameId}`)
@@ -125,7 +125,7 @@ async function increaseDeathCounter (gameId: string, saveId: string, bossId: str
   }
 }
 
-async function increaseTime (gameId: string, saveId: string, bossId: string, time: number): Promise<void> {
+async function increaseBossTime (gameId: string, saveId: string, bossId: string, time: number): Promise<void> {
   try {
     console.log('Increasing time')
     savesJSON.set(`games.${gameId}.${saveId}.bosses.${bossId}.time`, time)
@@ -134,4 +134,4 @@ async function increaseTime (gameId: string, saveId: string, bossId: string, tim
   }
 }
 
-export {BossInfo, Bosses, Save, Saves, getSaves, getSaveInfo, getBossTimer, createSave, increaseDeathCounter, increaseTime}
+export {BossInfo, Bosses, Save, Saves, getSaves, getSaveInfo, getBossTime, createSave, increaseDeathCounter, increaseBossTime}
