@@ -125,6 +125,7 @@ async function increaseDeathCounter (gameId: string, saveId: string, bossId: str
   }
 }
 
+// Should be a setter
 async function increaseBossTime (gameId: string, saveId: string, bossId: string, time: number): Promise<void> {
   try {
     console.log('Increasing time')
