@@ -7,7 +7,9 @@ const gameId: string = window.localStorage.getItem('gameId')
 const saveId: string = window.localStorage.getItem('saveId')
 console.log('Game ID / Save ID', gameId, saveId)
 // Initialize timer with the fetched game ID / save ID
+// Initalize saves class
 const timer = new Timer(gameId, saveId)
+const savesTEMPCLASS = new saves.SavesTEMPNAME(gameId, saveId)
 
 // Check if game ID or save ID is undefined
 if (!gameId || !saveId) {
@@ -42,12 +44,15 @@ remote.globalShortcut.register('End', async (): Promise<void> => {
   const bossId: string = document.getElementsByClassName('active')[0].id
   timer.switch(timerElement, bossId)
 })
+remote.globalShortcut.register('1', async () => {
+  console.log(await savesTEMPCLASS.getBossDeaths('iudex'))
+})
 
 displaySaveInfo()
 
 async function displaySaveInfo (): Promise<void> {
   try {
-    const saveInfo: saves.Save = await saves.getSaveInfo(gameId, saveId)
+    const saveInfo: saves.Save = await savesTEMPCLASS.getSaveInfo()
     console.log('Fetched save information', saveInfo)
 
     // Display the name of the save

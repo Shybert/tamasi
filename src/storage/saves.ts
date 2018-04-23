@@ -23,6 +23,54 @@ interface Save {
 interface Saves {
   [x: string]: Save
 }
+interface SavesList {
+  [x: string]: Save
+}
+
+class SavesTEMPNAME {
+  // Required properties
+  private gameId: string
+  private saveId: string
+  private savePath: string
+  constructor (gameId: string, saveId: string) {
+    this.gameId = gameId
+    this.saveId = saveId
+
+    this.savePath = `games.${this.gameId}.${this.saveId}`
+  }
+
+  public async getSaves (): Promise<SavesList> {
+    try {
+      return savesJSON.get()
+    } catch (err) {
+      console.error('Error while fetching list of saves:', err)
+    }
+  }
+
+  public async getSaveInfo (): Promise<Save> {
+    try {
+      return savesJSON.get(this.savePath)
+    } catch (err) {
+      console.error('Error while fetching save info:', err)
+    }
+  }
+
+  public async getBossDeaths (bossId: string): Promise<BossInfo['deaths']> {
+    try {
+      return savesJSON.get(`${this.savePath}.bosses.${bossId}.deaths`)
+    } catch (err) {
+      console.error('Error while fetching boss deaths:', err)
+    }
+  }
+  public async increaseBossDeaths (bossId: string): Promise<void> {
+    try {
+      const currentDeaths = await this.getBossDeaths(bossId)
+      savesJSON.set(`${this.savePath}.bosses.${bossId}.deaths`, (currentDeaths + 1))
+    } catch (err) {
+      console.error('Error while setting boss deaths')
+    }
+  }
+}
 
 // Functions
 async function getSaves (gameId: string): Promise<Saves> {
@@ -134,4 +182,4 @@ async function increaseBossTime (gameId: string, saveId: string, bossId: string,
   }
 }
 
-export {BossInfo, Bosses, Save, Saves, getSaves, getSaveInfo, getBossTime, createSave, increaseDeathCounter, increaseBossTime}
+export {BossInfo, Bosses, Save, Saves, SavesTEMPNAME, getSaves, getSaveInfo, getBossTime, createSave, increaseDeathCounter, increaseBossTime}
