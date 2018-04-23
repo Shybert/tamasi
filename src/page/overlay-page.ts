@@ -1,5 +1,5 @@
 import {remote} from 'electron'
-import * as saves from '../storage/saves' // eslint-disable-line no-unused-vars
+import * as Saves from '../storage/saves' // eslint-disable-line no-unused-vars
 import {Timer} from '../timer'
 
 // Fetch the save ID and game ID for saving
@@ -9,7 +9,7 @@ console.log('Game ID / Save ID', gameId, saveId)
 // Initialize timer with the fetched game ID / save ID
 // Initalize saves class
 const timer = new Timer(gameId, saveId)
-const savesTEMPCLASS = new saves.SavesTEMPNAME(gameId, saveId)
+const saves = new Saves.SavesTEMPNAME(gameId, saveId)
 
 // Check if game ID or save ID is undefined
 if (!gameId || !saveId) {
@@ -32,10 +32,10 @@ remote.globalShortcut.register('Home', async (): Promise<void> => {
   console.log('Currently selected boss:', bossId)
 
   // Increase death counter and get new death count
-  const newDeathCount: number = await saves.increaseDeathCounter(gameId, saveId, bossId)
+  const newDeathCount: number = await saves.increaseBossDeaths(bossId)
   // Display new death amount
   currentlySelectedBoss.getElementsByClassName('deaths')[0].innerHTML = `Deaths: ${newDeathCount}`
-  console.log('New death count displayed')
+  console.log('New death count displayed', newDeathCount)
 })
 remote.globalShortcut.register('End', async (): Promise<void> => {
   console.log('Switch timer button pressed')
@@ -45,14 +45,14 @@ remote.globalShortcut.register('End', async (): Promise<void> => {
   timer.switch(timerElement, bossId)
 })
 remote.globalShortcut.register('1', async () => {
-  console.log(await savesTEMPCLASS.getBossDeaths('iudex'))
+  console.log(await saves.getBossDeaths('iudex'))
 })
 
 displaySaveInfo()
 
 async function displaySaveInfo (): Promise<void> {
   try {
-    const saveInfo: saves.Save = await savesTEMPCLASS.getSaveInfo()
+    const saveInfo: Saves.Save = await saves.getSaveInfo()
     console.log('Fetched save information', saveInfo)
 
     // Display the name of the save

@@ -32,7 +32,7 @@ class SavesTEMPNAME {
   private gameId: string
   private saveId: string
   private savePath: string
-  constructor (gameId: string, saveId: string) {
+  constructor (gameId: string, saveId?: string) {
     this.gameId = gameId
     this.saveId = saveId
 
@@ -41,7 +41,7 @@ class SavesTEMPNAME {
 
   public async getSaves (): Promise<SavesList> {
     try {
-      return savesJSON.get()
+      return savesJSON.get(`games.${this.gameId}`)
     } catch (err) {
       console.error('Error while fetching list of saves:', err)
     }
@@ -62,10 +62,12 @@ class SavesTEMPNAME {
       console.error('Error while fetching boss deaths:', err)
     }
   }
-  public async increaseBossDeaths (bossId: string): Promise<void> {
+  public async increaseBossDeaths (bossId: string): Promise<BossInfo['deaths']> {
     try {
       const currentDeaths = await this.getBossDeaths(bossId)
-      savesJSON.set(`${this.savePath}.bosses.${bossId}.deaths`, (currentDeaths + 1))
+      const increasedDeaths = currentDeaths + 1
+      savesJSON.set(`${this.savePath}.bosses.${bossId}.deaths`, increasedDeaths)
+      return increasedDeaths
     } catch (err) {
       console.error('Error while setting boss deaths')
     }
@@ -81,17 +83,6 @@ async function getSaves (gameId: string): Promise<Saves> {
     return saveList
   } catch (err) {
     console.error('Error while fetching list of saves:', err)
-  }
-}
-
-async function getSaveInfo (gameId: string, saveId: string): Promise<Save> {
-  try {
-    console.log('Fetching save info')
-    const saveInfo: Save = await savesJSON.get(`games.${gameId}.${saveId}`)
-    console.log('Fetched save info', saveInfo)
-    return saveInfo
-  } catch (err) {
-    console.error('Error while fetching save info:', err)
   }
 }
 
@@ -156,23 +147,6 @@ async function createSave (name: string): Promise<void> {
   }
 }
 
-async function increaseDeathCounter (gameId: string, saveId: string, bossId: string): Promise<number> {
-  try {
-    console.log('Increasing death counter')
-    const currentDeaths: number = savesJSON.get(`games.${gameId}.${saveId}.bosses.${bossId}.deaths`)
-    console.log('Current deaths:', currentDeaths)
-
-    // Set deaths to current deaths + 1
-    const newDeaths: number = currentDeaths + 1
-    savesJSON.set(`games.${gameId}.${saveId}.bosses.${bossId}.deaths`, newDeaths)
-    console.log('Increased death counter, new deaths:', newDeaths)
-
-    return newDeaths
-  } catch (err) {
-    console.error('Error while increasing death counter:', err)
-  }
-}
-
 async function increaseBossTime (gameId: string, saveId: string, bossId: string, time: number): Promise<void> {
   try {
     console.log('Increasing time')
@@ -182,4 +156,4 @@ async function increaseBossTime (gameId: string, saveId: string, bossId: string,
   }
 }
 
-export {BossInfo, Bosses, Save, Saves, SavesTEMPNAME, getSaves, getSaveInfo, getBossTime, createSave, increaseDeathCounter, increaseBossTime}
+export {BossInfo, Bosses, Save, Saves, SavesTEMPNAME, getSaves, getBossTime, createSave, increaseBossTime}
