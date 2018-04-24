@@ -32,9 +32,9 @@ class SavesTEMPNAME {
   private gameId: string
   private saveId: string
   private savePath: string
-  constructor (gameId: string, saveId?: string) {
-    this.gameId = gameId
-    this.saveId = saveId
+  constructor (theGameId: string, theSaveId?: string) {
+    this.gameId = theGameId
+    this.saveId = theSaveId
 
     this.savePath = `games.${this.gameId}.${this.saveId}`
   }
@@ -55,10 +55,16 @@ class SavesTEMPNAME {
     }
   }
 
-  public async setBossTime (bossId: string, time: number): Promise<BossInfo['time']> {
+  public async getBossTime (bossId: string): Promise<BossInfo['time']> {
+    try {
+      return savesJSON.get(`${this.savePath}.bosses.${bossId}.time`)
+    } catch (err) {
+      console.error('Error while fetching boss time:', err)
+    }
+  }
+  public async setBossTime (bossId: string, time: number): Promise<void> {
     try {
       savesJSON.set(`${this.savePath}.bosses.${bossId}.time`, time)
-      return time
     } catch (err) {
       console.error('Error while setting boss time:', err)
     }
@@ -89,18 +95,6 @@ async function getSaves (gameId: string): Promise<Saves> {
     return saveList
   } catch (err) {
     console.error('Error while fetching list of saves:', err)
-  }
-}
-
-async function getBossTime (gameId: string, saveId: string, bossId: string): Promise<number> {
-  try {
-    console.log('Fetching current boss time')
-    const savesInfo: Saves = await savesJSON.get(`games.${gameId}`)
-    const bossTime: number = savesInfo[saveId].bosses[bossId].time
-    console.log('Fetched current boss time:', bossTime)
-    return bossTime
-  } catch (err) {
-    console.error('Error while fetching current boss time:', err)
   }
 }
 
@@ -153,4 +147,4 @@ async function createSave (name: string): Promise<void> {
   }
 }
 
-export {BossInfo, Bosses, Save, Saves, SavesTEMPNAME, getSaves, getBossTime, createSave}
+export {BossInfo, Bosses, Save, Saves, SavesTEMPNAME, getSaves, createSave}

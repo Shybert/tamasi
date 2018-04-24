@@ -28,7 +28,7 @@ class Timer {
         this.previousIntervalTime = Date.now()
         this.previousSaveTime = Date.now()
         // Set elapsed milliseconds to currently saved time
-        this.milliseconds = await saves.getBossTime(this.gameId, this.saveId, bossId)
+        this.milliseconds = await this.savesTEMPCLASS.getBossTime(bossId)
 
         // Using arrow function to get around the setInterval 'this' problem
         this.interval = setInterval(() => this.timer(timeElement, bossId), 50)
