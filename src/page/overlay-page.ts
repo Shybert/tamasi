@@ -32,7 +32,8 @@ remote.globalShortcut.register('Home', async (): Promise<void> => {
   console.log('Currently selected boss:', bossId)
 
   // Increase death counter and get new death count
-  const newDeathCount: number = await saves.increaseBossDeaths(bossId)
+  const newDeathCount: number = await saves.getBossDeaths(bossId) + 1
+  saves.setBossDeaths(bossId, newDeathCount)
   // Display new death amount
   currentlySelectedBoss.getElementsByClassName('deaths')[0].innerHTML = `Deaths: ${newDeathCount}`
   console.log('New death count displayed', newDeathCount)

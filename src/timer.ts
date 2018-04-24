@@ -5,9 +5,13 @@ class Timer {
   // Required properties
   private gameId: string
   private saveId: string
-  constructor (gameId: string, saveId: string) {
-    this.gameId = gameId
-    this.saveId = saveId
+  private savesTEMPCLASS: saves.SavesTEMPNAME
+  constructor (theGameId: string, theSaveId: string) {
+    this.gameId = theGameId
+    this.saveId = theSaveId
+
+    // Initialize saves class
+    this.savesTEMPCLASS = new saves.SavesTEMPNAME(this.gameId, this.saveId)
   }
 
   private interval: any
@@ -48,7 +52,7 @@ class Timer {
       // Compare current time to last save time
       if (Date.now() - this.previousSaveTime > 5000) {
         this.previousSaveTime = Date.now()
-        saves.increaseBossTime(this.gameId, this.saveId, bossId, this.milliseconds)
+        this.savesTEMPCLASS.setBossTime(bossId, this.milliseconds)
       }
 
       // Set a new previous time for use in the next interval
@@ -64,7 +68,7 @@ class Timer {
       if (this.interval) {
         console.log('Stopping timer')
         clearInterval(this.interval)
-        saves.increaseBossTime(this.gameId, this.saveId, bossId, this.milliseconds)
+        this.savesTEMPCLASS.setBossTime(bossId, this.milliseconds)
         console.log('Total elapsed time:', this.milliseconds)
         this.reset()
       } else {
