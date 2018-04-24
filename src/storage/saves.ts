@@ -24,7 +24,7 @@ interface SavesList {
   [x: string]: Save
 }
 
-class SavesTEMPNAME {
+class Saves {
   // Required properties
   private gameId: string
   private saveId: string
@@ -108,12 +108,12 @@ class SavesTEMPNAME {
       // Import boss list for the game
       const bossList: Bosses = gameInfo.bosses as Bosses
       console.log('Imported boss list for the game')
-      // Insert a 'time' property to each boss
-      Object.keys(bossList).forEach((key: string): void => {
-        bossList[key].time = 0
-        bossList[key].deaths = 0
+      // Insert properties for each boss
+      Object.keys(bossList).forEach((bossId: string): void => {
+        bossList[bossId].time = 0
+        bossList[bossId].deaths = 0
       })
-      console.log('Inserted time and death property to each boss')
+      console.log('Inserted properties to each boss')
 
       // Insert the info
       const saveInfo: Save = {
@@ -131,4 +131,4 @@ class SavesTEMPNAME {
   }
 }
 
-export {BossInfo, Bosses, Save, SavesList, SavesTEMPNAME}
+export {BossInfo, Bosses, Save, SavesList, Saves}

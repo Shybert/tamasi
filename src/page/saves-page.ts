@@ -4,7 +4,7 @@ import * as page from './page'
 
 // Fetch game ID and initialize saves class
 const gameId: string = localStorage.getItem('gameId')
-const saves = new Saves.SavesTEMPNAME(gameId)
+const saves = new Saves.Saves(gameId)
 
 // Displaying new save overlay
 async function displayNewSaveOverlay (): Promise<void> {

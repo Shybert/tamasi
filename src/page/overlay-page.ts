@@ -9,7 +9,7 @@ console.log('Game ID / Save ID', gameId, saveId)
 // Initialize timer with the fetched game ID / save ID
 // Initalize saves class
 const timer = new Timer(gameId, saveId)
-const saves = new Saves.SavesTEMPNAME(gameId, saveId)
+const saves = new Saves.Saves(gameId, saveId)
 
 // Check if game ID or save ID is undefined
 if (!gameId || !saveId) {
@@ -44,9 +44,6 @@ remote.globalShortcut.register('End', async (): Promise<void> => {
   const timerElement: HTMLElement = document.getElementsByClassName('active')[0].getElementsByClassName('time')[0] as HTMLElement // eslint-disable-line no-undef
   const bossId: string = document.getElementsByClassName('active')[0].id
   timer.switch(timerElement, bossId)
-})
-remote.globalShortcut.register('1', async () => {
-  console.log(await saves.getBossDeaths('iudex'))
 })
 
 displaySaveInfo()
