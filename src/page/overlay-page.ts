@@ -1,6 +1,7 @@
 import {remote} from 'electron'
 import * as Saves from '../storage/saves' // eslint-disable-line no-unused-vars
 import {Timer} from '../timer'
+import * as display from './display'
 
 // Fetch the save ID and game ID for saving
 const gameId: string = window.localStorage.getItem('gameId')
@@ -59,30 +60,14 @@ async function displaySaveInfo (): Promise<void> {
 
     // Display boss information
     const saveInfoElement: HTMLElement = document.getElementById('saveInfo')
-    Object.entries(saveInfo.bosses).forEach(([bossId, bossInfo], index): void => {
+    Object.entries(saveInfo.bosses).forEach(async ([bossId, bossInfo], index): Promise<void> => {
       const liParent: HTMLElement = document.createElement('li')
       const ulBossInfo: HTMLElement = document.createElement('ul')
 
-      // Append boss name
-      const bossName: Text = document.createTextNode(`Name: ${bossInfo.name}`)
-      const liBossName: HTMLElement = document.createElement('li')
-      liBossName.classList.add('name')
-      liBossName.appendChild(bossName)
-      ulBossInfo.appendChild(liBossName)
-
-      // Append timer
-      const bossTime: Text = document.createTextNode(`Time: ${bossInfo.time}`)
-      const liBossTime: HTMLElement = document.createElement('li')
-      liBossTime.classList.add('time')
-      liBossTime.appendChild(bossTime)
-      ulBossInfo.appendChild(liBossTime)
-
-      // Append deaths
-      const bossDeaths: Text = document.createTextNode(`Deaths: ${bossInfo.deaths}`)
-      const liBossDeaths: HTMLElement = document.createElement('li')
-      liBossDeaths.classList.add('deaths')
-      liBossDeaths.appendChild(bossDeaths)
-      ulBossInfo.appendChild(liBossDeaths)
+      // Append boss info
+      ulBossInfo.appendChild(await display.addLiInfo(`Name: ${bossInfo.name}`, {theClass: 'name'}))
+      ulBossInfo.appendChild(await display.addLiInfo(`Time: ${bossInfo.time}`, {theClass: 'time'}))
+      ulBossInfo.appendChild(await display.addLiInfo(`Deaths: ${bossInfo.deaths}`, {theClass: 'deaths'}))
 
       // Add boss ID as the ID of the parent li
       liParent.id = bossId

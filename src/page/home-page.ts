@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+import * as display from './display'
 import * as page from './page'
 import * as data from '../storage/data'
 
@@ -16,10 +17,7 @@ async function displayGameList (): Promise<void> {
 
     // Create the elements
     for (let i = 0; i < gameNames.length; i += 1) {
-      const li: HTMLElement = document.createElement('li')
-      const text: Text = document.createTextNode(gameNames[i].name)
-      li.setAttribute('id', gameNames[i].id)
-      li.appendChild(text)
+      const li: HTMLElement = await display.addLiInfo(gameNames[i].name, {id: gameNames[i].id})
 
       // Listening for clicks on the game names for opening the save window
       li.addEventListener('click', (): void => {
