@@ -65,9 +65,9 @@ describe('Display', async () => {
       await display.hidePages()
       for (let i = 0; i < divContent.children.length; i += 1) {
         // Fail the test if display value has not been set to 'none'
-        const actual = window.getComputedStyle(divContent.children[i]).getPropertyValue('display')
-        const expected = 'none'
-        assert.fail(actual, expected, 'Display value was not correctly set to zero for all three elements')
+        const actual: string = window.getComputedStyle((divContent.children)[i]).getPropertyValue('display')
+        const expected: string = 'none'
+        assert.equal(actual, expected, "Display value was not correctly set to 'none' for all three elements")
       }
     })
   })

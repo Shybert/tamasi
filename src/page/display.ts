@@ -20,7 +20,12 @@ async function addLiInfo (text: string, classAndId?: {id?: string, theClass?: st
 }
 
 async function hidePages () {
+  const divContent: HTMLElement = document.getElementById('content')
 
+  // Loop through the children and set their display value to 'none'
+  for (let i = 0; i < divContent.children.length; i += 1) {
+    (divContent.children[i] as HTMLElement).style.display = 'none' // eslint-disable-line no-undef
+  }
 }
 
 export {addLiInfo, hidePages}
