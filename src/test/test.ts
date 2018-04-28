@@ -42,4 +42,29 @@ describe('Display', async () => {
       assert.isTrue(returnedLi.classList.contains(exampleClass) && returnedLi.id === id, 'The returned li did not contain the ID or the class provided')
     })
   })
+
+  describe('hidePages()', async () => {
+    before(() => {
+      // Set up div with ID set to 'content'
+      const div: HTMLElement = document.createElement('div')
+      div.id = 'content'
+      document.getElementsByTagName('body')[0].appendChild(div)
+    })
+
+    it("Should set display to 'none' for all child nodes of the div with the ID 'content'", async () => {
+      // Set up child nodes on the div with ID 'content
+      const divContent: HTMLElement = document.getElementById('content')
+      for (let i = 0; i < 3; i += 1) {
+        divContent.appendChild(document.createElement('div'))
+      }
+
+      await display.hidePages()
+      for (let i = 0; i < divContent.children.length; i += 1) {
+        // Fail the test if display value has not been set to 'none'
+        const actual = window.getComputedStyle(divContent.children[i]).getPropertyValue('display')
+        const expected = 'none'
+        assert.fail(actual, expected, 'Display value was not correctly set to zero for all three elements')
+      }
+    })
+  })
 })

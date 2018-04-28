@@ -19,4 +19,8 @@ async function addLiInfo (text: string, classAndId?: {id?: string, theClass?: st
   return li
 }
 
-export {addLiInfo}
+async function hidePages () {
+
+}
+
+export {addLiInfo, hidePages}
