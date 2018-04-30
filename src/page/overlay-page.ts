@@ -1,13 +1,16 @@
 import {remote} from 'electron'
-import * as saves from '../storage/saves' // eslint-disable-line no-unused-vars
+import * as Saves from '../storage/saves' // eslint-disable-line no-unused-vars
 import {Timer} from '../timer'
+import * as display from './display'
 
 // Fetch the save ID and game ID for saving
 const gameId: string = window.localStorage.getItem('gameId')
 const saveId: string = window.localStorage.getItem('saveId')
 console.log('Game ID / Save ID', gameId, saveId)
 // Initialize timer with the fetched game ID / save ID
+// Initalize saves class
 const timer = new Timer(gameId, saveId)
+const saves = new Saves.Saves(gameId, saveId)
 
 // Check if game ID or save ID is undefined
 if (!gameId || !saveId) {
@@ -30,10 +33,11 @@ remote.globalShortcut.register('Home', async (): Promise<void> => {
   console.log('Currently selected boss:', bossId)
 
   // Increase death counter and get new death count
-  const newDeathCount: number = await saves.increaseDeathCounter(gameId, saveId, bossId)
+  const newDeathCount: number = await saves.getBossDeaths(bossId) + 1
+  saves.setBossDeaths(bossId, newDeathCount)
   // Display new death amount
   currentlySelectedBoss.getElementsByClassName('deaths')[0].innerHTML = `Deaths: ${newDeathCount}`
-  console.log('New death count displayed')
+  console.log('New death count displayed', newDeathCount)
 })
 remote.globalShortcut.register('End', async (): Promise<void> => {
   console.log('Switch timer button pressed')
@@ -47,7 +51,7 @@ displaySaveInfo()
 
 async function displaySaveInfo (): Promise<void> {
   try {
-    const saveInfo: saves.Save = await saves.getSaveInfo(gameId, saveId)
+    const saveInfo: Saves.Save = await saves.getSaveInfo()
     console.log('Fetched save information', saveInfo)
 
     // Display the name of the save
@@ -56,30 +60,14 @@ async function displaySaveInfo (): Promise<void> {
 
     // Display boss information
     const saveInfoElement: HTMLElement = document.getElementById('saveInfo')
-    Object.entries(saveInfo.bosses).forEach(([bossId, bossInfo], index): void => {
+    Object.entries(saveInfo.bosses).forEach(async ([bossId, bossInfo], index): Promise<void> => {
       const liParent: HTMLElement = document.createElement('li')
       const ulBossInfo: HTMLElement = document.createElement('ul')
 
-      // Append boss name
-      const bossName: Text = document.createTextNode(`Name: ${bossInfo.name}`)
-      const liBossName: HTMLElement = document.createElement('li')
-      liBossName.classList.add('name')
-      liBossName.appendChild(bossName)
-      ulBossInfo.appendChild(liBossName)
-
-      // Append timer
-      const bossTime: Text = document.createTextNode(`Time: ${bossInfo.time}`)
-      const liBossTime: HTMLElement = document.createElement('li')
-      liBossTime.classList.add('time')
-      liBossTime.appendChild(bossTime)
-      ulBossInfo.appendChild(liBossTime)
-
-      // Append deaths
-      const bossDeaths: Text = document.createTextNode(`Deaths: ${bossInfo.deaths}`)
-      const liBossDeaths: HTMLElement = document.createElement('li')
-      liBossDeaths.classList.add('deaths')
-      liBossDeaths.appendChild(bossDeaths)
-      ulBossInfo.appendChild(liBossDeaths)
+      // Append boss info
+      ulBossInfo.appendChild(await display.addLiInfo(`Name: ${bossInfo.name}`, {theClass: 'name'}))
+      ulBossInfo.appendChild(await display.addLiInfo(`Time: ${bossInfo.time}`, {theClass: 'time'}))
+      ulBossInfo.appendChild(await display.addLiInfo(`Deaths: ${bossInfo.deaths}`, {theClass: 'deaths'}))
 
       // Add boss ID as the ID of the parent li
       liParent.id = bossId
