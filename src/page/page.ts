@@ -2,12 +2,13 @@
 import {ipcRenderer} from 'electron'
 import * as homePage from './home-page'
 import * as savesPage from './saves-page'
+import * as display from './display'
 
 async function displayHomePage () {
   try {
     console.log('Displaying home page')
 
-    hidePages()
+    display.hidePages()
 
     // (Re)load the list of games
     homePage.displayGameList()
@@ -25,7 +26,7 @@ async function displaySavesPage () {
   try {
     console.log('Displaying saves page')
 
-    hidePages()
+    display.hidePages()
 
     // Display saves page
     savesPage.displaySaveList()
@@ -44,22 +45,6 @@ async function displayOverlayPage () {
     ipcRenderer.send('loadOverlay')
   } catch (err) {
     console.error('Error while displaying overlay:', err)
-  }
-}
-
-// The single function for hiding all the pages
-async function hidePages () {
-  try {
-    console.log('Hiding pages')
-
-    // Fetch all child nodes for the 'content' div, since these are the pages
-    const pages: HTMLCollection = document.getElementById('content').children
-    // Loop through the pages and hide them
-    for (let i = 0; i < pages.length; i += 1) {
-      (pages[i] as HTMLElement).style.display = 'none'
-    }
-  } catch (err) {
-    console.error('Error while hiding pages:', err)
   }
 }
 
