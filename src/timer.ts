@@ -51,7 +51,7 @@ class Timer {
       console.log('Currently elapsed time:', this.milliseconds)
 
       // Compare current time to last save time
-      if (Date.now() - this.previousSaveTime > 5000) {
+      if (Date.now() - this.previousSaveTime > 10000) {
         this.previousSaveTime = Date.now()
         this.saves.setBossTime(bossId, this.milliseconds)
       }
