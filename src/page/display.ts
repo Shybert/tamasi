@@ -36,28 +36,4 @@ async function hidePages () {
   }
 }
 
-async function selectBoss (direction: 'previous' | 'next'): Promise<void> {
-  try {
-    console.log(`Selecting ${direction} boss`)
-
-    // Find the element with the active class
-    const liWithActiveClass: HTMLElement = document.getElementsByClassName('active')[0] as HTMLElement // eslint-disable-line no-undef
-    // Remove 'active' class
-    liWithActiveClass.classList.remove('active')
-
-    // Check which direction to move in the list
-    if (direction === 'previous') {
-      // Add 'active' class to the previous element
-      liWithActiveClass.previousElementSibling.classList.add('active')
-    } else if (direction === 'next') {
-      // Add 'active' class to the next element
-      liWithActiveClass.nextElementSibling.classList.add('active')
-    }
-
-    console.log(`Selected ${direction} boss`)
-  } catch (err) {
-    console.error(`Error while selecting ${direction} boss:`, err)
-  }
-}
-
-export {addLiInfo, hidePages, selectBoss}
+export {addLiInfo, hidePages}
