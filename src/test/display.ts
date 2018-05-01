@@ -76,4 +76,50 @@ describe('Display', async () => {
       document.getElementsByTagName('body')[0].innerHTML = ''
     })
   })
+
+  describe('formatTime()', () => {
+    it('Should return a correctly formatted string', async () => {
+      const actual: string = await display.formatTime(1000)
+      const expected: string = '00:00:01.000'
+      assert.equal(actual, expected, 'The returned string was not correctly formatted')
+    })
+    it('Should pad hours, minutes and seconds to two characters with leading zeros', async () => {
+      const twoZeros: string = await display.formatTime(0)
+      const oneZero: string = await display.formatTime(3661000)
+      const message: string = 'Hours, minutes or seconds were not correctly padded to three characters'
+
+      // Check if two zeros were added when there were no digits before
+      assert.equal(twoZeros, '00:00:00.000', message)
+      // Check if one zero was added there was one digit before
+      assert.equal(oneZero, '01:01:01.000', message)
+    })
+    it('Should pad miliseconds to three characters with leading zeros', async () => {
+      const threeZeros: string = await display.formatTime(0)
+      const twoZeros: string = await display.formatTime(1)
+      const oneZero: string = await display.formatTime(10)
+      const message: string = 'Milliseconds were not correctly padded to three characters'
+
+      // Check if three zeros were added when there were no digits before
+      assert.equal(threeZeros, '00:00:00.000', message)
+      // Check if two zeros were added when there was one digit before
+      assert.equal(twoZeros, '00:00:00.001', message)
+      // Check if one zero was added when there were two digits before
+      assert.equal(oneZero, '00:00:00.010', message)
+    })
+    it('Should keep incrementing hours when time grows very large', async () => {
+      const actual: string = await display.formatTime(8640000000000000)
+      const expected: string = '2400000000:00:00.000'
+
+      assert.equal(actual, expected, 'Hours did not get incremented correctly when time grew very large')
+    })
+    it('Should correctly format time', async () => {
+      const message: string = 'Time was not correctly formatted'
+
+      assert.equal(await display.formatTime(14123348), '03:55:23.348', message)
+      assert.equal(await display.formatTime(3599999), '00:59:59.999', message)
+      assert.equal(await display.formatTime(273600108), '76:00:00.108', message)
+      assert.equal(await display.formatTime(3782004), '01:03:02.004', message)
+      assert.equal(await display.formatTime(3596459987), '999:00:59.987', message)
+    })
+  })
 })
