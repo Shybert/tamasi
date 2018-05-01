@@ -44,7 +44,7 @@ async function formatTime (milliseconds: number): Promise<string> {
     const millisecondsDate: Date = new Date(milliseconds)
 
     // Convert date to relevant time, then pad it with leading zeroes
-    const hours: string = (millisecondsDate.getUTCHours()).toString().padStart(2, '0')
+    const hours: string = Math.floor(milliseconds / 3600000).toString().padStart(2, '0')
     const minutes: string = (millisecondsDate.getUTCMinutes()).toString().padStart(2, '0')
     const seconds: string = (millisecondsDate.getUTCSeconds()).toString().padStart(2, '0')
     const formattedMilliseconds: string = (millisecondsDate.getUTCMilliseconds()).toString().padStart(3, '0')
