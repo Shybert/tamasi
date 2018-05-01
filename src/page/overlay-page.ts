@@ -66,7 +66,7 @@ async function displaySaveInfo (): Promise<void> {
 
       // Append boss info
       ulBossInfo.appendChild(await display.addLiInfo(`Name: ${bossInfo.name}`, {theClass: 'name'}))
-      ulBossInfo.appendChild(await display.addLiInfo(`Time: ${bossInfo.time}`, {theClass: 'time'}))
+      ulBossInfo.appendChild(await display.addLiInfo(`Time: ${await display.formatTime(bossInfo.time)}`, {theClass: 'time'}))
       ulBossInfo.appendChild(await display.addLiInfo(`Deaths: ${bossInfo.deaths}`, {theClass: 'deaths'}))
 
       // Add boss ID as the ID of the parent li

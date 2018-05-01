@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 import * as saves from './storage/saves'
+import * as display from './page/display'
 
 class Timer {
   // Required properties
@@ -46,7 +47,7 @@ class Timer {
       to prevent the timer getting out of sync */
       this.milliseconds += Date.now() - this.previousIntervalTime
       // Display new time on the element
-      const formattedTime: string = await this.formatTime(this.milliseconds)
+      const formattedTime: string = await display.formatTime(this.milliseconds)
       timeElement.innerHTML = `Time: ${formattedTime}`
       console.log('Currently elapsed time:', this.milliseconds)
 
