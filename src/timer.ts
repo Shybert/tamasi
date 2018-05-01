@@ -92,28 +92,6 @@ class Timer {
       console.error('Error while resetting timer:', err)
     }
   }
-
-  private async formatTime (milliseconds: number): Promise<string> {
-    try {
-      console.log('Formatting time')
-
-      // Convert milliseconds to date format to get hours, minutes etc.
-      const millisecondsDate: Date = new Date(milliseconds)
-
-      // Convert date to relevant time, then pad it with leading zeroes
-      const hours: string = (millisecondsDate.getUTCHours()).toString().padStart(2, '0')
-      const minutes: string = (millisecondsDate.getUTCMinutes()).toString().padStart(2, '0')
-      const seconds: string = (millisecondsDate.getUTCSeconds()).toString().padStart(2, '0')
-      const formattedMilliseconds: string = (millisecondsDate.getUTCMilliseconds()).toString().padStart(3, '0')
-
-      // Append times together and add seperators
-      const formattedTime: string = `${hours}:${minutes}:${seconds}.${formattedMilliseconds}`
-
-      return formattedTime
-    } catch (err) {
-      console.error('Error while formatting time:', err)
-    }
-  }
 }
 
 export {Timer}
