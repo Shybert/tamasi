@@ -1,7 +1,7 @@
 import * as path from 'path'
 import * as url from 'url'
 import * as fs from 'fs-extra'
-import {app, BrowserWindow, ipcMain} from 'electron'
+import {app, BrowserWindow, ipcMain, globalShortcut} from 'electron'
 
 // Keeping a global reference of the windows
 let winMain: any
@@ -59,6 +59,12 @@ ipcMain.on('loadOverlay', async (): Promise<void> => {
     // Dereference window when closed
     winOverlay.on('closed', () => {
       winOverlay = null
+    })
+
+    // Detect when window is closed so keybindings can be cleared
+    winOverlay.on('close', () => {
+      console.log('Clearing keybindings')
+      globalShortcut.unregisterAll()
     })
   } catch (err) {
     console.error('Error while loading overlay:', err)
