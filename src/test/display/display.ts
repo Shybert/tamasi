@@ -1,61 +1,10 @@
 /* eslint-env mocha */
 /* eslint-disable no-undef */
-import * as display from '../display/display'
-import * as data from '../storage/data' // eslint-disable-line no-unused-vars
+import * as display from '../../display/display'
 import * as chai from 'chai'
 const assert = chai.assert
 
 describe('Display', async () => {
-  describe('displayGameList()', async () => {
-    const gameNames: Array<data.GameName> = [{id: '1', name: '1'}, {id: '2', name: '2'}, {id: '3', name: '3'}]
-    let element: HTMLElement
-    beforeEach(async () => {
-      // Create the ul element that the function appends to
-      const ul: HTMLElement = document.createElement('ul')
-      ul.id = 'gamesList'
-      document.getElementsByTagName('body')[0].appendChild(ul)
-      element = document.getElementById('gamesList')
-    })
-    afterEach(async () => {
-      // Clear the body for the next test
-      document.getElementsByTagName('body')[0].innerHTML = ''
-      // Clean up localStorage for the next test
-      localStorage.clear()
-    })
-
-    it('Should clear the current list of games', async () => {
-      // Append a div to the element to check if it gets cleared
-      const div: HTMLElement = document.createElement('div')
-      div.id = 'id'
-      element.appendChild(document.createElement('div'))
-
-      await display.displayGameList(gameNames)
-      assert.isNull(document.getElementById('id'), 'The added div was not cleared from the list element')
-    })
-    it('Should append an li for each game', async () => {
-      await display.displayGameList(gameNames)
-
-      assert.equal(element.children.length, 3, 'The ul did not have the correct amount of elements')
-      for (let i = 0; i < element.children.length; i += 1) {
-        assert.equal(element.children[i].tagName, 'LI', 'An appended element was not an li element')
-      }
-    })
-    it('Should set the ID of the game in localStorage when clicking the li elements', async () => {
-      await display.displayGameList(gameNames)
-
-      for (let i = 0; i < element.children.length; i += 1) {
-        // Simulate a click to fire the event listener
-        const liElement: HTMLElement = element.children[i] as HTMLElement
-        liElement.click()
-
-        const actual: string = localStorage.getItem('gameId')  
-        const expected: string = liElement.id
-
-        assert.equal(actual, expected, 'The ID of the game was not set in localStorage when the element was clicked')
-      }
-    })
-  })
-
   describe('addLiInfo()', async () => {
     let text: string
     let id: string
