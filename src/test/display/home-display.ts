@@ -4,7 +4,7 @@ import * as homeDisplay from '../../display/home-display'
 import * as data from '../../storage/data' // eslint-disable-line no-unused-vars
 const assert = chai.assert
 
-describe('Home-display', async () => {
+describe('home-display', async () => {
   describe('displayGameList()', async () => {
     const gameNames: Array<data.GameName> = [{id: '1', name: '1'}, {id: '2', name: '2'}, {id: '3', name: '3'}]
     let element: HTMLElement

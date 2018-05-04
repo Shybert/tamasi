@@ -4,7 +4,7 @@ import * as display from '../../display/display'
 import * as chai from 'chai'
 const assert = chai.assert
 
-describe('Display', async () => {
+describe('display', async () => {
   describe('addLiInfo()', async () => {
     let text: string
     let id: string

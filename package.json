@@ -7,7 +7,7 @@
     "start": "electron .",
     "tsc": "tsc",
     "standard": "standard */**/*.ts",
-    "test": "electron-mocha app/js/test/ --renderer"
+    "test": "electron-mocha app/js/test/ --renderer --recursive"
   },
   "author": "Shybert",
   "repository": {
