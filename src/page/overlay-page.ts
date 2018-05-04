@@ -1,7 +1,7 @@
 import {remote} from 'electron'
 import * as Saves from '../storage/saves' // eslint-disable-line no-unused-vars
 import {Timer} from '../timer'
-import * as display from './display'
+import * as display from '../display/display'
 
 // Fetch the save ID and game ID for saving
 const gameId: string = window.localStorage.getItem('gameId')

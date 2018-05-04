@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import * as Saves from '../storage/saves' // eslint-disable-line no-unused-vars
-import * as display from './display'
+import * as display from '../display/display'
 import * as page from './page'
 
 // Fetch game ID and initialize saves class

@@ -2,7 +2,7 @@
 import {ipcRenderer} from 'electron'
 import * as homePage from './home-page'
 import * as savesPage from './saves-page'
-import * as display from './display'
+import * as display from '../display/display'
 
 async function displayHomePage () {
   try {

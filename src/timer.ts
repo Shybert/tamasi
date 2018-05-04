@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import * as saves from './storage/saves'
-import * as display from './page/display'
+import * as display from './display/display'
 
 class Timer {
   // Required properties

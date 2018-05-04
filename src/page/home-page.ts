@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import * as display from './display'
+import * as display from '../display/display'
 import * as page from './page'
 import * as data from '../storage/data'
 
