@@ -19,7 +19,7 @@ interface Game {
 interface Games {
   [x: string]: Game
 }
-// Interfaces for file
+
 interface GameName {
   id: string,
   name: string

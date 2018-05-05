@@ -39,19 +39,7 @@ describe('home-display', async () => {
         assert.equal(element.children[i].tagName, 'LI', 'An appended element was not an li element')
       }
     })
-    it('Should set the ID of the game in localStorage when clicking the li elements', async () => {
-      await homeDisplay.displayGameList(gameNames)
-
-      for (let i = 0; i < element.children.length; i += 1) {
-        // Simulate a click to fire the event listener
-        const liElement: HTMLElement = element.children[i] as HTMLElement // eslint-disable-line no-undef
-        liElement.click()
-
-        const actual: string = window.localStorage.getItem('gameId')
-        const expected: string = liElement.id
-
-        assert.equal(actual, expected, 'The ID of the game was not set in localStorage when the element was clicked')
-      }
-    })
+    it('Should add an event listener to each li element')
+    it('Should set the ID of the game in localStorage when clicking the li elements')
   })
 })

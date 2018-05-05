@@ -1,8 +1,9 @@
 /* eslint-disable no-undef */
 import {ipcRenderer} from 'electron'
-import * as homePage from './home-page'
+import * as data from '../storage/data'
 import * as savesPage from './saves-page'
 import * as display from '../display/display'
+import * as homeDisplay from '../display/home-display'
 
 async function displayHomePage () {
   try {
@@ -11,7 +12,7 @@ async function displayHomePage () {
     display.hidePages()
 
     // (Re)load the list of games
-    homePage.displayGameList()
+    homeDisplay.displayGameList(await data.getGameNames())
     console.log('(Re)loaded games list')
 
     // Display home page
