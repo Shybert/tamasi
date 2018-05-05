@@ -1,11 +1,7 @@
 /* eslint-disable no-undef */
-import * as Saves from '../storage/saves' // eslint-disable-line no-unused-vars
+import * as saves from '../storage/saves' // eslint-disable-line no-unused-vars
 import * as display from '../display/display'
 import * as page from './page'
-
-// Fetch game ID and initialize saves class
-const gameId: string = localStorage.getItem('gameId')
-const saves = new Saves.Saves(gameId)
 
 // Displaying new save overlay
 async function displayNewSaveOverlay (): Promise<void> {
@@ -22,7 +18,8 @@ async function displayNewSaveOverlay (): Promise<void> {
 async function newSaveClicked (): Promise<void> {
   try {
     const newSaveName: string = (document.getElementById('newSaveName') as HTMLInputElement).value
-    await saves.createSave(newSaveName)
+    const gameId: string = window.localStorage.getItem('gameId')
+    await saves.createSave(gameId, newSaveName)
 
     // Re-display the save list
     displaySaveList()
@@ -38,6 +35,7 @@ async function newSaveClicked (): Promise<void> {
 async function displaySaveList (): Promise<void> {
   try {
     console.log('Displaying/Updating saves list')
+    const gameId: string = window.localStorage.getItem('gameId')
     const saveList: HTMLElement = document.getElementById('saveList')
 
     // Clear current list of saves
@@ -45,8 +43,7 @@ async function displaySaveList (): Promise<void> {
     console.log('Removed old save list elements')
 
     // Fetch saves
-    const savesObj: Saves.SavesList = await saves.getSaves()
-    console.log()
+    const savesObj: saves.Saves = await saves.getSaves(gameId)
 
     // Abort displaying if no saves have been created yet
     if (!savesObj) {

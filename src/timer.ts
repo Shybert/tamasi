@@ -1,18 +1,18 @@
 /* eslint-disable no-undef */
-import * as saves from './storage/saves'
+import {Save} from './storage/saves'
 import * as display from './display/display'
 
 class Timer {
   // Required properties
   private gameId: string
   private saveId: string
-  private saves: saves.Saves
+  private saves: Save
   constructor (theGameId: string, theSaveId: string) {
     this.gameId = theGameId
     this.saveId = theSaveId
 
     // Initialize saves class
-    this.saves = new saves.Saves(this.gameId, this.saveId)
+    this.saves = new Save(this.gameId, this.saveId)
   }
 
   private interval: any

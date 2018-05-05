@@ -10,7 +10,7 @@ console.log('Game ID / Save ID', gameId, saveId)
 // Initialize timer with the fetched game ID / save ID
 // Initalize saves class
 const timer = new Timer(gameId, saveId)
-const saves = new Saves.Saves(gameId, saveId)
+const saves = new Saves.Save(gameId, saveId)
 
 // Check if game ID or save ID is undefined
 if (!gameId || !saveId) {
@@ -51,7 +51,7 @@ displaySaveInfo()
 
 async function displaySaveInfo (): Promise<void> {
   try {
-    const saveInfo: Saves.Save = await saves.getSaveInfo()
+    const saveInfo: Saves.SaveInfo = await saves.getSaveInfo()
     console.log('Fetched save information', saveInfo)
 
     // Display the name of the save

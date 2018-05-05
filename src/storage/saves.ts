@@ -15,36 +15,28 @@ interface Bosses {
   [x: string]: BossInfo
 }
 
-interface Save {
+interface SaveInfo {
   name: string
   bosses: Bosses
 }
 
-interface SavesList {
-  [x: string]: Save
+interface Saves {
+  [x: string]: SaveInfo
 }
 
-class Saves {
+class Save {
   // Required properties
   private gameId: string
   private saveId: string
   private savePath: string
-  constructor (theGameId: string, theSaveId?: string) {
+  constructor (theGameId: string, theSaveId: string) {
     this.gameId = theGameId
     this.saveId = theSaveId
 
     this.savePath = `games.${this.gameId}.${this.saveId}`
   }
 
-  public async getSaves (): Promise<SavesList> {
-    try {
-      return savesJSON.get(`games.${this.gameId}`)
-    } catch (err) {
-      console.error('Error while fetching list of saves:', err)
-    }
-  }
-
-  public async getSaveInfo (): Promise<Save> {
+  public async getSaveInfo (): Promise<SaveInfo> {
     try {
       return savesJSON.get(this.savePath)
     } catch (err) {
@@ -81,54 +73,62 @@ class Saves {
       console.error('Error while setting boss deaths')
     }
   }
+}
 
-  public async createSave (name: string): Promise<void> {
-    try {
-      console.log('Creating a new save')
+// Functions outside the class as they are not about a specific save
+async function getSaves (gameId: string): Promise<Saves> {
+  try {
+    return savesJSON.get(`games.${gameId}`)
+  } catch (err) {
+    console.error('Error while fetching list of saves:', err)
+  }
+}
+async function createSave (gameId: string, name: string): Promise<void> {
+  try {
+    console.log('Creating a new save')
 
-      let saveName: string = name
-      const gameInfo: data.Game = await data.getGameInfo(this.gameId)
-      const savePath: string = `games.${this.gameId}`
-      // Generate an ID for the save
-      const generatedSaveId: string = crypto.randomBytes(16).toString('hex')
+    let saveName: string = name
+    const gameInfo: data.Game = await data.getGameInfo(gameId)
+    const savePath: string = `games.${gameId}`
+    // Generate an ID for the save
+    const generatedSaveId: string = crypto.randomBytes(16).toString('hex')
 
-      // Check if a name has been provided
-      if (!saveName) {
-        // No name provided for save, use default name
-        console.log('No name provided for save')
-        saveName = gameInfo.name
-      }
-
-      // Abort save creation if boss list is empty
-      if (!gameInfo.bosses) {
-        console.log('Boss list for game is empty, aborting save creation')
-        return
-      }
-
-      // Import boss list for the game
-      const bossList: Bosses = gameInfo.bosses as Bosses
-      console.log('Imported boss list for the game')
-      // Insert properties for each boss
-      Object.keys(bossList).forEach((bossId: string): void => {
-        bossList[bossId].time = 0
-        bossList[bossId].deaths = 0
-      })
-      console.log('Inserted properties to each boss')
-
-      // Insert the info
-      const saveInfo: Save = {
-        name: saveName,
-        bosses: bossList
-      }
-      // Write the created save to saves.json
-      savesJSON.set(`${savePath}.${generatedSaveId}`, saveInfo)
-      console.log('Inserted new save information')
-
-      console.log('Created new save')
-    } catch (err) {
-      console.error('Error while creating new save', err)
+    // Check if a name has been provided
+    if (!saveName) {
+      // No name provided for save, use default name
+      console.log('No name provided for save')
+      saveName = gameInfo.name
     }
+
+    // Abort save creation if boss list is empty
+    if (!gameInfo.bosses) {
+      console.log('Boss list for game is empty, aborting save creation')
+      return
+    }
+
+    // Import boss list for the game
+    const bossList: Bosses = gameInfo.bosses as Bosses
+    console.log('Imported boss list for the game')
+    // Insert properties for each boss
+    Object.keys(bossList).forEach((bossId: string): void => {
+      bossList[bossId].time = 0
+      bossList[bossId].deaths = 0
+    })
+    console.log('Inserted properties to each boss')
+
+    // Insert the info
+    const saveInfo: SaveInfo = {
+      name: saveName,
+      bosses: bossList
+    }
+    // Write the created save to saves.json
+    savesJSON.set(`${savePath}.${generatedSaveId}`, saveInfo)
+    console.log('Inserted new save information')
+
+    console.log('Created new save')
+  } catch (err) {
+    console.error('Error while creating new save', err)
   }
 }
 
-export {BossInfo, Bosses, Save, SavesList, Saves}
+export {BossInfo, Bosses, SaveInfo, Saves, Save, getSaves, createSave}
