@@ -6,18 +6,19 @@ interface listInfo {
   id: string
 }
 
-async function createList (listInfoArray: Array<listInfo>, clickEventFunction: Function): Promise<HTMLElement> {
-  const ul: HTMLElement = document.createElement('ul')
+async function displayList (ulId: string, listInfoArray: Array<listInfo>, clickEventFunction: Function): Promise<void> {
+  const listElement: HTMLElement = document.getElementById(ulId)
+
+  // Clear the element
+  listElement.innerHTML = ''
 
   listInfoArray.forEach(async (listInfoObject) => {
     const li: HTMLElement = await addLiInfo(listInfoObject.text, {id: listInfoObject.id})
 
     li.addEventListener('click', clickEventFunction())
 
-    ul.appendChild(li)
+    listElement.appendChild(li)
   })
-
-  return ul
 }
 
 export async function addLiInfo (text: string, classAndId?: {id?: string, theClass?: string}): Promise<HTMLElement> {
@@ -80,4 +81,4 @@ export async function formatTime (milliseconds: number): Promise<string> {
   }
 }
 
-export {listInfo, createList}
+export {listInfo, displayList}
