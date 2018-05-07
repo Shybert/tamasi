@@ -1,6 +1,25 @@
 /* eslint-disable no-undef */
 import * as data from '../storage/data' // eslint-disable-line no-unused-vars
 
+interface listInfo {
+  text: string,
+  id: string
+}
+
+async function createList (listInfoArray: Array<listInfo>, clickEventFunction: Function): Promise<HTMLElement> {
+  const ul: HTMLElement = document.createElement('ul')
+
+  listInfoArray.forEach(async (listInfoObject) => {
+    const li: HTMLElement = await addLiInfo(listInfoObject.text, {id: listInfoObject.id})
+
+    li.addEventListener('click', clickEventFunction())
+
+    ul.appendChild(li)
+  })
+
+  return ul
+}
+
 export async function addLiInfo (text: string, classAndId?: {id?: string, theClass?: string}): Promise<HTMLElement> {
   try {
     const li: HTMLElement = document.createElement('li')
@@ -60,3 +79,5 @@ export async function formatTime (milliseconds: number): Promise<string> {
     console.error('Error while formatting time:', err)
   }
 }
+
+export {listInfo, createList}

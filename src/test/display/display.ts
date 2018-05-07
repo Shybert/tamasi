@@ -5,6 +5,42 @@ import * as chai from 'chai'
 const assert = chai.assert
 
 describe('display', async () => {
+  describe('createList()', async () => {
+    const listInfoArray: Array<display.listInfo> = [{text: '1', id: '1'}, {text: '2', id: '2'}, {text: '3', id: '3'}]
+
+    it('Should return a ul element', async () => {
+      const actual: string = (await display.createList(listInfoArray, () => {})).tagName
+      const expected: string = 'UL'
+
+      assert.equal(actual, expected, 'The returned element was not a ul element')
+    })
+    it('Should append an li for each array entry', async () => {
+      const actual: HTMLElement = await display.createList(listInfoArray, () => {})
+
+      // Check if the correct amount of elements were appended
+      assert.equal(actual.childElementCount, 3, 'The correct amount of li elements were not appended')
+      // Check if each element is an li
+      for (let i = 0; i < actual.childElementCount; i += 1) {
+        assert.equal(actual.children[i].tagName, 'LI', 'The appended element was not an li')
+      }
+    })
+    it('Should add the provided text to each li', async () => {
+      const actual: HTMLElement = await display.createList(listInfoArray, () => {})
+
+      for (let i = 0; i < actual.childElementCount; i += 1) {
+        assert.equal(actual.children[i].innerHTML, listInfoArray[i].text, 'The provided text was not correctly added to each li')
+      }
+    })
+    it('Should add the provided ID to each li', async () => {
+      const actual: HTMLElement = await display.createList(listInfoArray, () => {})
+
+      for (let i = 0; i < actual.childElementCount; i += 1) {
+        assert.equal(actual.children[i].id, listInfoArray[i].id, 'The provided ID was not correctly added to each li')
+      }
+    })
+    it("Should add the provided function as a 'click' event listener")
+  })
+
   describe('addLiInfo()', async () => {
     let text: string
     let id: string
