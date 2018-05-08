@@ -42,7 +42,7 @@ async function displaySaveList (): Promise<void> {
 
     // Insert the elements
     Object.entries(savesObj).forEach(async ([saveId, save]): Promise<void> => {
-      const li: HTMLElement = await display.addLiInfo(save.name, {id: saveId})
+      const li: HTMLElement = await display.createLiWithInfo(save.name, {id: saveId})
 
       // Listen for click for opening overlay
       li.addEventListener('click', (): void => {

@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import * as data from '../storage/data' // eslint-disable-line no-unused-vars
 
-export async function addLiInfo (text: string, classAndId?: {id?: string, theClass?: string}): Promise<HTMLElement> {
+export async function createLiWithInfo (text: string, classAndId?: {id?: string, theClass?: string}): Promise<HTMLElement> {
   try {
     const li: HTMLElement = document.createElement('li')
 

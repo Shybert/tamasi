@@ -5,7 +5,7 @@ import * as chai from 'chai'
 const assert = chai.assert
 
 describe('display', async () => {
-  describe('addLiInfo()', async () => {
+  describe('createLiWithInfo()', async () => {
     let text: string
     let id: string
     let exampleClass: string
@@ -17,35 +17,35 @@ describe('display', async () => {
 
     it('Should return an li element', async () => {
       // Get node name and convert it to lowercase since nodeName returns uppercase
-      const actual: string = (await display.addLiInfo('')).nodeName.toLowerCase()
+      const actual: string = (await display.createLiWithInfo('')).nodeName.toLowerCase()
       const expected: string = 'li'
 
       // Convert node name to lowercase since nodeName returns uppercase
       assert.equal(actual, expected, 'The returned element was not an li element')
     })
     it('Should append the provided text to the li', async () => {
-      const returnedLi: HTMLElement = await display.addLiInfo(text)
+      const returnedLi: HTMLElement = await display.createLiWithInfo(text)
 
       assert.equal(returnedLi.innerHTML, text, 'The text in innerHTML did not equal the text provided to the function')
     })
     it('Should not add a class or an ID if they are not provided', async () => {
-      const returnedLi: HTMLElement = await display.addLiInfo('')
+      const returnedLi: HTMLElement = await display.createLiWithInfo('')
 
       assert.isTrue(returnedLi.classList.length === 0, 'The returned li had a class when no class was provided')
       assert.isFalse(returnedLi.hasAttribute('id'), 'The returned li had an ID when no ID was provided')
     })
     it('Should add the provided class to the li', async () => {
-      const returnedLi: HTMLElement = await display.addLiInfo('', {theClass: exampleClass})
+      const returnedLi: HTMLElement = await display.createLiWithInfo('', {theClass: exampleClass})
 
       assert.isTrue(returnedLi.classList.contains(exampleClass), 'The returned li did not contain the provided class')
     })
     it('Should add the provided ID to the li', async () => {
-      const returnedLi: HTMLElement = await display.addLiInfo('', {id: id})
+      const returnedLi: HTMLElement = await display.createLiWithInfo('', {id: id})
 
       assert.equal(returnedLi.id, id, 'The returned li did not contain the provided ID')
     })
     it('Should add both an ID and a class if both are provided', async () => {
-      const returnedLi: HTMLElement = await display.addLiInfo('', {id: id, theClass: exampleClass})
+      const returnedLi: HTMLElement = await display.createLiWithInfo('', {id: id, theClass: exampleClass})
 
       assert.isTrue(returnedLi.classList.contains(exampleClass), 'The returned li did not have the provided class')
       assert.equal(returnedLi.id, id, 'The returned li did not have the provided ID')

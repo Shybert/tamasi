@@ -12,7 +12,7 @@ export async function displayGameList (gameNames: Array<data.GameName>): Promise
 
     // Create the elements
     for (let i = 0; i < gameNames.length; i += 1) {
-      const li: HTMLElement = await display.addLiInfo(gameNames[i].name, {id: gameNames[i].id})
+      const li: HTMLElement = await display.createLiWithInfo(gameNames[i].name, {id: gameNames[i].id})
 
       // Listening for clicks on the game names for opening the save window
       li.addEventListener('click', (): void => {
