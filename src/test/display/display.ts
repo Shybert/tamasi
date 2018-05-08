@@ -5,56 +5,6 @@ import * as chai from 'chai'
 const assert = chai.assert
 
 describe('display', async () => {
-  describe('createList()', async () => {
-    beforeEach(() => {
-      const ul: HTMLElement = document.createElement('ul')
-      ul.id = 'list'
-      document.body.appendChild(ul)
-    })
-    afterEach(() => {
-      document.body.innerHTML = ''
-    })
-    const listInfoArray: Array<display.listInfo> = [{text: '1', id: '1'}, {text: '2', id: '2'}, {text: '3', id: '3'}]
-
-    it('Should clear the current list', async () => {
-      // Append an element to see that it is cleared after running the function
-      const div: HTMLElement = document.createElement('div')
-      div.id = 'div'
-      document.body.appendChild(document.createElement('div'))
-      await display.displayList('list', listInfoArray, () => {})
-
-      assert.isNull(document.getElementById('div'), 'The ul element was not correctly cleared')
-    })
-    it('Should append an li for each array entry', async () => {
-      await display.displayList('list', listInfoArray, () => {})
-      const listElement: HTMLElement = document.getElementById('list')
-
-      // Check if the correct amount of elements were appended
-      assert.equal(listElement.childElementCount, 3, 'The correct amount of li elements were not appended')
-      // Check if each element is an li
-      for (let i = 0; i < listElement.childElementCount; i += 1) {
-        assert.equal(listElement.children[i].tagName, 'LI', 'The appended element was not an li')
-      }
-    })
-    it('Should add the provided text to each li', async () => {
-      await display.displayList('list', listInfoArray, () => {})
-      const listElement = document.getElementById('list')
-
-      for (let i = 0; i < listElement.childElementCount; i += 1) {
-        assert.equal(listElement.children[i].innerHTML, listInfoArray[i].text, 'The provided text was not correctly added to each li')
-      }
-    })
-    it('Should add the provided ID to each li', async () => {
-      await display.displayList('list', listInfoArray, () => {})
-      const listElement: HTMLElement = document.getElementById('list')
-
-      for (let i = 0; i < listElement.childElementCount; i += 1) {
-        assert.equal(listElement.children[i].id, listInfoArray[i].id, 'The provided ID was not correctly added to each li')
-      }
-    })
-    it("Should add the provided function as a 'click' event listener")
-  })
-
   describe('addLiInfo()', async () => {
     let text: string
     let id: string

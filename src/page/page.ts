@@ -11,9 +11,9 @@ async function displayHomePage () {
 
     display.hidePages()
 
-    // (Re)load the list of games
+    // (Re)display games list
     homeDisplay.displayGameList(await data.getGameNames())
-    console.log('(Re)loaded games list')
+    console.log('(Re)displayed games list')
 
     // Display home page
     document.getElementById('home').style.display = 'block'
