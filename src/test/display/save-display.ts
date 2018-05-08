@@ -9,10 +9,10 @@ describe('saveDisplay', async () => {
     beforeEach(async () => {
       const newSaveOverlay: HTMLElement = document.createElement('div')
       newSaveOverlay.id = 'newSaveOverlay'
-      document.getElementsByTagName('body')[0].appendChild(newSaveOverlay)
+      document.body.appendChild(newSaveOverlay)
     })
     afterEach(async () => {
-      document.getElementsByTagName('body')[0].innerHTML = ''
+      document.body.innerHTML = ''
     })
 
     it("Should set the display CSS value to 'block'", async () => {

@@ -57,7 +57,7 @@ describe('display', async () => {
       // Set up div with ID set to 'content'
       const div: HTMLElement = document.createElement('div')
       div.id = 'content'
-      document.getElementsByTagName('body')[0].appendChild(div)
+      document.body.appendChild(div)
     })
 
     it("Should set display to 'none' for all child nodes of the div with the ID 'content'", async () => {
@@ -77,7 +77,7 @@ describe('display', async () => {
     })
 
     after(() => {
-      document.getElementsByTagName('body')[0].innerHTML = ''
+      document.body.innerHTML = ''
     })
   })
 

@@ -12,12 +12,12 @@ describe('home-display', async () => {
       // Create the ul element that the function appends to
       const ul: HTMLElement = document.createElement('ul')
       ul.id = 'gamesList'
-      document.getElementsByTagName('body')[0].appendChild(ul)
+      document.body.appendChild(ul)
       element = document.getElementById('gamesList')
     })
     afterEach(async () => {
       // Clear the body for the next test
-      document.getElementsByTagName('body')[0].innerHTML = ''
+      document.body.innerHTML = ''
       // Clean up localStorage for the next test
       window.localStorage.clear()
     })
