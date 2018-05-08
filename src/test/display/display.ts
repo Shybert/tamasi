@@ -16,9 +16,8 @@ describe('display', async () => {
     })
 
     it('Should return an li element', async () => {
-      // Get node name and convert it to lowercase since nodeName returns uppercase
-      const actual: string = (await display.createLiWithInfo('')).nodeName.toLowerCase()
-      const expected: string = 'li'
+      const actual: string = (await display.createLiWithInfo('')).tagName
+      const expected: string = 'LI'
 
       // Convert node name to lowercase since nodeName returns uppercase
       assert.equal(actual, expected, 'The returned element was not an li element')
@@ -59,6 +58,9 @@ describe('display', async () => {
       div.id = 'content'
       document.body.appendChild(div)
     })
+    after(() => {
+      document.body.innerHTML = ''
+    })
 
     it("Should set display to 'none' for all child nodes of the div with the ID 'content'", async () => {
       // Set up child nodes on the div with ID 'content
@@ -74,10 +76,6 @@ describe('display', async () => {
         const expected: string = 'none'
         assert.equal(actual, expected, "Display value was not correctly set to 'none' for all three elements")
       }
-    })
-
-    after(() => {
-      document.body.innerHTML = ''
     })
   })
 
