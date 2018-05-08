@@ -3,17 +3,6 @@ import * as saves from '../storage/saves' // eslint-disable-line no-unused-vars
 import * as display from '../display/display'
 import * as page from './page'
 
-// Displaying new save overlay
-async function displayNewSaveOverlay (): Promise<void> {
-  try {
-    console.log("Showing the 'new save' overlay")
-    const newSaveOverlay: HTMLElement = document.getElementById('newSaveOverlay')
-    newSaveOverlay.style.display = 'block'
-  } catch (err) {
-    console.error("Error while displaying the 'new save' overlay", err)
-  }
-}
-
 // New save button clicked
 async function newSaveClicked (): Promise<void> {
   try {
@@ -71,4 +60,4 @@ async function displaySaveList (): Promise<void> {
   }
 }
 
-export {displaySaveList, displayNewSaveOverlay, newSaveClicked}
+export {displaySaveList, newSaveClicked}
