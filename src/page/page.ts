@@ -1,9 +1,10 @@
 /* eslint-disable no-undef */
 import {ipcRenderer} from 'electron'
 import * as data from '../storage/data'
-import * as savesPage from './saves-page'
 import * as display from '../display/display'
 import * as homeDisplay from '../display/home-display'
+import * as saveDisplay from '../display/save-display'
+import * as saves from '../storage/saves'
 
 async function displayHomePage () {
   try {
@@ -30,7 +31,10 @@ async function displaySavesPage () {
     display.hidePages()
 
     // Display saves page
-    savesPage.displaySaveList()
+    const gameId: string = window.localStorage.getItem('gameId')
+    const savesObj: saves.Saves = await saves.getSaves(gameId)
+    saveDisplay.displaySavesList(savesObj)
+
     document.getElementById('saves').style.display = 'block'
     console.log('Displayed saves page')
   } catch (err) {
