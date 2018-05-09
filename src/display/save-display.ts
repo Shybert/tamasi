@@ -1,6 +1,6 @@
 import * as saves from '../storage/saves' // eslint-disable-line no-unused-vars
 import * as display from './display'
-import * as page from '../page/page'
+import * as page from './page-display'
 
 async function displayNewSaveOverlay (): Promise<void> {
   try {

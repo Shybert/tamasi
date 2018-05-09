@@ -1,9 +1,9 @@
 /* eslint-disable no-undef */
 import {ipcRenderer} from 'electron'
 import * as data from '../storage/data'
-import * as display from '../display/display'
-import * as homeDisplay from '../display/home-display'
-import * as saveDisplay from '../display/save-display'
+import * as display from './display'
+import * as homeDisplay from './home-display'
+import * as saveDisplay from './save-display'
 import * as saves from '../storage/saves'
 
 async function displayHomePage () {
