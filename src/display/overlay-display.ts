@@ -1,7 +1,7 @@
 async function selectBoss (direction: 'previous' | 'next'): Promise<void> {
   console.log(`Selecting ${direction} boss`)
   const saveInfoElement: HTMLElement = document.getElementById('saveInfo')
-  const activeLi: HTMLElement = document.getElementsByClassName('active')[0] as HTMLElement // eslint-disable-line no-undef
+  const activeLi: HTMLElement = document.getElementsByClassName('active')[0] as HTMLElement
 
   // Remove the active class from the li
   activeLi.classList.remove('active')

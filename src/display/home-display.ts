@@ -1,6 +1,6 @@
 import * as display from './display'
 import * as page from './page-display'
-import * as data from '../storage/data' // eslint-disable-line no-unused-vars
+import * as data from '../storage/data'
 
 export async function displayGameList (gameNames: Array<data.GameName>): Promise<void> {
   try {

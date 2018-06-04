@@ -1,5 +1,4 @@
-/* eslint-disable no-undef */
-import * as data from '../storage/data' // eslint-disable-line no-unused-vars
+import * as data from '../storage/data'
 
 export async function createLiWithInfo (text: string, classAndId?: {id?: string, theClass?: string}): Promise<HTMLElement> {
   try {
@@ -32,7 +31,7 @@ export async function hidePages () {
 
     // Loop through the children and set their display value to 'none'
     for (let i = 0; i < divContent.children.length; i += 1) {
-      (divContent.children[i] as HTMLElement).style.display = 'none' // eslint-disable-line no-undef
+      (divContent.children[i] as HTMLElement).style.display = 'none'
     }
   } catch (err) {
     console.log('Error while hiding pages:', err)

@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import * as page from './display/page-display'
 import * as savesPage from './page/saves-page'
 import * as savesDisplay from './display/save-display'

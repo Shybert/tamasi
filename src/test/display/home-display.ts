@@ -1,7 +1,6 @@
-/* eslint-env mocha */
 import * as chai from 'chai'
 import * as homeDisplay from '../../display/home-display'
-import * as data from '../../storage/data' // eslint-disable-line no-unused-vars
+import * as data from '../../storage/data'
 const assert = chai.assert
 
 describe('home-display', async () => {

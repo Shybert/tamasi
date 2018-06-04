@@ -1,6 +1,5 @@
-/* eslint-disable no-undef */
 import * as crypto from 'crypto'
-import * as data from './data' // eslint-disable-line no-unused-vars
+import * as data from './data'
 const Store = require('electron-store')
 const savesJSON = new Store({name: 'saves', cwd: 'storage'})
 

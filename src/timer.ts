@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import {Save} from './storage/saves'
 import * as display from './display/display'
 

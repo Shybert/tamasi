@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import {ipcRenderer} from 'electron'
 import * as data from '../storage/data'
 import * as display from './display'

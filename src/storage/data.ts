@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const Store = require('electron-store')
 const dataJSON = new Store({name: 'data', cwd: 'storage'})
 

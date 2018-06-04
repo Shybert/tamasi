@@ -1,5 +1,3 @@
-/* eslint-env mocha */
-/* eslint-disable no-undef */
 import * as saveDisplay from '../../display/save-display'
 import * as chai from 'chai'
 const assert = chai.assert

@@ -1,5 +1,3 @@
-/* eslint-env mocha */
-/* eslint-disable no-undef */
 import * as overlayDisplay from '../../display/overlay-display'
 import * as chai from 'chai'
 const assert = chai.assert

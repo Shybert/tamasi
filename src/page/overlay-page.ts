@@ -1,5 +1,5 @@
 import {remote} from 'electron'
-import * as Saves from '../storage/saves' // eslint-disable-line no-unused-vars
+import * as Saves from '../storage/saves'
 import {Timer} from '../timer'
 import * as display from '../display/display'
 
@@ -28,7 +28,7 @@ remote.globalShortcut.register('PageDown', async (): Promise<void> => {
 remote.globalShortcut.register('Home', async (): Promise<void> => {
   console.log('Increase death counter button pressed')
   // Get the ID of the currently selected boss
-  const currentlySelectedBoss: HTMLElement = document.getElementsByClassName('active')[0] as HTMLElement // eslint-disable-line no-undef
+  const currentlySelectedBoss: HTMLElement = document.getElementsByClassName('active')[0] as HTMLElement
   const bossId: string = currentlySelectedBoss.id
   console.log('Currently selected boss:', bossId)
 
@@ -42,7 +42,7 @@ remote.globalShortcut.register('Home', async (): Promise<void> => {
 remote.globalShortcut.register('End', async (): Promise<void> => {
   console.log('Switch timer button pressed')
   // Get the correct timer element and boss ID
-  const timerElement: HTMLElement = document.getElementsByClassName('active')[0].getElementsByClassName('time')[0] as HTMLElement // eslint-disable-line no-undef
+  const timerElement: HTMLElement = document.getElementsByClassName('active')[0].getElementsByClassName('time')[0] as HTMLElement
   const bossId: string = document.getElementsByClassName('active')[0].id
   timer.switch(timerElement, bossId)
 })
@@ -92,7 +92,7 @@ async function selectBoss (direction: 'previous' | 'next'): Promise<void> {
     console.log(`Selecting ${direction} boss`)
 
     // Find the element with the active class
-    const liWithActiveClass: HTMLElement = document.getElementsByClassName('active')[0] as HTMLElement // eslint-disable-line no-undef
+    const liWithActiveClass: HTMLElement = document.getElementsByClassName('active')[0] as HTMLElement
     // Make sure timer has been stopped
     timer.stop(liWithActiveClass.id)
     // Remove 'active' class

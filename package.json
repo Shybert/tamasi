@@ -6,7 +6,6 @@
   "scripts": {
     "start": "electron .",
     "tsc": "tsc",
-    "standard": "standard */**/*.ts",
     "test": "electron-mocha app/js/test/ --renderer --recursive"
   },
   "author": "Shybert",
@@ -23,22 +22,12 @@
     "chai": "^4.1.2",
     "electron": "^2.0.2",
     "electron-mocha": "^6.0.2",
-    "eslint-plugin-typescript": "^0.12.0",
-    "standard": "^11.0.1",
-    "typescript": "^2.9.1",
-    "typescript-eslint-parser": "^16.0.0"
+    "tslint": "^5.10.0",
+    "tslint-config-standard": "^7.0.0",
+    "typescript": "^2.9.1"
   },
   "dependencies": {
     "electron-store": "^2.0.0",
     "fs-extra": "^6.0.1"
-  },
-  "standard": {
-    "parser": "typescript-eslint-parser",
-    "plugins": [
-      "typescript"
-    ],
-    "ignore": [
-      "app/"
-    ]
   }
 }
