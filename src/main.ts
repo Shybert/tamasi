@@ -78,9 +78,9 @@ ipcMain.on('loadOverlay', async (): Promise<void> => {
 // Copy the storage files to userdata
 async function copyStorage (): Promise<void> {
   try {
-    console.log('Copying storage/ to userData')
+    logger.log('Copying storage/ to userData')
     await fs.copy('app/storage', path.join(app.getPath('userData'), 'storage'), {overwrite: false})
-    console.log('Copied storage/ to userData')
+    logger.log('Copied storage/ to userData')
   } catch (err) {
     console.error(`Error while copying storage: ${err}`)
   }

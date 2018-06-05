@@ -5,6 +5,7 @@ import {app} from 'electron'
 
 export default class Logger {
   private bar: string = '='.repeat(80)
+  private logTimeFormat: string = 'yyyy-mm-dd HH:MM'
   private logsPath: string
   private stream: fs.WriteStream
   constructor () {
@@ -14,7 +15,12 @@ export default class Logger {
     fs.ensureFileSync(this.logsPath)
     this.stream = fs.createWriteStream(this.logsPath)
 
-    console.log(`${this.bar}\nProgram started at ${dateFormat(new Date(), 'yyyy-mm-dd HH:MM')}\n`)
-    this.stream.write(`${this.bar}\nProgram started at ${dateFormat(new Date(), 'yyyy-mm-dd HH:MM')}\n`)
+    console.log(`${this.bar}\nProgram started at ${dateFormat(new Date(), this.logTimeFormat)}\n`)
+    this.stream.write(`${this.bar}\nProgram started at ${dateFormat(new Date(), this.logTimeFormat)}\n\n`)
+  }
+
+  public async log (text: string) {
+    console.log(`[${dateFormat(new Date(), this.logTimeFormat)}] ${text}`)
+    this.stream.write(`[${dateFormat(new Date(), this.logTimeFormat)}] ${text}\n`)
   }
 }
