@@ -82,6 +82,6 @@ async function copyStorage (): Promise<void> {
     await fs.copy('app/storage', path.join(app.getPath('userData'), 'storage'), {overwrite: false})
     logger.log('Copied storage/ to userData')
   } catch (err) {
-    console.error(`Error while copying storage: ${err}`)
+    logger.error(`Error while copying storage: ${err}`)
   }
 }

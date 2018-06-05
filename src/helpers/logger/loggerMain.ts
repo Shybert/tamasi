@@ -23,4 +23,9 @@ export default class Logger {
     console.log(`[${dateFormat(new Date(), this.logTimeFormat)}] ${text}`)
     this.stream.write(`[${dateFormat(new Date(), this.logTimeFormat)}] ${text}\n`)
   }
+
+  public async error (text: string) {
+    console.error(`[${dateFormat(new Date(), this.logTimeFormat)} - ERROR] ${text}`)
+    this.stream.write(`[${dateFormat(new Date(), this.logTimeFormat)} - ERROR] ${text}\n`)
+  }
 }
