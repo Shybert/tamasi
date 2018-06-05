@@ -15,13 +15,17 @@ copyStorage()
 
 async function createWindow () {
   try {
-    winMain = new BrowserWindow()
+    winMain = new BrowserWindow({show: false})
 
     winMain.loadURL(url.format({
       pathname: path.join(__dirname, '../index.html'),
       protocol: 'file:',
       slashes: true
     }))
+
+    winMain.once('ready-to-show', () => {
+      winMain.show()
+    })
 
     // Dereference window when closed
     winMain.on('closed', () => {
@@ -51,13 +55,17 @@ app.on('activate', () => {
 // Listen for opening overlay
 ipcMain.on('loadOverlay', async (): Promise<void> => {
   try {
-    winOverlay = new BrowserWindow()
+    winOverlay = new BrowserWindow({show: false})
 
     winOverlay.loadURL(url.format({
       pathname: path.join(__dirname, '../overlay.html'),
       protocol: 'file:',
       slashes: true
     }))
+
+    winOverlay.once('ready-to-show', () => {
+      winOverlay.show()
+    })
 
     // Dereference window when closed
     winOverlay.on('closed', () => {
