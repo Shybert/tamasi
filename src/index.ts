@@ -1,8 +1,12 @@
 import * as page from './display/page-display'
 import * as savesPage from './page/saves-page'
 import * as savesDisplay from './display/save-display'
+import Logger from './helpers/logger/loggerRenderer'
+
+const logger = new Logger()
 
 // Event listeners
+logger.log('Setting up event listeners on index')
 // Detecting new save button presses
 const newSaveButton: HTMLElement = document.getElementById('newSaveButton')
 newSaveButton.addEventListener('click', savesDisplay.displayNewSaveOverlay)

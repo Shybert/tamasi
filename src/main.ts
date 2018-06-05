@@ -74,6 +74,14 @@ ipcMain.on('loadOverlay', async (): Promise<void> => {
   }
 })
 
+ipcMain.on('LOGGER', async (event: Event, text: string, level: string) => {
+  if (level === 'log') {
+    logger.log(text)
+  } else if (level === 'error') {
+    logger.error(text)
+  }
+})
+
 // Functions
 // Copy the storage files to userdata
 async function copyStorage (): Promise<void> {
