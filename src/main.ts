@@ -15,6 +15,7 @@ copyStorage()
 
 async function createWindow () {
   try {
+    logger.log('Creating main window', 'main')
     winMain = new BrowserWindow({show: false})
 
     winMain.loadURL(url.format({
@@ -24,15 +25,17 @@ async function createWindow () {
     }))
 
     winMain.once('ready-to-show', () => {
+      logger.log('Main window ready to show', 'main')
       winMain.show()
     })
 
     // Dereference window when closed
     winMain.on('closed', () => {
+      logger.log('Window closed, dereferencing window', 'main')
       winMain = null
     })
   } catch (err) {
-    console.error(`Error while creating main window: ${err}`)
+    logger.error(`Error while creating main window: ${err}`, 'main')
   }
 }
 
@@ -55,6 +58,7 @@ app.on('activate', () => {
 // Listen for opening overlay
 ipcMain.on('loadOverlay', async (): Promise<void> => {
   try {
+    logger.log('Creating overlay window', 'main')
     winOverlay = new BrowserWindow({show: false})
 
     winOverlay.loadURL(url.format({
@@ -64,21 +68,23 @@ ipcMain.on('loadOverlay', async (): Promise<void> => {
     }))
 
     winOverlay.once('ready-to-show', () => {
+      logger.log('Overlay window ready to show', 'main')
       winOverlay.show()
     })
 
     // Dereference window when closed
     winOverlay.on('closed', () => {
+      logger.log('Overlay window closed, dereferencing window', 'main')
       winOverlay = null
     })
 
     // Detect when window is closed so keybindings can be cleared
     winOverlay.on('close', () => {
-      console.log('Clearing keybindings')
+      logger.log('Overlay window closed, clearing keybindings', 'main')
       globalShortcut.unregisterAll()
     })
   } catch (err) {
-    console.error('Error while loading overlay:', err)
+    logger.error(`Error while loading overlay: ${err}'`, 'main')
   }
 })
 
