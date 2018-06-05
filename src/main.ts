@@ -2,6 +2,9 @@ import * as path from 'path'
 import * as url from 'url'
 import * as fs from 'fs-extra'
 import {app, BrowserWindow, ipcMain, globalShortcut} from 'electron'
+import Logger from './helpers/logger/loggerMain'
+
+const logger = new Logger()
 
 // Keeping a global reference of the windows
 let winMain: any
