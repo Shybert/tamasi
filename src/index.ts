@@ -3,7 +3,7 @@ import * as savesPage from './page/saves-page'
 import * as savesDisplay from './display/save-display'
 import Logger from './helpers/logger/loggerRenderer'
 
-const logger = new Logger()
+const logger = new Logger('index')
 
 // Event listeners
 logger.log('Setting up event listeners on index')

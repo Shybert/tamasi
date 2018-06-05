@@ -82,11 +82,11 @@ ipcMain.on('loadOverlay', async (): Promise<void> => {
   }
 })
 
-ipcMain.on('LOGGER', async (event: Event, text: string, level: string) => {
+ipcMain.on('LOGGER', async (event: Event, text: string, level: string, scope: string) => {
   if (level === 'log') {
-    logger.log(text)
+    logger.log(text, scope)
   } else if (level === 'error') {
-    logger.error(text)
+    logger.error(text, scope)
   }
 })
 
@@ -94,10 +94,10 @@ ipcMain.on('LOGGER', async (event: Event, text: string, level: string) => {
 // Copy the storage files to userdata
 async function copyStorage (): Promise<void> {
   try {
-    logger.log('Copying storage/ to userData')
+    logger.log('Copying storage/ to userData', 'main')
     await fs.copy('app/storage', path.join(app.getPath('userData'), 'storage'), {overwrite: false})
-    logger.log('Copied storage/ to userData')
+    logger.log('Copied storage/ to userData', 'main')
   } catch (err) {
-    logger.error(`Error while copying storage: ${err}`)
+    logger.error(`Error while copying storage: ${err}`, 'main')
   }
 }
