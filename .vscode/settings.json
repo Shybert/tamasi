@@ -4,10 +4,5 @@
         "**/*.js.map": true,
         "node_modules": true
     },
-    "javascript.validate.enable": false,
-    "standard.usePackageJson": true,
-    "standard.validate": [
-        "javascript",
-        "typescript"
-    ]
+    "javascript.validate.enable": false
 }
