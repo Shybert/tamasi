@@ -5,5 +5,8 @@ logs
 # Node
 node_modules/
 
-# Compiled js files
-js/
+# Webpack compilation
+dist/
+
+# VS Code
+.vscode/

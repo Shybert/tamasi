@@ -1,19 +1,12 @@
 {
+    "extends": "./node_modules/electron-webpack/tsconfig-base.json",
     "compilerOptions": {
+        "sourceMap": true,
         "target": "es2017",
-        "module": "commonjs",
-        "esModuleInterop": true,
-        "noImplicitAny": true,
+        "module": "esnext",
         "moduleResolution": "node",
-        "outDir": "app/js",
-        "rootDir": "src",
-        "sourceMap": true
-    },
-    "include": [
-        "src/**/*.ts"
-    ],
-    "exclude": [
-        "app",
-        "node_modules"
-    ]
+        "esModuleInterop": true,
+        "strict": true,
+        "noImplicitReturns": true
+    }
 }
