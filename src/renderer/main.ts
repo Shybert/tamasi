@@ -1,20 +1,13 @@
 // src/index.ts
 
 import Vue from 'vue'
-import HelloComponent from './components/Hello.vue'
+import App from './App.vue'
+import router from './router'
 
-const a = new Vue({
+// tslint:disable-next-line:no-unused-expression
+new Vue({
   el: '#app',
-  template: `
-  <div>
-    Name: <input v-model="name" type="text">
-    <hello-component :name="name" :initialEnthusiasm="5" />
-  </div>
-  `,
-  data: {name: 'World'},
-  components: {
-    HelloComponent
-  }
+  template: '<App></App>',
+  components: {App},
+  router
 })
-
-a.name = 'Quite Something'

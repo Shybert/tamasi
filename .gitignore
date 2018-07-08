@@ -10,3 +10,6 @@ dist/
 
 # VS Code
 .vscode/
+
+# .js files
+**/*.js*
