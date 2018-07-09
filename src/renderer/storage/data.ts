@@ -42,4 +42,10 @@ function getGameNames (): GameName[] {
   return gameNames
 }
 
-export {getGameNames}
+function getGameInfo (gameId: string): Game {
+  const gameInfo: Game = dataJSON.get(`games.${gameId}`)
+  console.log('Fetched game info', gameInfo)
+  return gameInfo
+}
+
+export {getGameNames, getGameInfo}
