@@ -25,10 +25,10 @@ interface GameName {
 }
 
 // Functions
-function getGameNames (): Array<GameName> {
+function getGameNames (): GameName[] {
   console.log('Fetching game names')
   const gameInfo: Games = dataJSON.get(`games`)
-  const gameNames: Array<GameName> = []
+  const gameNames: GameName[] = []
 
   console.log('Putting names and IDs into an array')
   Object.entries(gameInfo).forEach(([key, value]): void => {
@@ -42,10 +42,4 @@ function getGameNames (): Array<GameName> {
   return gameNames
 }
 
-function getGameInfo (gameId: string): Game {
-  const gameInfo: Game = dataJSON.get(`games.${gameId}`)
-  console.log('Fetched game info', gameInfo)
-  return gameInfo
-}
-
-export {BossInfo, Bosses, Game, Games, GameName, getGameNames, getGameInfo}
+export {getGameNames}
