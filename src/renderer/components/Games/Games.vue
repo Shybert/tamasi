@@ -6,15 +6,14 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import GameListComponent from './GameList.vue'
 import * as data from '../../storage/data'
 
-const games = data.getGameNames()
+import GameListComponent from './GameList.vue'
 
 export default Vue.extend({
   data () {
     return {
-      games
+      games: data.getGameNames()
     }
   },
   components: {GameListComponent}
