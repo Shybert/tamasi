@@ -17,7 +17,7 @@ import NewSaveOverlayComponent from './NewSaveOverlay.vue'
 export default Vue.extend({
   data () {
     return {
-      saveList: saves.getSaves(this.$route.params.id),
+      saveList: saves.getSaves(this.$route.params.gameId),
       showNewSaveOverlay: false
     }
   },
@@ -26,10 +26,10 @@ export default Vue.extend({
       this.$data.showNewSaveOverlay = true
     },
     createNewSave (saveName: string) {
-      saves.createSave(this.$route.params.id, saveName)
+      saves.createSave(this.$route.params.gameId, saveName)
 
       // Redisplay the save list now that a new save has been created
-      this.$data.saveList = saves.getSaves(this.$route.params.id)
+      this.$data.saveList = saves.getSaves(this.$route.params.gameId)
       this.$data.showNewSaveOverlay = false
     }
   },
