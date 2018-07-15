@@ -51,6 +51,11 @@ export default Vue.extend({
     const bossIds = Object.keys(this.saveInfo.bosses)
     if (!bossIds.includes(this.saveInfo.selected)) this.selectBoss(bossIds[0])
 
+    // Make sure to save newest changes to saveInfo before closing
+    window.addEventListener('beforeunload', () => {
+      this.save.setSaveInfo(this.saveInfo)
+    })
+
     remote.globalShortcut.register('PageUp', () => {
       this.selectBoss(previousArrayValue(bossIds, bossIds.indexOf(this.saveInfo.selected)))
     })
