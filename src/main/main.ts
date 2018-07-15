@@ -1,7 +1,7 @@
 import * as path from 'path'
 import * as url from 'url'
 import * as fs from 'fs-extra'
-import {app, BrowserWindow, ipcMain} from 'electron'
+import {app, BrowserWindow, ipcMain, globalShortcut} from 'electron'
 
 const isDevelopment: boolean = process.env.NODE_ENV !== 'production'
 
@@ -62,6 +62,10 @@ ipcMain.on('loadOverlayWindow', async (event: Event, gameId: string, saveId: str
 
   overlayWindow.once('ready-to-show', () => {
     overlayWindow!.show()
+  })
+
+  overlayWindow.on('close', () => {
+    globalShortcut.unregisterAll()
   })
 
   // Dereference window when closed

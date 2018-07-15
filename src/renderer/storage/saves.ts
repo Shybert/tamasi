@@ -14,9 +14,31 @@ interface Bosses {
 interface SaveInfo {
   name: string
   bosses: Bosses
+  selected: string
 }
 interface Saves {
   [x: string]: SaveInfo
+}
+
+class Save {
+  // Required properties
+  private gameId: string
+  private saveId: string
+  private savePath: string
+  constructor (theGameId: string, theSaveId: string) {
+    this.gameId = theGameId
+    this.saveId = theSaveId
+
+    this.savePath = `games.${this.gameId}.${this.saveId}`
+  }
+
+  public getSaveInfo (): SaveInfo {
+    return savesJSON.get(this.savePath)
+  }
+  public setSaveInfo (saveInfo: SaveInfo): void {
+    console.log('Setting saveInfo')
+    savesJSON.set(`${this.savePath}`, saveInfo)
+  }
 }
 
 function getSaves (gameId: string): Saves {
@@ -56,7 +78,8 @@ function createSave (gameId: string, name: string): void {
     // Insert the info
     const saveInfo: SaveInfo = {
       name: saveName,
-      bosses: bossList
+      bosses: bossList,
+      selected: Object.keys(bossList)[0]
     }
     // Write the created save to saves.json
     savesJSON.set(`${savePath}.${generatedSaveId}`, saveInfo)
@@ -68,4 +91,4 @@ function createSave (gameId: string, name: string): void {
   }
 }
 
-export {getSaves, createSave}
+export {getSaves, createSave, Save, SaveInfo}
