@@ -12,6 +12,7 @@
 import Vue from 'vue'
 import {remote} from 'electron'
 import {throttle} from 'lodash'
+import {Timer} from '../../timer'
 import {Save, SaveInfo} from '../../storage/saves'
 
 import BossInfoComponent from './BossInfo.vue'
@@ -31,7 +32,8 @@ export default Vue.extend({
   data () {
     return {
       save: new Save(this.$route.params.gameId, this.$route.params.saveId),
-      saveInfo: {} as SaveInfo
+      saveInfo: {} as SaveInfo,
+      timer: new Timer()
     }
   },
   watch: {
@@ -58,9 +60,15 @@ export default Vue.extend({
     remote.globalShortcut.register('End', () => {
       this.incrementDeaths(this.saveInfo.selected)
     })
+    remote.globalShortcut.register('Home', () => {
+      this.timer.switch(this.saveInfo, this.saveInfo.selected)
+    })
   },
   methods: {
     selectBoss (bossId: string): void {
+      // Stop the timer if it is running
+      this.timer.stop()
+
       this.saveInfo.selected = bossId
       console.log(this.saveInfo.selected)
     },
