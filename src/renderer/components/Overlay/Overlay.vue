@@ -55,11 +55,17 @@ export default Vue.extend({
     remote.globalShortcut.register('PageDown', () => {
       this.selectBoss(nextArrayValue(bossIds, bossIds.indexOf(this.saveInfo.selected)))
     })
+    remote.globalShortcut.register('End', () => {
+      this.incrementDeaths(this.saveInfo.selected)
+    })
   },
   methods: {
     selectBoss (bossId: string): void {
       this.saveInfo.selected = bossId
       console.log(this.saveInfo.selected)
+    },
+    incrementDeaths (bossId: string): void {
+      this.saveInfo.bosses[bossId].deaths += 1
     }
   },
   components: {BossInfoComponent}
