@@ -4,7 +4,87 @@
       "name": "Demon's Souls"
     },
     "ds1": {
-      "name": "Dark Souls 1"
+      "name": "Dark Souls 1",
+      "bosses": {
+        "asylumDemon": {
+          "name": "Asylum Demon"
+        },
+        "taurusDemon": {
+          "name": "Taurus Demon"
+        },
+        "bellGargoyles": {
+          "name": "Bell Gargoyles"
+        },
+        "moonlightButterfly": {
+          "name": "Moonlight Butterfly"
+        },
+        "strayDemon": {
+          "name": "Stray Demon"
+        },
+        "capraDemon": {
+          "name": "Capra Demon"
+        },
+        "gapingDragon": {
+          "name": "Gaping Dragon"
+        },
+        "quelaag": {
+          "name": "Chaos Witch Quelaag"
+        },
+        "ceaselessDischarge": {
+          "name": "Ceaseless Discharge"
+        },
+        "sif": {
+          "name": "Great Grey Wolf Sif"
+        },
+        "pinwheel": {
+          "name": "Pinwheel"
+        },
+        "ironGolem": {
+          "name": "Iron Golem"
+        },
+        "crossbreedPriscilla": {
+          "name": "Crossbreed Priscilla"
+        },
+        "gwyndolin": {
+          "name": "Dark Sun Gwyndolin"
+        },
+        "ornsteinSmough": {
+          "name": "Dragon Slayer Ornstein & Executioner Smough"
+        },
+        "seath": {
+          "name": "Seath the Scaleless"
+        },
+        "demonFiresage": {
+          "name": "Demon Firesage"
+        },
+        "centipedeDemon": {
+          "name": "Centipede Demon"
+        },
+        "bedOfChaos": {
+          "name": "Bed Of Chaos"
+        },
+        "fourKings": {
+          "name": "Four Kings"
+        },
+        "nito": {
+          "name": "Gravelord Nito"
+        },
+        "sanctuaryGuardian": {
+          "name": "Sanctuary Guardian"
+        },
+        "artorias": {
+          "name": "Knight Artorias"
+        },
+        "manus": {
+          "name": "Manus, Father of the Abyss"
+        },
+        "kalameet": {
+          "name": "Black Dragon Kalameet"
+        },
+        "gwyn": {
+          "name": "Gwyn, Lord of Cinder"
+        }
+      }
     },
     "ds2": {
       "name": "Dark Souls 2",
