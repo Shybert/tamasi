@@ -6,7 +6,12 @@ import {app, BrowserWindow, ipcMain, globalShortcut} from 'electron'
 const isDevelopment: boolean = process.env.NODE_ENV !== 'production'
 
 // Set correct userData path
-app.setPath('userData', path.join(app.getPath('appData'), 'dsdt'))
+if (isDevelopment) {
+  app.setPath('userData', path.join(app.getPath('appData'), 'dsdt-dev'))
+} else {
+  app.setPath('userData', path.join(app.getPath('appData'), 'dsdt'))
+}
+console.log(`userData path: ${app.getPath('userData')}`)
 
 // Keeping a global reference to windows to prevent garbage collection
 let mainWindow: BrowserWindow | null
@@ -94,7 +99,6 @@ app.on('activate', () => {
 async function copyStorage (): Promise<void> {
   try {
     await fs.copy(path.join(__static, 'storage'), path.join(app.getPath('userData'), 'storage'), {overwrite: false})
-    console.log(`userData: ${app.getPath('userData')}`)
   } catch (err) {
     console.error(`Error while copying storage: ${err}`)
   }
