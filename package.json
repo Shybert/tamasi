@@ -4,7 +4,8 @@
   "description": "A death counter and timer application & overlay built for Dark Souls.",
   "main": "dist/main/main.js",
   "scripts": {
-    "start": "electron-webpack dev"
+    "start": "electron-webpack dev",
+    "test": "jest"
   },
   "author": "Shybert",
   "repository": {
@@ -15,14 +16,19 @@
   "devDependencies": {
     "@types/electron-store": "^1.3.0",
     "@types/fs-extra": "^5.0.4",
+    "@types/jest": "^23.3.0",
     "@types/lodash": "^4.14.112",
+    "@vue/test-utils": "^1.0.0-beta.21",
     "electron": "^2.0.5",
     "electron-webpack": "^2.1.2",
     "electron-webpack-ts": "^2.0.2",
     "electron-webpack-vue": "^2.1.3",
+    "jest": "^23.4.1",
+    "ts-jest": "^23.0.1",
     "tslint": "^5.11.0",
     "tslint-config-standard": "^7.1.0",
     "typescript": "^2.9.2",
+    "vue-jest": "^2.6.0",
     "webpack": "^4.16.2"
   },
   "dependencies": {
@@ -31,5 +37,33 @@
     "lodash": "^4.17.10",
     "vue": "^2.5.16",
     "vue-router": "^3.0.1"
+  },
+  "jest": {
+    "globals": {
+      "vue-jest": {
+        "tsConfigFile": "tsconfig.json"
+      }
+    },
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node",
+      "vue"
+    ],
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "transform": {
+      ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest",
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "**/*.{ts,vue}",
+      "!**/*.d.ts",
+      "!**/node_modules/**"
+    ],
+    "coverageReporters": ["html", "text-summary"]
   }
 }
