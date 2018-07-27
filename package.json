@@ -64,6 +64,6 @@
       "!**/*.d.ts",
       "!**/node_modules/**"
     ],
-    "coverageReporters": ["html", "text-summary"]
+    "coverageReporters": ["text-summary"]
   }
 }
