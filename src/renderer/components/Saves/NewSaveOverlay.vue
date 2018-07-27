@@ -1,7 +1,7 @@
 <template>
   <div class="newSaveOverlay">
     <h2>New Save Overlay</h2>
-    <input v-model="newSaveName" placeholder="New Save Name">
+    <input id="newSaveName" v-model="newSaveName" placeholder="New Save Name">
     <button @click="createNewSave">Create New Save</button>
   </div>
 </template>
