@@ -28,7 +28,9 @@
     "tslint": "^5.11.0",
     "tslint-config-standard": "^7.1.0",
     "typescript": "^2.9.2",
+    "vue-class-component": "^6.2.0",
     "vue-jest": "^2.6.0",
+    "vue-property-decorator": "^7.0.0",
     "webpack": "^4.16.2"
   },
   "dependencies": {
