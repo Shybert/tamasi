@@ -2,50 +2,34 @@ const Store = require('electron-store')
 const dataJSON = new Store({name: 'data', cwd: 'storage'})
 
 // data.json interface
-interface BossInfo {
+interface IBossInfo {
   name: string
 }
 
-interface Bosses {
-  [x: string]: BossInfo
+interface IBosses {
+  [x: string]: IBossInfo
 }
 
-interface Game {
+interface IGame {
   name: string,
-  bosses: Bosses
+  bosses: IBosses
 }
 
-interface Games {
-  [x: string]: Game
-}
-
-interface GameName {
-  id: string,
-  name: string
+interface IGames {
+  [x: string]: IGame
 }
 
 // Functions
-function getGameNames (): GameName[] {
-  console.log('Fetching game names')
-  const gameInfo: Games = dataJSON.get(`games`)
-  const gameNames: GameName[] = []
-
-  console.log('Putting names and IDs into an array')
-  Object.entries(gameInfo).forEach(([key, value]): void => {
-    const gameName: GameName = {
-      id: key,
-      name: value.name
-    }
-    gameNames.push(gameName)
-  })
-
-  return gameNames
+function getGames (): IGames {
+  const games: IGames = dataJSON.get(`games`)
+  console.log('Fetched games', games)
+  return games
 }
 
-function getGameInfo (gameId: string): Game {
-  const gameInfo: Game = dataJSON.get(`games.${gameId}`)
+function getGameInfo (gameId: string): IGame {
+  const gameInfo: IGame = dataJSON.get(`games.${gameId}`)
   console.log('Fetched game info', gameInfo)
   return gameInfo
 }
 
-export {getGameNames, getGameInfo}
+export {getGames, getGameInfo, IGames}

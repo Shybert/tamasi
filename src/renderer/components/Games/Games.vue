@@ -6,17 +6,16 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import {Component} from 'vue-property-decorator'
 import * as data from '../../storage/data'
 
 import GameListComponent from './GameList.vue'
 
-export default Vue.extend({
-  data () {
-    return {
-      games: data.getGameNames()
-    }
-  },
-  components: {GameListComponent}
-})
+@Component({components: {GameListComponent}})
+export default class Games extends Vue {
+  get games () {
+    return data.getGames()
+  }
+}
 </script>
 
