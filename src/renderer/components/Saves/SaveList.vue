@@ -8,14 +8,16 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import {Component, Prop} from 'vue-property-decorator'
 import {ipcRenderer} from 'electron'
+import * as saves from '../../storage/saves'
 
-export default Vue.extend({
-  props: ['saveList'],
-  methods: {
-    loadOverlayWindow (saveId: string) {
-      ipcRenderer.send('loadOverlayWindow', this.$route.params.gameId, saveId)
-    }
+@Component
+export default class SaveList extends Vue {
+  @Prop() saveList!: saves.ISaves
+
+  loadOverlayWindow (saveId: string): void {
+    ipcRenderer.send('loadOverlayWindow', this.$route.params.gameId, saveId)
   }
-})
+}
 </script>
