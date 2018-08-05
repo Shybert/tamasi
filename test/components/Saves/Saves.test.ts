@@ -30,18 +30,6 @@ describe('Saves.vue', () => {
     expect(saves.getSaves).toBeCalledWith('testGameId')
   })
 
-  test("Calls createNewSave() method when 'createNewSave' is emitted on the NewSaveOverlay component", () => {
-    const wrapper = factory()
-    // Make sure the new save overlay is rendered
-    wrapper.setData({showNewSaveOverlay: true})
-    expect(wrapper.contains(NewSaveOverlay)).toBe(true)
-
-    wrapper.setMethods({createNewSave: jest.fn()})
-    wrapper.find(NewSaveOverlay).vm.$emit('createNewSave')
-
-    expect(wrapper.vm.createNewSave).toBeCalled()
-  })
-
   describe('New Save Overlay', () => {
     test('Not displayed by default', () => {
       const wrapper = factory()
@@ -57,10 +45,24 @@ describe('Saves.vue', () => {
 
     test("Clicking the 'Open New Save Overlay' button displays the NewSaveOverlay component", () => {
       const wrapper = factory()
+      expect(wrapper.contains(NewSaveOverlay)).toBe(false)
+
       const button = wrapper.find('button')
       button.trigger('click')
 
       expect(wrapper.contains(NewSaveOverlay)).toBe(true)
+    })
+
+    test("Calls createNewSave() method when 'createNewSave' is emitted", () => {
+      const wrapper = factory()
+      // Make sure the new save overlay is rendered
+      wrapper.setData({showNewSaveOverlay: true})
+      expect(wrapper.contains(NewSaveOverlay)).toBe(true)
+
+      wrapper.setMethods({createNewSave: jest.fn()})
+      wrapper.find(NewSaveOverlay).vm.$emit('createNewSave')
+
+      expect(wrapper.vm.createNewSave).toBeCalled()
     })
   })
 

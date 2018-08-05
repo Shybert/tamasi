@@ -18,8 +18,10 @@ import NewSaveOverlayComponent from './NewSaveOverlay.vue'
 @Component({components: {SaveListComponent, NewSaveOverlayComponent}})
 export default class Saves extends Vue {
   showNewSaveOverlay: boolean = false
-  get saveList () {
-    return saves.getSaves(this.$route.params.gameId)
+  data () {
+    return {
+      saveList: saves.getSaves(this.$route.params.gameId)
+    }
   }
 
   openNewSaveOverlay (): void {
