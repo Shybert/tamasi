@@ -13,7 +13,7 @@ import Vue from 'vue'
 import {remote} from 'electron'
 import {throttle} from 'lodash'
 import {Timer} from '../../timer'
-import {Save, SaveInfo} from '../../storage/saves'
+import {Save, ISaveInfo} from '../../storage/saves'
 
 import BossInfoComponent from './BossInfo.vue'
 
@@ -32,13 +32,13 @@ export default Vue.extend({
   data () {
     return {
       save: new Save(this.$route.params.gameId, this.$route.params.saveId),
-      saveInfo: {} as SaveInfo,
+      saveInfo: {} as ISaveInfo,
       timer: new Timer()
     }
   },
   watch: {
     saveInfo: {
-      handler: throttle(function (this: any, newInfo: SaveInfo) {
+      handler: throttle(function (this: any, newInfo: ISaveInfo) {
         this.save.setSaveInfo(newInfo)
       }, 5000),
       deep: true

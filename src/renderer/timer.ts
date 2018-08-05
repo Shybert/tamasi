@@ -1,11 +1,11 @@
-import {SaveInfo} from './storage/saves'
+import {ISaveInfo} from './storage/saves'
 
 class Timer {
   private interval: NodeJS.Timer | undefined
   private previousIntervalTime: number | undefined
   private milliseconds: number = 0
 
-  public async start (saveInfo: SaveInfo, bossId: string): Promise<void> {
+  public async start (saveInfo: ISaveInfo, bossId: string): Promise<void> {
     console.log('Starting timer')
 
     // Initialize previous interval time with current time to calculate time differences
@@ -31,7 +31,7 @@ class Timer {
     }
   }
 
-  public async switch (saveInfo?: SaveInfo, bossId?: string): Promise<void> {
+  public async switch (saveInfo?: ISaveInfo, bossId?: string): Promise<void> {
     try {
       if (this.interval) {
         this.stop()
@@ -45,7 +45,7 @@ class Timer {
     }
   }
 
-  private async timer (saveInfo: SaveInfo, bossId: string): Promise<void> {
+  private async timer (saveInfo: ISaveInfo, bossId: string): Promise<void> {
     try {
       /* Add the number of milliseconds since the last iteration using the system clock
       to prevent the timer getting out of sync */

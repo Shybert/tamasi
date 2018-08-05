@@ -3,21 +3,21 @@ import * as data from './data'
 const Store = require('electron-store')
 const savesJSON = new Store({name: 'saves', cwd: 'storage'})
 
-interface BossInfo {
+interface IBossInfo {
   name: string,
   time: number,
   deaths: number
 }
-interface Bosses {
-  [x: string]: BossInfo
+interface IBosses {
+  [x: string]: IBossInfo
 }
-interface SaveInfo {
+interface ISaveInfo {
   name: string
-  bosses: Bosses
+  bosses: IBosses
   selected: string
 }
-interface Saves {
-  [x: string]: SaveInfo
+interface ISaves {
+  [x: string]: ISaveInfo
 }
 
 class Save {
@@ -32,16 +32,16 @@ class Save {
     this.savePath = `games.${this.gameId}.${this.saveId}`
   }
 
-  public getSaveInfo (): SaveInfo {
+  public getSaveInfo (): ISaveInfo {
     return savesJSON.get(this.savePath)
   }
-  public setSaveInfo (saveInfo: SaveInfo): void {
+  public setSaveInfo (saveInfo: ISaveInfo): void {
     console.log('Setting saveInfo')
     savesJSON.set(`${this.savePath}`, saveInfo)
   }
 }
 
-function getSaves (gameId: string): Saves {
+function getSaves (gameId: string): ISaves {
   return savesJSON.get(`games.${gameId}`)
 }
 
@@ -66,7 +66,7 @@ function createSave (gameId: string, name: string): void {
       return
     }
 
-    const bossList: Bosses = gameInfo.bosses as Bosses
+    const bossList: IBosses = gameInfo.bosses as IBosses
     console.log('Imported boss list for the game')
     // Insert properties for each boss
     Object.keys(bossList).forEach((bossId: string): void => {
@@ -76,7 +76,7 @@ function createSave (gameId: string, name: string): void {
     console.log('Inserted properties to each boss')
 
     // Insert the info
-    const saveInfo: SaveInfo = {
+    const saveInfo: ISaveInfo = {
       name: saveName,
       bosses: bossList,
       selected: Object.keys(bossList)[0]
@@ -91,4 +91,4 @@ function createSave (gameId: string, name: string): void {
   }
 }
 
-export {getSaves, createSave, Save, SaveInfo}
+export {getSaves, createSave, Save, ISaveInfo}
