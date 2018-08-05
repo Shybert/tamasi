@@ -2,23 +2,21 @@
   <div class="newSaveOverlay">
     <h2>New Save Overlay</h2>
     <input id="newSaveName" v-model="newSaveName" placeholder="New Save Name">
-    <button @click="createNewSave">Create New Save</button>
+    <button @click="createSave" id="createSave">Create New Save</button>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-export default Vue.extend({
-  data () {
-    return {
-      newSaveName: ''
-    }
-  },
-  methods: {
-    createNewSave () {
-      this.$emit('createNewSave', this.$data.newSaveName)
-    }
+import {Component} from 'vue-property-decorator'
+
+@Component
+export default class NewSaveOverlay extends Vue {
+  newSaveName: string = ''
+
+  createSave (): void {
+    this.$emit('createNewSave', this.newSaveName)
   }
-})
+}
 </script>
 
