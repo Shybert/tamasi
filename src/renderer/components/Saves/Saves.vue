@@ -1,6 +1,6 @@
 <template>
   <div class="saves">
-    <NewSaveOverlayComponent v-if="showNewSaveOverlay" @createNewSave="createNewSave"></NewSaveOverlayComponent>
+    <NewSaveOverlayComponent v-if="showNewSaveOverlay" @createNewSave="createNewSave" @closeOverlay="showNewSaveOverlay = false"></NewSaveOverlayComponent>
     <button @click="openNewSaveOverlay">Open New Save Overlay</button>
 
     <SaveListComponent :saveList="saveList"></SaveListComponent>

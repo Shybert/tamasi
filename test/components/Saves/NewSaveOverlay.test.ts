@@ -24,4 +24,18 @@ describe('NewSaveOverlay.vue', () => {
     // Wrapped in two arrays because that's what vue-test-utils does apparently
     expect(wrapper.emitted('createNewSave')).toEqual([['Test Name']])
   })
+
+  test('Displays a button for closing the overlay', () => {
+    const wrapper = shallowMount(NewSaveOverlay)
+    expect(wrapper.find('#closeOverlay').exists()).toBe(true)
+  })
+
+  test('Clicking the close overlay button emits a message to close the overlay', () => {
+    const wrapper = shallowMount(NewSaveOverlay)
+
+    const closeOverlay = wrapper.find('#closeOverlay')
+    closeOverlay.trigger('click')
+
+    expect(wrapper.emitted('closeOverlay')).toBeTruthy()
+  })
 })

@@ -3,6 +3,7 @@
     <h2>New Save Overlay</h2>
     <input id="newSaveName" v-model="newSaveName" placeholder="New Save Name">
     <button @click="createSave" id="createSave">Create New Save</button>
+    <button @click="closeOverlay" id="closeOverlay">Close Overlay</button>
   </div>
 </template>
 
@@ -16,6 +17,10 @@ export default class NewSaveOverlay extends Vue {
 
   createSave (): void {
     this.$emit('createNewSave', this.newSaveName)
+  }
+
+  closeOverlay (): void {
+    this.$emit('closeOverlay')
   }
 }
 </script>

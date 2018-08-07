@@ -64,6 +64,16 @@ describe('Saves.vue', () => {
 
       expect(wrapper.vm.createNewSave).toBeCalled()
     })
+
+    test('Hides the overlay when the overlay emits a message to do so', () => {
+      const wrapper = factory()
+      // Make sure the new save overlay is rendered
+      wrapper.setData({showNewSaveOverlay: true})
+      expect(wrapper.contains(NewSaveOverlay)).toBe(true)
+
+      wrapper.find(NewSaveOverlay).vm.$emit('closeOverlay')
+      expect(wrapper.find(NewSaveOverlay).exists()).toBe(false)
+    })
   })
 
   describe('createNewSave()', () => {
