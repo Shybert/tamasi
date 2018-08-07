@@ -91,4 +91,4 @@ function createSave (gameId: string, name: string): void {
   }
 }
 
-export {getSaves, createSave, Save, ISaveInfo, ISaves}
+export {getSaves, createSave, Save, ISaveInfo, ISaves, IBossInfo}

@@ -8,23 +8,26 @@
 
 <script lang="ts">
 import Vue from 'vue'
-export default Vue.extend({
-  props: ['bossInfo'],
-  computed: {
-    formattedTime () {
-      const date: Date = new Date(this.bossInfo.time)
+import {Component, Prop} from 'vue-property-decorator'
+import * as saves from '../../storage/saves'
 
-      // Convert date to relevant time, then pad it with leading zeroes
-      const hours: string = Math.floor(this.bossInfo.time / 3600000).toString().padStart(2, '0')
-      const minutes: string = (date.getUTCMinutes()).toString().padStart(2, '0')
-      const seconds: string = (date.getUTCSeconds()).toString().padStart(2, '0')
-      const milliseconds: string = (date.getUTCMilliseconds()).toString().padStart(3, '0')
+@Component
+export default class BossInfo extends Vue {
+  @Prop() bossInfo!: saves.IBossInfo
 
-      const formattedTime: string = `${hours}:${minutes}:${seconds}.${milliseconds}`
+  get formattedTime () {
+    const date: Date = new Date(this.bossInfo.time)
 
-      return formattedTime
-    }
+    // Convert date to relevant time, then pad it with leading zeroes
+    const hours: string = Math.floor(this.bossInfo.time / 3600000).toString().padStart(2, '0')
+    const minutes: string = (date.getUTCMinutes()).toString().padStart(2, '0')
+    const seconds: string = (date.getUTCSeconds()).toString().padStart(2, '0')
+    const milliseconds: string = (date.getUTCMilliseconds()).toString().padStart(3, '0')
+
+    const formattedTime: string = `${hours}:${minutes}:${seconds}.${milliseconds}`
+
+    return formattedTime
   }
-})
+}
 </script>
 
