@@ -49,7 +49,11 @@ async function createMainWindow () {
 }
 
 ipcMain.on('loadOverlayWindow', async (event: Event, gameId: string, saveId: string) => {
-  overlayWindow = new BrowserWindow({show: false, alwaysOnTop: true, frame: false})
+  let windowOptions: Object
+  if (isDevelopment) windowOptions = {show: false}
+  else windowOptions = {show: false, alwaysOnTop: true, frame: false}
+
+  overlayWindow = new BrowserWindow(windowOptions)
 
   if (isDevelopment) {
     overlayWindow.webContents.openDevTools()
