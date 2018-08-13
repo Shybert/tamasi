@@ -1,5 +1,9 @@
-const Store = require('electron-store')
-const dataJSON = new Store({name: 'data', cwd: 'storage'})
+import * as fs from 'fs'
+import * as path from 'path'
+
+declare const __static: string
+const dataPath = path.join(__static, 'storage', 'data.json')
+const data: {games: IGames} = JSON.parse(fs.readFileSync(dataPath, 'UTF8'))
 
 // data.json interface
 interface IBossInfo {
@@ -21,15 +25,11 @@ interface IGames {
 
 // Functions
 function getGames (): IGames {
-  const games: IGames = dataJSON.get(`games`)
-  console.log('Fetched games', games)
-  return games
+  return data.games
 }
 
 function getGameInfo (gameId: string): IGame {
-  const gameInfo: IGame = dataJSON.get(`games.${gameId}`)
-  console.log('Fetched game info', gameInfo)
-  return gameInfo
+  return data.games[gameId]
 }
 
 export {getGames, getGameInfo, IGames}
