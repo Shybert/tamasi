@@ -13,7 +13,7 @@ import * as data from '../../storage/data'
 
 @Component
 export default class GameList extends Vue {
-  @Prop() games!: data.IGames
+  @Prop(Object) games!: data.IGames
 }
 </script>
 

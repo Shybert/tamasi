@@ -14,7 +14,7 @@ import * as saves from '../../storage/saves'
 
 @Component
 export default class SaveList extends Vue {
-  @Prop() saveList!: saves.ISaves
+  @Prop(Object) saveList!: saves.ISaves
 
   loadOverlayWindow (saveId: string): void {
     ipcRenderer.send('loadOverlayWindow', this.$route.params.gameId, saveId)

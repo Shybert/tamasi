@@ -13,7 +13,7 @@ import * as saves from '../../storage/saves'
 
 @Component
 export default class BossInfo extends Vue {
-  @Prop() bossInfo!: saves.IBossInfo
+  @Prop(Object) bossInfo!: saves.IBossInfo
 
   get formattedTime () {
     const date: Date = new Date(this.bossInfo.time)
