@@ -1,6 +1,6 @@
 import * as crypto from 'crypto'
 import * as data from './data'
-const Store = require('electron-store')
+import Store from 'electron-store'
 const savesJSON = new Store({name: 'saves', cwd: 'storage'})
 
 interface IBossInfo {
