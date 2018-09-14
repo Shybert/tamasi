@@ -10,14 +10,14 @@ const games = {
 function factory () {
   return shallowMount(GameList, {
     stubs: ['router-link'],
-    propsData: {
-      games
+    mocks: {
+      $store: {state: {gameData: {games}}}
     }
   })
 }
 
-describe('SaveList.vue', () => {
-  test('Displays the name of each save', () => {
+describe('GameList.vue', () => {
+  test('Displays the name of each game', () => {
     const wrapper = factory()
     const routerLinks = wrapper.findAll('router-link-stub')
 

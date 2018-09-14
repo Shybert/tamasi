@@ -8,12 +8,13 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import {Component, Prop} from 'vue-property-decorator'
-import * as data from '../../storage/data'
+import {Component} from 'vue-property-decorator'
 
 @Component
 export default class GameList extends Vue {
-  @Prop(Object) games!: data.IGames
+  get games () {
+    return this.$store.state.gameData.games
+  }
 }
 </script>
 
