@@ -20,7 +20,7 @@ export default class NewSaveOverlay extends Vue {
   }
 
   closeOverlay (): void {
-    this.$emit('closeOverlay')
+    this.$store.commit('toggleNewSaveOverlay', {showNewSaveOverlay: false})
   }
 }
 </script>

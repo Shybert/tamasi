@@ -1,39 +1,24 @@
 <template>
   <div class="saves">
-    <NewSaveOverlayComponent v-if="showNewSaveOverlay" @createNewSave="createNewSave" @closeOverlay="showNewSaveOverlay = false"></NewSaveOverlayComponent>
-    <button @click="openNewSaveOverlay">Open New Save Overlay</button>
-
-    <SaveListComponent :saveList="saveList"></SaveListComponent>
+    <NewSaveOverlayComponent v-if="showNewSaveOverlay"></NewSaveOverlayComponent>
+    <button @click="openNewSaveOverlay" id="openNewSaveOverlay">Open New Save Overlay</button>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import {Component} from 'vue-property-decorator'
-import * as saves from '../../storage/saves'
 
-import SaveListComponent from './SaveList.vue'
 import NewSaveOverlayComponent from './NewSaveOverlay.vue'
 
-@Component({components: {SaveListComponent, NewSaveOverlayComponent}})
+@Component({components: {NewSaveOverlayComponent}})
 export default class Saves extends Vue {
-  showNewSaveOverlay: boolean = false
-  data () {
-    return {
-      saveList: saves.getSaves(this.$route.params.gameId)
-    }
+  get showNewSaveOverlay (): boolean {
+    return this.$store.state.saves.showNewSaveOverlay
   }
 
   openNewSaveOverlay (): void {
-    this.$data.showNewSaveOverlay = true
-  }
-
-  createNewSave (saveName: string): void {
-    saves.createSave(this.$route.params.gameId, saveName)
-
-    // Redisplay the save list now that a new save has been created
-    this.$data.saveList = saves.getSaves(this.$route.params.gameId)
-    this.$data.showNewSaveOverlay = false
+    this.$store.commit('toggleNewSaveOverlay', {showNewSaveOverlay: true})
   }
 }
 </script>
