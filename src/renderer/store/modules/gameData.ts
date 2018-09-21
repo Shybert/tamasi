@@ -2,15 +2,18 @@ import * as fs from 'fs'
 import * as path from 'path'
 
 // gameData.json interface
+interface IBossInfo {
+  name: string
+}
+interface IBosses {
+  [x: string]: IBossInfo
+}
+interface IGame {
+  name: string,
+  bosses: IBosses
+}
 interface IGames {
-  [x: string]: {
-    name: string
-    bosses: {
-      [x: string]: {
-        name: string
-      }
-    }
-  }
+  [x: string]: IGame
 }
 
 declare const __static: string
