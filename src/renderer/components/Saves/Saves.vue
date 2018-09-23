@@ -14,7 +14,7 @@ import NewSaveOverlayComponent from './NewSaveOverlay.vue'
 @Component({components: {NewSaveOverlayComponent}})
 export default class Saves extends Vue {
   get showNewSaveOverlay (): boolean {
-    return this.$store.state.saves.showNewSaveOverlay
+    return this.$store.state.savesData.showNewSaveOverlay
   }
 
   openNewSaveOverlay (): void {
