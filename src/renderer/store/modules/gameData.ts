@@ -2,15 +2,15 @@ import * as fs from 'fs'
 import * as path from 'path'
 
 // gameData.json interface
-interface IBossInfo {
+interface IGameBossInfo {
   name: string
 }
-interface IBosses {
-  [x: string]: IBossInfo
+interface IGameBosses {
+  [x: string]: IGameBossInfo
 }
-interface IGame {
+export interface IGame {
   name: string,
-  bosses: IBosses
+  bosses: IGameBosses
 }
 interface IGames {
   [x: string]: IGame
