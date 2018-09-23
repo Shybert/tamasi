@@ -5,7 +5,7 @@ import Store from 'electron-store'
 const savesData = new Store({name: 'saves', cwd: 'storage'})
 
 // Saves interface
-interface ISaveBossInfo {
+export interface ISaveBossInfo {
   name: string,
   time: number,
   deaths: number
@@ -13,7 +13,7 @@ interface ISaveBossInfo {
 interface ISaveBosses {
   [x: string]: ISaveBossInfo
 }
-interface ISave {
+export interface ISave {
   name: string
   bosses: ISaveBosses
   selected: string

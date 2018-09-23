@@ -1,8 +1,8 @@
 <template>
   <div id="overlay">
     <ul>
-      <li v-for="(boss, bossId) in saveInfo.bosses" :key="bossId" :id="bossId" :class="{selected: (bossId === saveInfo.selected)}" @click="selectBoss(bossId)">
-        <BossInfoComponent :bossInfo="boss"></BossInfoComponent>
+      <li v-for="(boss, bossId) in save.bosses" :key="bossId" :id="bossId" :class="{selected: (bossId === save.selected)}" @click="selectBoss(bossId)">
+        <BossInfoComponent :bossId="bossId"></BossInfoComponent>
       </li>
     </ul>
   </div>
@@ -10,10 +10,10 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import {remote} from 'electron'
-import {throttle} from 'lodash'
-import {Timer} from '../../timer'
-import {Save, ISaveInfo} from '../../storage/saves'
+import {Component} from 'vue-property-decorator'
+// import {remote} from 'electron'
+// import {Timer} from '../../timer'
+import {ISave} from '../../store/modules/savesData'
 
 import BossInfoComponent from './BossInfo.vue'
 
@@ -28,61 +28,45 @@ function nextArrayValue (array: any[], index: number): any {
   return array[index]
 }
 
-export default Vue.extend({
-  data () {
-    return {
-      save: new Save(this.$route.params.gameId, this.$route.params.saveId),
-      saveInfo: {} as ISaveInfo,
-      timer: new Timer()
-    }
-  },
-  watch: {
-    saveInfo: {
-      handler: throttle(function (this: any, newInfo: ISaveInfo) {
-        this.save.setSaveInfo(newInfo)
-      }, 5000),
-      deep: true
-    }
-  },
-  created () {
-    this.saveInfo = this.save.getSaveInfo()
+@Component({components: {BossInfoComponent}})
+export default class Overlay extends Vue {
+  get save (): ISave {
+    return this.$store.state.savesData.saves[this.$route.params.gameId][this.$route.params.saveId]
+  }
 
-    // Check if selected boss is valid
-    const bossIds = Object.keys(this.saveInfo.bosses)
-    if (!bossIds.includes(this.saveInfo.selected)) this.selectBoss(bossIds[0])
+  // created () {
+  //   // Move out of Overlay.vue?
+  //   // Check if selected boss is valid
+  //   if (!bossIds.includes(this.save.selected)) this.selectBoss(bossIds[0])
 
-    // Make sure to save newest changes to saveInfo before closing
-    window.addEventListener('beforeunload', () => {
-      this.save.setSaveInfo(this.saveInfo)
-    })
+  //   const bossIds = Object.keys(this.save.bosses)
 
-    remote.globalShortcut.register('PageUp', () => {
-      this.selectBoss(previousArrayValue(bossIds, bossIds.indexOf(this.saveInfo.selected)))
-    })
-    remote.globalShortcut.register('PageDown', () => {
-      this.selectBoss(nextArrayValue(bossIds, bossIds.indexOf(this.saveInfo.selected)))
-    })
-    remote.globalShortcut.register('End', () => {
-      this.incrementDeaths(this.saveInfo.selected)
-    })
-    remote.globalShortcut.register('Home', () => {
-      this.timer.switch(this.saveInfo, this.saveInfo.selected)
-    })
-  },
-  methods: {
-    selectBoss (bossId: string): void {
-      // Stop the timer if it is running
-      this.timer.stop()
+  //   remote.globalShortcut.register('PageUp', () => {
+  //     this.selectBoss(previousArrayValue(bossIds, bossIds.indexOf(this.save.selected)))
+  //   })
+  //   remote.globalShortcut.register('PageDown', () => {
+  //     this.selectBoss(nextArrayValue(bossIds, bossIds.indexOf(this.save.selected)))
+  //   })
+  //   remote.globalShortcut.register('End', () => {
+  //     this.incrementDeaths(this.save.selected)
+  //   })
+  //   remote.globalShortcut.register('Home', () => {
+  //     this.timer.switch(this.save, this.save.selected)
+  //   })
+  // }
 
-      this.saveInfo.selected = bossId
-      console.log(this.saveInfo.selected)
-    },
-    incrementDeaths (bossId: string): void {
-      this.saveInfo.bosses[bossId].deaths += 1
-    }
-  },
-  components: {BossInfoComponent}
-})
+  // selectBoss (bossId: string): void {
+  //   // // Stop the timer if it is running
+  //   // this.timer.stop()
+
+  //   this.save.selected = bossId
+  //   console.log(this.save.selected)
+  // }
+
+  // incrementDeaths (bossId: string): void {
+  //   this.save.bosses[bossId].deaths += 1
+  // }
+}
 </script>
 
 <style>
