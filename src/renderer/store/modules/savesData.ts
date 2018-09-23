@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import * as crypto from 'crypto'
 import {IGame} from './gameData'
 import Store from 'electron-store'
@@ -17,7 +18,7 @@ interface ISave {
   bosses: ISaveBosses
   selected: string
 }
-interface ISaves {
+export interface ISaves {
   [x: string]: { // Game ID
     [x: string]: ISave // Save ID
   }
@@ -38,7 +39,9 @@ const mutations = {
     state.showNewSaveOverlay = payload.showNewSaveOverlay
   },
   createSave (state: ISavesState, payload: {save: ISave, saveId: string, gameId: string}) {
-    state.saves[payload.gameId][payload.saveId] = payload.save
+    // Use Vue.set because otherwise Vue cannot detect property addition
+    Vue.set(state.saves[payload.gameId], payload.saveId, payload.save)
+
     savesData.set(`games.${payload.gameId}.${payload.saveId}`, payload.save)
   }
 }

@@ -2,6 +2,8 @@
   <div class="saves">
     <NewSaveOverlayComponent v-if="showNewSaveOverlay"></NewSaveOverlayComponent>
     <button @click="openNewSaveOverlay" id="openNewSaveOverlay">Open New Save Overlay</button>
+
+    <SaveListComponent></SaveListComponent>
   </div>
 </template>
 
@@ -10,8 +12,9 @@ import Vue from 'vue'
 import {Component} from 'vue-property-decorator'
 
 import NewSaveOverlayComponent from './NewSaveOverlay.vue'
+import SaveListComponent from './SaveList.vue'
 
-@Component({components: {NewSaveOverlayComponent}})
+@Component({components: {NewSaveOverlayComponent, SaveListComponent}})
 export default class Saves extends Vue {
   get showNewSaveOverlay (): boolean {
     return this.$store.state.savesData.showNewSaveOverlay
