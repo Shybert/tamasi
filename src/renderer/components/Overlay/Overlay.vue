@@ -49,9 +49,9 @@ export default class Overlay extends Vue {
     remote.globalShortcut.register('PageDown', () => {
       this.selectBoss(nextArrayValue(bossIds, bossIds.indexOf(this.save.selected)))
     })
-    // remote.globalShortcut.register('End', () => {
-    //   this.incrementDeaths(this.save.selected)
-    // })
+    remote.globalShortcut.register('End', () => {
+      this.incrementDeaths(this.save.selected)
+    })
     // remote.globalShortcut.register('Home', () => {
     //   this.timer.switch(this.save, this.save.selected)
     // })
@@ -67,9 +67,11 @@ export default class Overlay extends Vue {
     console.log(this.save.selected)
   }
 
-  // incrementDeaths (bossId: string): void {
-  //   this.save.bosses[bossId].deaths += 1
-  // }
+  incrementDeaths (bossId: string): void {
+    this.$store.commit('incrementDeaths', {gameId: this.$route.params.gameId,
+      saveId: this.$route.params.saveId,
+      bossId})
+  }
 }
 </script>
 
