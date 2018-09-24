@@ -2,7 +2,7 @@
   <div id="overlay">
     <ul>
       <li v-for="(boss, bossId) in save.bosses" :key="bossId" :id="bossId" :class="{selected: (bossId === save.selected)}" @click="selectBoss(bossId)">
-        <BossInfoComponent :bossId="bossId"></BossInfoComponent>
+        <BossInfoComponent :bossInfo="boss"></BossInfoComponent>
       </li>
     </ul>
   </div>

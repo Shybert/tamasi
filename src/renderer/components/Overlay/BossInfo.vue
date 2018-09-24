@@ -13,10 +13,7 @@ import {ISaveBossInfo} from '../../store/modules/savesData'
 
 @Component
 export default class BossInfo extends Vue {
-  @Prop(String) bossId!: string
-  get bossInfo (): ISaveBossInfo {
-    return this.$store.state.savesData.saves[this.$route.params.gameId][this.$route.params.saveId].bosses[this.bossId]
-  }
+  @Prop(Object) bossInfo!: ISaveBossInfo
 
   get formattedTime () {
     const date: Date = new Date(this.bossInfo.time)
