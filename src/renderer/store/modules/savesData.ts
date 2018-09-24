@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import * as crypto from 'crypto'
+import throttle from 'lodash/throttle'
 import {IGame} from './gameData'
 import Store from 'electron-store'
 const savesData = new Store({name: 'saves', cwd: 'storage'})
@@ -33,6 +34,10 @@ const state: ISavesState = {
   showNewSaveOverlay: false,
   saves: savesData.get('games')
 }
+function saveSave (): void {
+  savesData.set('games', state.saves)
+}
+const throttledSaveSave = throttle(saveSave, 5000)
 
 const mutations = {
   toggleNewSaveOverlay (state: ISavesState, payload: {showNewSaveOverlay: boolean}) {
@@ -42,7 +47,12 @@ const mutations = {
     // Use Vue.set because otherwise Vue cannot detect property addition
     Vue.set(state.saves[payload.gameId], payload.saveId, payload.save)
 
-    savesData.set(`games.${payload.gameId}.${payload.saveId}`, payload.save)
+    throttledSaveSave()
+  },
+
+  setSelectedBoss (state: ISavesState, payload: {gameId: string, saveId: string, selectedBossId: string}) {
+    state.saves[payload.gameId][payload.saveId].selected = payload.selectedBossId
+    throttledSaveSave()
   }
 }
 

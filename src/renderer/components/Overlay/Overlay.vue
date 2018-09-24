@@ -11,18 +11,18 @@
 <script lang="ts">
 import Vue from 'vue'
 import {Component} from 'vue-property-decorator'
-// import {remote} from 'electron'
+import {remote} from 'electron'
 // import {Timer} from '../../timer'
 import {ISave} from '../../store/modules/savesData'
 
 import BossInfoComponent from './BossInfo.vue'
 
-function previousArrayValue (array: any[], index: number): any {
+function previousArrayValue (array: string[], index: number): any {
   if (index === 0) index = array.length
   index -= 1
   return array[index]
 }
-function nextArrayValue (array: any[], index: number): any {
+function nextArrayValue (array: string[], index: number): any {
   index += 1
   index = index % array.length
   return array[index]
@@ -34,34 +34,38 @@ export default class Overlay extends Vue {
     return this.$store.state.savesData.saves[this.$route.params.gameId][this.$route.params.saveId]
   }
 
-  // created () {
-  //   // Move out of Overlay.vue?
-  //   // Check if selected boss is valid
-  //   if (!bossIds.includes(this.save.selected)) this.selectBoss(bossIds[0])
+  created () {
+    // // Move out of Overlay.vue?
+    // // Check if selected boss is valid
+    // if (!bossIds.includes(this.save.selected)) this.selectBoss(bossIds[0])
 
-  //   const bossIds = Object.keys(this.save.bosses)
+    const bossIds = Object.keys(this.save.bosses)
 
-  //   remote.globalShortcut.register('PageUp', () => {
-  //     this.selectBoss(previousArrayValue(bossIds, bossIds.indexOf(this.save.selected)))
-  //   })
-  //   remote.globalShortcut.register('PageDown', () => {
-  //     this.selectBoss(nextArrayValue(bossIds, bossIds.indexOf(this.save.selected)))
-  //   })
-  //   remote.globalShortcut.register('End', () => {
-  //     this.incrementDeaths(this.save.selected)
-  //   })
-  //   remote.globalShortcut.register('Home', () => {
-  //     this.timer.switch(this.save, this.save.selected)
-  //   })
-  // }
+    // Unregister hotkeys incase they haven't been unregistered from a window close
+    remote.globalShortcut.unregisterAll()
+    remote.globalShortcut.register('PageUp', () => {
+      this.selectBoss(previousArrayValue(bossIds, bossIds.indexOf(this.save.selected)))
+    })
+    remote.globalShortcut.register('PageDown', () => {
+      this.selectBoss(nextArrayValue(bossIds, bossIds.indexOf(this.save.selected)))
+    })
+    // remote.globalShortcut.register('End', () => {
+    //   this.incrementDeaths(this.save.selected)
+    // })
+    // remote.globalShortcut.register('Home', () => {
+    //   this.timer.switch(this.save, this.save.selected)
+    // })
+  }
 
-  // selectBoss (bossId: string): void {
-  //   // // Stop the timer if it is running
-  //   // this.timer.stop()
+  selectBoss (bossId: string): void {
+    // // Stop the timer if it is running
+    // this.timer.stop()
 
-  //   this.save.selected = bossId
-  //   console.log(this.save.selected)
-  // }
+    this.$store.commit('setSelectedBoss', {gameId: this.$route.params.gameId,
+      saveId: this.$route.params.saveId,
+      selectedBossId: bossId})
+    console.log(this.save.selected)
+  }
 
   // incrementDeaths (bossId: string): void {
   //   this.save.bosses[bossId].deaths += 1
