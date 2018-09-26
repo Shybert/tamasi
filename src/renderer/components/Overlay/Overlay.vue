@@ -37,13 +37,11 @@ export default class Overlay extends Vue {
   timer = new Timer()
 
   created () {
-    // // Move out of Overlay.vue?
-    // // Check if selected boss is valid
-    // if (!bossIds.includes(this.save.selected)) this.selectBoss(bossIds[0])
-
     this.timer.on('tick', this.setBossTime)
 
     const bossIds = Object.keys(this.save.bosses)
+    // Check if selected boss is valid
+    if (!bossIds.includes(this.save.selected)) this.selectBoss(bossIds[0])
 
     // Unregister hotkeys incase they haven't been unregistered from a window close
     remote.globalShortcut.unregisterAll()
@@ -57,10 +55,7 @@ export default class Overlay extends Vue {
       this.incrementDeaths(this.save.selected)
     })
     remote.globalShortcut.register('Home', () => {
-      const time = this.save.bosses[this.save.selected].time
-      console.log(time)
-
-      this.timer.switch(time)
+      this.timer.switch(this.save.bosses[this.save.selected].time)
     })
   }
 

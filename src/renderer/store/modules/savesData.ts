@@ -66,7 +66,7 @@ const mutations = {
 
 const actions = {
   createSave ({state, commit, rootState}: {state: ISavesState, commit: any, rootState: any},
-    payload: {saveName: string, gameId: string}) {
+    payload: {gameId: string, saveName: string}) {
     const gameData: IGame = rootState.gameData.games[payload.gameId]
     const save = generateSave(payload.saveName, gameData)
     const generatedSaveId: string = crypto.randomBytes(16).toString('hex')

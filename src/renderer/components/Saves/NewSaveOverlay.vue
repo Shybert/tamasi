@@ -16,7 +16,7 @@ export default class NewSaveOverlay extends Vue {
   newSaveName: string = ''
 
   createSave (): void {
-    this.$store.dispatch('createSave', {saveName: this.newSaveName, gameId: this.$route.params.gameId})
+    this.$store.dispatch('createSave', {gameId: this.$route.params.gameId, saveName: this.newSaveName})
   }
 
   closeOverlay (): void {
