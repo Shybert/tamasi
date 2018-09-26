@@ -12,7 +12,7 @@
 import Vue from 'vue'
 import {Component} from 'vue-property-decorator'
 import {remote} from 'electron'
-// import {Timer} from '../../timer'
+import Timer from '../../timer'
 import {ISave} from '../../store/modules/savesData'
 
 import BossInfoComponent from './BossInfo.vue'
@@ -34,10 +34,14 @@ export default class Overlay extends Vue {
     return this.$store.state.savesData.saves[this.$route.params.gameId][this.$route.params.saveId]
   }
 
+  timer = new Timer()
+
   created () {
     // // Move out of Overlay.vue?
     // // Check if selected boss is valid
     // if (!bossIds.includes(this.save.selected)) this.selectBoss(bossIds[0])
+
+    this.timer.on('tick', this.setBossTime)
 
     const bossIds = Object.keys(this.save.bosses)
 
@@ -52,14 +56,17 @@ export default class Overlay extends Vue {
     remote.globalShortcut.register('End', () => {
       this.incrementDeaths(this.save.selected)
     })
-    // remote.globalShortcut.register('Home', () => {
-    //   this.timer.switch(this.save, this.save.selected)
-    // })
+    remote.globalShortcut.register('Home', () => {
+      const time = this.save.bosses[this.save.selected].time
+      console.log(time)
+
+      this.timer.switch(time)
+    })
   }
 
   selectBoss (bossId: string): void {
-    // // Stop the timer if it is running
-    // this.timer.stop()
+    // Stop the timer if it is running
+    this.timer.stop()
 
     this.$store.commit('setSelectedBoss', {gameId: this.$route.params.gameId,
       saveId: this.$route.params.saveId,
@@ -71,6 +78,13 @@ export default class Overlay extends Vue {
     this.$store.commit('incrementDeaths', {gameId: this.$route.params.gameId,
       saveId: this.$route.params.saveId,
       bossId})
+  }
+
+  setBossTime (time: number): void {
+    this.$store.commit('setBossTime', {gameId: this.$route.params.gameId,
+    saveId: this.$route.params.saveId,
+    bossId: this.save.selected,
+    time})
   }
 }
 </script>

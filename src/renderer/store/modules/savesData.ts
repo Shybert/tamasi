@@ -57,6 +57,10 @@ const mutations = {
   incrementDeaths (state: ISavesState, payload: {gameId: string, saveId: string, bossId: string}) {
     state.saves[payload.gameId][payload.saveId].bosses[payload.bossId].deaths += 1
     throttledSaveSave()
+  },
+  setBossTime (state: ISavesState, payload: {gameId: string, saveId: string, bossId: string, time: number}) {
+    state.saves[payload.gameId][payload.saveId].bosses[payload.bossId].time = payload.time
+    throttledSaveSave()
   }
 }
 

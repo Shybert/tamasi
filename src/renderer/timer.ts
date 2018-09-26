@@ -1,77 +1,57 @@
-import {ISaveInfo} from './storage/saves'
+import {EventEmitter} from 'events'
 
-class Timer {
+export default class Timer extends EventEmitter {
   private interval: NodeJS.Timer | undefined
   private previousIntervalTime: number | undefined
-  private milliseconds: number = 0
+  private elapsedMilliseconds: number = 0
 
-  public async start (saveInfo: ISaveInfo, bossId: string): Promise<void> {
+  public start (startTime: number): void {
     console.log('Starting timer')
 
     // Initialize previous interval time with current time to calculate time differences
     this.previousIntervalTime = Date.now()
-    // Set milliseconds to current boss time
-    this.milliseconds = saveInfo.bosses[bossId].time
+    this.elapsedMilliseconds = startTime
 
-    this.interval = setInterval(() => this.timer(saveInfo, bossId), 50)
+    this.interval = setInterval(() => this.timer(), 50)
   }
 
-  public async stop (): Promise<void> {
-    try {
-      // Check if timer is running first
-      if (this.interval) {
-        console.log('Stopping timer')
-        clearInterval(this.interval)
-        this.reset()
-      } else {
-        console.log('Not stopping timer because it is not running')
-      }
-    } catch (err) {
-      console.error('Error while stopping timer:', err)
+  public stop (): void {
+    // Check if timer is running first
+    if (this.interval) {
+      console.log('Stopping timer')
+      clearInterval(this.interval)
+      this.reset()
+    } else {
+      console.log('Not stopping timer because it is not running')
     }
   }
 
-  public async switch (saveInfo?: ISaveInfo, bossId?: string): Promise<void> {
-    try {
-      if (this.interval) {
-        this.stop()
-      } else {
-        if (!saveInfo) throw new Error('Save info must be provided when starting the timer')
-        if (!bossId) throw new Error('Boss ID must be provided when starting the timer')
-        this.start(saveInfo, bossId)
-      }
-    } catch (err) {
-      console.error('Error while switching timer:', err)
+  public switch (startTime?: number): void {
+    if (this.interval) {
+      this.stop()
+    } else {
+      if (typeof startTime === 'undefined') throw new Error('Start time must be provided when starting the timer!')
+      this.start(startTime)
     }
   }
 
-  private async timer (saveInfo: ISaveInfo, bossId: string): Promise<void> {
-    try {
-      /* Add the number of milliseconds since the last iteration using the system clock
-      to prevent the timer getting out of sync */
-      this.milliseconds += Date.now() - this.previousIntervalTime!
+  private timer (): void {
+    /* Add the number of milliseconds since the last iteration using the system clock
+    to prevent the timer getting out of sync */
+    this.elapsedMilliseconds += Date.now() - this.previousIntervalTime!
+    console.log('Currently elapsed time:', this.elapsedMilliseconds)
 
-      saveInfo.bosses[bossId].time = this.milliseconds
-      console.log('Currently elapsed time:', this.milliseconds)
+    this.emit('tick', this.elapsedMilliseconds)
 
-      // Set a new previous time for use in the next interval
-      this.previousIntervalTime = Date.now()
-    } catch (err) {
-      console.error('Error while running timer:', err)
-    }
+    // Set a new previous time for use in the next interval
+    this.previousIntervalTime = Date.now()
   }
 
-  private async reset (): Promise<void> {
-    try {
-      console.log('Resetting timer')
-      // Set all variables back to their default value
-      this.interval = undefined
-      this.previousIntervalTime = undefined
-      this.milliseconds = 0
-    } catch (err) {
-      console.error('Error while resetting timer:', err)
-    }
+  private reset (): void {
+    console.log('Resetting timer')
+    // Set all variables back to their default value
+    this.interval = undefined
+    this.previousIntervalTime = undefined
+    this.elapsedMilliseconds = 0
   }
 }
-
-export {Timer}
