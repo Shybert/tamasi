@@ -4,11 +4,13 @@ import VueRouter from 'vue-router'
 import GamesComponent from './components/Games/Games.vue'
 import SavesComponent from './components/Saves/Saves.vue'
 import Overlay from './Overlay.vue'
+import SettingsComponent from './components/Settings/Settings.vue'
 
 const routes = [
   {path: '/', component: GamesComponent},
   {path: '/saves/:gameId', component: SavesComponent},
-  {path: '/overlay/:gameId/:saveId', component: Overlay}
+  {path: '/overlay/:gameId/:saveId', component: Overlay},
+  {path: '/settings', component: SettingsComponent}
 ]
 
 Vue.use(VueRouter)

@@ -1,6 +1,7 @@
 <template>
   <nav>
     <router-link to="/" id="homeLink">Home</router-link>
+    <router-link to="/settings" id="settingsLink">Settings</router-link>
   </nav>
 </template>
 
