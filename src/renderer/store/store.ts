@@ -1,14 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import gameData from './modules/gameData'
-import savesData from './modules/savesData'
+import games from './modules/games'
+import saves from './modules/saves'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
-    gameData,
-    savesData
+    games,
+    saves
   },
   strict: process.env.NODE_ENV !== 'production'
 })

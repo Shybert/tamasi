@@ -10,12 +10,12 @@
 import Vue from 'vue'
 import {Component} from 'vue-property-decorator'
 import {ipcRenderer} from 'electron'
-import {ISaves} from '../../store/modules/savesData'
+import {ISaves} from '../../store/modules/saves'
 
 @Component
 export default class SaveList extends Vue {
   get saveList (): ISaves {
-    return this.$store.state.savesData.saves[this.$route.params.gameId]
+    return this.$store.state.saves.saves[this.$route.params.gameId]
   }
 
   loadOverlayWindow (saveId: string): void {

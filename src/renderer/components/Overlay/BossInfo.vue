@@ -9,7 +9,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import {Component, Prop} from 'vue-property-decorator'
-import {ISaveBossInfo} from '../../store/modules/savesData'
+import {ISaveBossInfo} from '../../store/modules/saves'
 
 @Component
 export default class BossInfo extends Vue {

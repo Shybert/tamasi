@@ -13,7 +13,7 @@ import Vue from 'vue'
 import {Component} from 'vue-property-decorator'
 import {remote} from 'electron'
 import Timer from '../../timer'
-import {ISave} from '../../store/modules/savesData'
+import {ISave} from '../../store/modules/saves'
 
 import BossInfoComponent from './BossInfo.vue'
 
@@ -31,7 +31,7 @@ function nextArrayValue (array: string[], index: number): any {
 @Component({components: {BossInfoComponent}})
 export default class Overlay extends Vue {
   get save (): ISave {
-    return this.$store.state.savesData.saves[this.$route.params.gameId][this.$route.params.saveId]
+    return this.$store.state.saves.saves[this.$route.params.gameId][this.$route.params.saveId]
   }
 
   timer = new Timer()

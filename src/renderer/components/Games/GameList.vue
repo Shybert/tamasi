@@ -13,7 +13,7 @@ import {Component} from 'vue-property-decorator'
 @Component
 export default class GameList extends Vue {
   get games () {
-    return this.$store.state.gameData.games
+    return this.$store.state.games.games
   }
 }
 </script>

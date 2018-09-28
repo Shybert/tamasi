@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import * as crypto from 'crypto'
 import throttle from 'lodash/throttle'
-import {IGame} from './gameData'
+import {IGame} from './games'
 import Store from 'electron-store'
 const savesData = new Store({name: 'saves', cwd: 'storage'})
 
