@@ -33,6 +33,18 @@ export default class Overlay extends Vue {
   get save (): ISave {
     return this.$store.state.saves.saves[this.$route.params.gameId][this.$route.params.saveId]
   }
+  get previousBossHotkey () {
+    return this.$store.getters.getSetting('hotkeys', 'previousBoss')
+  }
+  get nextBossHotkey () {
+    return this.$store.getters.getSetting('hotkeys', 'nextBoss')
+  }
+  get incrementDeathCounterHotkey () {
+    return this.$store.getters.getSetting('hotkeys', 'incrementDeaths')
+  }
+  get switchTimerHotkey () {
+    return this.$store.getters.getSetting('hotkeys', 'switchTimer')
+  }
 
   timer = new Timer()
 
@@ -45,16 +57,16 @@ export default class Overlay extends Vue {
 
     // Unregister hotkeys incase they haven't been unregistered from a window close
     remote.globalShortcut.unregisterAll()
-    remote.globalShortcut.register('PageUp', () => {
+    remote.globalShortcut.register(this.previousBossHotkey, () => {
       this.selectBoss(previousArrayValue(bossIds, bossIds.indexOf(this.save.selected)))
     })
-    remote.globalShortcut.register('PageDown', () => {
+    remote.globalShortcut.register(this.nextBossHotkey, () => {
       this.selectBoss(nextArrayValue(bossIds, bossIds.indexOf(this.save.selected)))
     })
-    remote.globalShortcut.register('End', () => {
+    remote.globalShortcut.register(this.incrementDeathCounterHotkey, () => {
       this.incrementDeaths(this.save.selected)
     })
-    remote.globalShortcut.register('Home', () => {
+    remote.globalShortcut.register(this.switchTimerHotkey, () => {
       this.timer.switch(this.save.bosses[this.save.selected].time)
     })
   }
