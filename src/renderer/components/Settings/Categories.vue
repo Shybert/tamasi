@@ -1,10 +1,10 @@
 <template>
   <div id="categories">
-    <div v-for="(category, categoryId) in categories" :key="categoryId" class="category">
+    <div v-for="(category, categoryId) in settingsCategories" :key="categoryId" class="category">
       <h2 class="categoryLabel">{{category.label}}</h2>
       <p class="categoryDesc">{{category.description}}</p>
 
-      <CategorySettingsComponent :categoryId="categoryId"></CategorySettingsComponent>
+      <SettingComponent v-for="(setting, settingId) in category.settings" :key="settingId" :settingId="settingId" :categoryId="categoryId"></SettingComponent>
     </div>
   </div>
 </template>
@@ -14,11 +14,11 @@ import Vue from 'vue'
 import {Component} from 'vue-property-decorator'
 import {ISettingsCategories} from '../../store/settingsData'
 
-import CategorySettingsComponent from './CategorySettings.vue'
+import SettingComponent from './Setting.vue'
 
-@Component({components: {CategorySettingsComponent}})
+@Component({components: {SettingComponent}})
 export default class Categories extends Vue {
-  get categories (): ISettingsCategories {
+  get settingsCategories (): ISettingsCategories {
     return this.$store.state.settings.defaultSettings
   }
 }
