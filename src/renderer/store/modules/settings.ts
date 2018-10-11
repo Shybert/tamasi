@@ -1,53 +1,4 @@
-// import settings from './settings'
-// import Store from 'electron-store'
-// const UserSettings = new Store({name: 'userSettings', cwd: 'storage'})
-
-// interface IUserSettings {
-//   [x: string]: {
-//     [x: string]: any
-//   }
-// }
-
-// export function getSetting (category: string, setting: string) {
-//   const userSetting: string = UserSettings.get(`${category}.${setting}`)
-//   if (userSetting) return userSetting
-
-//   // No custom setting, get default value
-//   return settings[category].settings[setting].default
-// }
-
-// export function setSetting (category: string, setting: string, value: string) {
-//   if (!validateSetting(category, setting, value)) throw new Error(`Value '${value}' not an accepted value for this setting.`)
-
-//   UserSettings.set(`${category}.${setting}`, value)
-// }
-
-// function validateSetting (category: string, setting: string, value: string): Boolean {
-//   const acceptedValues = settings[category].settings[setting].acceptedValues
-
-//   if (!acceptedValues.includes(value)) return false
-
-//   return true
-// }
-
-// export function validateSettings () {
-//   const userSettings: IUserSettings = UserSettings.store
-
-//   Object.entries(userSettings).forEach(([category, categorySettings]) => {
-//     Object.entries(categorySettings).forEach(([setting, value]) => {
-//       if (!validateSetting(category, setting, value)) {
-//         const defaultValue = settings[category].settings[setting].default
-
-//         // Reset setting to its default value
-//         UserSettings.delete(`${category}.${setting}`)
-
-//         alert(`Setting '${setting}' in category '${category}' has an unaccepted value: '${value}'
-//         The setting has been reset to its default value: '${defaultValue}'`)
-//       }
-//     })
-//   })
-// }
-
+import Vue from 'vue'
 import settingsData, {ISettingsCategories} from '../settingsData'
 import Store from 'electron-store'
 const userSettingsData = new Store({name: 'userSettings', cwd: 'storage'})
@@ -60,11 +11,38 @@ interface IUserSettings {
 
 interface ISettingsState {
   userSettings: IUserSettings,
-  defaultSettings: ISettingsCategories
+  defaultSettings: ISettingsCategories,
+  keyInputSelected: null | string
 }
 const state: ISettingsState = {
   userSettings: userSettingsData.store,
-  defaultSettings: settingsData
+  defaultSettings: settingsData,
+  keyInputSelected: null
+}
+
+const mutations = {
+  setSetting (state: ISettingsState, payload: {categoryId: string, settingId: string, setting: string}) {
+    // Since Vue cannot detect property addition
+    if (!state.userSettings[payload.categoryId]) Vue.set(state.userSettings, payload.categoryId, {})
+    if (!state.userSettings[payload.categoryId][payload.settingId]) Vue.set(state.userSettings[payload.categoryId], payload.settingId, {})
+
+    state.userSettings[payload.categoryId][payload.settingId] = payload.setting
+    userSettingsData.set(`${payload.categoryId}.${payload.settingId}`, payload.setting)
+  },
+
+  selectKeyInput (state: ISettingsState, payload: {categoryId: string, settingId: string}) {
+    state.keyInputSelected = `${payload.categoryId}.${payload.settingId}`
+  },
+  deselectKeyInput (state: ISettingsState) {
+    state.keyInputSelected = null
+  }
+}
+
+const actions = {
+  setHotkey ({commit}: {commit: any}, payload: {categoryId: string, settingId: string, setting: string}) {
+    commit('setSetting', payload)
+    commit('deselectKeyInput') // Reset selected key input when a hotkey has been set
+  }
 }
 
 const getters = {
@@ -72,7 +50,7 @@ const getters = {
     const userSettingCategory = state.userSettings[category]
     if (userSettingCategory) {
       const userSetting: string = userSettingCategory[setting]
-    if (userSetting) return userSetting
+      if (userSetting) return userSetting
     }
 
     // No user setting, get default value
@@ -82,5 +60,7 @@ const getters = {
 
 export default {
   state,
+  mutations,
+  actions,
   getters
 }
