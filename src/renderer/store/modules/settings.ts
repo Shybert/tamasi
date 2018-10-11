@@ -69,8 +69,11 @@ const state: ISettingsState = {
 
 const getters = {
   getSetting: (state: ISettingsState) => (category: string, setting: string) => {
-    const userSetting: string = state.userSettings[category][setting]
+    const userSettingCategory = state.userSettings[category]
+    if (userSettingCategory) {
+      const userSetting: string = userSettingCategory[setting]
     if (userSetting) return userSetting
+    }
 
     // No user setting, get default value
     return state.defaultSettings[category].settings[setting].default
