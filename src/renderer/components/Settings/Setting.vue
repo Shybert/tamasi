@@ -1,5 +1,5 @@
 <template>
-  <div class="setting">
+  <div class="setting" :class="{changed: isNotDefault}">
     <h3 class="settingLabel">{{settingInfo.label}}</h3>
     <p class="settingDesc">{{settingInfo.description}}</p>
 
@@ -21,6 +21,9 @@ export default class Setting extends Vue {
   get settingInfo (): ISetting {
     return this.$store.state.settings.defaultSettings[this.categoryId].settings[this.settingId]
   }
+  get isNotDefault (): boolean {
+    return !this.$store.getters.isSettingDefault(this.categoryId, this.settingId)
+  }
 
   getComponentName (type: string): string {
     const capitalizedType: string = `${type[0].toUpperCase()}${type.slice(1)}`
@@ -28,3 +31,9 @@ export default class Setting extends Vue {
   }
 }
 </script>
+
+<style scoped>
+.changed {
+  background-color: dimgray;
+}
+</style>

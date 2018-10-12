@@ -54,6 +54,18 @@ const getters = {
 
     // No user setting, get default value
     return state.defaultSettings[category].settings[setting].default
+  },
+
+  isSettingDefault: (state: ISettingsState) => (category: string, setting: string): boolean => {
+    const defaultValue = state.defaultSettings[category].settings[setting].default
+
+    if (category in state.userSettings) {
+      if (setting in state.userSettings[category]) {
+        if (state.userSettings[category][setting] === defaultValue) return true
+        return false
+      }
+    }
+    return true
   }
 }
 
