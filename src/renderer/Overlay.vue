@@ -34,16 +34,16 @@ export default class Overlay extends Vue {
     return this.$store.state.saves.saves[this.$route.params.gameId][this.$route.params.saveId]
   }
   get previousBossHotkey () {
-    return this.$store.getters.getSetting('hotkeys', 'previousBoss')
+    return this.$store.getters.setting('hotkeys', 'previousBoss')
   }
   get nextBossHotkey () {
-    return this.$store.getters.getSetting('hotkeys', 'nextBoss')
+    return this.$store.getters.setting('hotkeys', 'nextBoss')
   }
   get incrementDeathCounterHotkey () {
-    return this.$store.getters.getSetting('hotkeys', 'incrementDeaths')
+    return this.$store.getters.setting('hotkeys', 'incrementDeaths')
   }
   get switchTimerHotkey () {
-    return this.$store.getters.getSetting('hotkeys', 'switchTimer')
+    return this.$store.getters.setting('hotkeys', 'switchTimer')
   }
 
   timer = new Timer()

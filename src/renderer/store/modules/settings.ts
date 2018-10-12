@@ -46,10 +46,9 @@ const actions = {
 }
 
 const getters = {
-  getSetting: (state: ISettingsState) => (category: string, setting: string) => {
-    const userSettingCategory = state.userSettings[category]
-    if (userSettingCategory) {
-      const userSetting: string = userSettingCategory[setting]
+  setting: (state: ISettingsState) => (category: string, setting: string) => {
+    if (category in state.userSettings) {
+      const userSetting: string = state.userSettings[category][setting]
       if (userSetting) return userSetting
     }
 

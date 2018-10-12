@@ -11,7 +11,7 @@ export default class Key extends Vue {
   @Prop(String) categoryId!: string
   @Prop(String) settingId!: string
   get setting (): string {
-    return this.$store.getters.getSetting(this.categoryId, this.settingId)
+    return this.$store.getters.setting(this.categoryId, this.settingId)
   }
   get isSelected (): boolean {
     return this.$store.state.settings.keyInputSelected === `${this.categoryId}.${this.settingId}`
