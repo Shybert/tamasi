@@ -10,7 +10,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import {Component, Prop} from 'vue-property-decorator'
-import {ISetting} from '../../store/settingsData'
+import {ISettingInfo} from '../../store/settingsData'
 
 import HotkeyComponent from './inputs/Hotkey.vue'
 
@@ -18,11 +18,11 @@ import HotkeyComponent from './inputs/Hotkey.vue'
 export default class Setting extends Vue {
   @Prop(String) categoryId!: string
   @Prop(String) settingId!: string
-  get settingInfo (): ISetting {
+  get settingInfo (): ISettingInfo {
     return this.$store.state.settings.defaultSettings[this.categoryId].settings[this.settingId]
   }
   get isNotDefault (): boolean {
-    return !this.$store.getters.isSettingDefault(this.categoryId, this.settingId)
+    return !this.$store.getters.isSettingValueDefault(this.categoryId, this.settingId)
   }
 
   getComponentName (type: string): string {

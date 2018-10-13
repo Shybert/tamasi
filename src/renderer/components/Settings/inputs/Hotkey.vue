@@ -14,7 +14,7 @@ export default class Hotkey extends Vue {
   @Prop(String) categoryId!: string
   @Prop(String) settingId!: string
   get hotkey (): string {
-    return this.$store.getters.setting(this.categoryId, this.settingId)
+    return this.$store.getters.settingValue(this.categoryId, this.settingId)
   }
   get isSelected (): boolean {
     return this.$store.state.settings.hotkeyInputSelected === `${this.categoryId}.${this.settingId}`
@@ -33,7 +33,7 @@ export default class Hotkey extends Vue {
     this.validateInput(event.key)
     if (this.inputError) return
 
-    this.$store.commit('setSetting', {categoryId: this.categoryId, settingId: this.settingId, setting: event.key})
+    this.$store.commit('setSettingValue', {categoryId: this.categoryId, settingId: this.settingId, settingValue: event.key})
     this.$store.commit('deselectHotkeyInput')
 
   }

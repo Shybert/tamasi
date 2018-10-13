@@ -4,7 +4,7 @@
       <h2 class="categoryLabel">{{category.label}}</h2>
       <p class="categoryDesc">{{category.description}}</p>
 
-      <SettingComponent v-for="(setting, settingId) in category.settings" :key="settingId" :settingId="settingId" :categoryId="categoryId"></SettingComponent>
+      <SettingComponent v-for="(settingInfo, settingId) in category.settings" :key="settingId" :settingId="settingId" :categoryId="categoryId"></SettingComponent>
     </div>
   </div>
 </template>

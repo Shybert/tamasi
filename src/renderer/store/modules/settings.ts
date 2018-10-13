@@ -21,13 +21,13 @@ const state: ISettingsState = {
 }
 
 const mutations = {
-  setSetting (state: ISettingsState, payload: {categoryId: string, settingId: string, setting: string}) {
+  setSettingValue (state: ISettingsState, payload: {categoryId: string, settingId: string, settingValue: string}) {
     // Since Vue cannot detect property addition
-    if (!state.userSettings[payload.categoryId]) Vue.set(state.userSettings, payload.categoryId, {})
-    if (!state.userSettings[payload.categoryId][payload.settingId]) Vue.set(state.userSettings[payload.categoryId], payload.settingId, {})
+    if (!(payload.categoryId in state.userSettings)) Vue.set(state.userSettings, payload.categoryId, {})
+    if (!(payload.settingId in state.userSettings[payload.categoryId])) Vue.set(state.userSettings[payload.categoryId], payload.settingId, {})
 
-    state.userSettings[payload.categoryId][payload.settingId] = payload.setting
-    userSettingsData.set(`${payload.categoryId}.${payload.settingId}`, payload.setting)
+    state.userSettings[payload.categoryId][payload.settingId] = payload.settingValue
+    userSettingsData.set(`${payload.categoryId}.${payload.settingId}`, payload.settingValue)
   },
 
   selectHotkeyInput (state: ISettingsState, payload: {categoryId: string, settingId: string}) {
@@ -39,33 +39,32 @@ const mutations = {
 }
 
 const getters = {
-  setting: (state: ISettingsState) => (category: string, setting: string) => {
-    if (category in state.userSettings) {
-      const userSetting: string = state.userSettings[category][setting]
+  settingValue: (state: ISettingsState) => (categoryId: string, settingId: string) => {
+    if (categoryId in state.userSettings) {
+      const userSetting: string = state.userSettings[categoryId][settingId]
       if (userSetting) return userSetting
     }
 
     // No user setting, get default value
-    return state.defaultSettings[category].settings[setting].default
+    return state.defaultSettings[categoryId].settings[settingId].default
   },
 
   hotkeys: (state: ISettingsState, getters: any) => {
     return Object.keys(state.defaultSettings.hotkeys.settings).map(settingId => {
-      return getters.setting('hotkeys', settingId)
+      return getters.settingValue('hotkeys', settingId)
     })
   },
 
-  isSettingValueAccepted: (state: ISettingsState) => (categoryId: string, settingId: string, setting: any): boolean => {
-    if (state.defaultSettings[categoryId].settings[settingId].acceptedValues.includes(setting)) return true
+  isSettingValueAccepted: (state: ISettingsState) => (categoryId: string, settingId: string, settingValue: any): boolean => {
+    if (state.defaultSettings[categoryId].settings[settingId].acceptedValues.includes(settingValue)) return true
     return false
   },
+  isSettingValueDefault: (state: ISettingsState) => (categoryId: string, settingId: string): boolean => {
+    const defaultValue = state.defaultSettings[categoryId].settings[settingId].default
 
-  isSettingDefault: (state: ISettingsState) => (category: string, setting: string): boolean => {
-    const defaultValue = state.defaultSettings[category].settings[setting].default
-
-    if (category in state.userSettings) {
-      if (setting in state.userSettings[category]) {
-        if (state.userSettings[category][setting] === defaultValue) return true
+    if (categoryId in state.userSettings) {
+      if (settingId in state.userSettings[categoryId]) {
+        if (state.userSettings[categoryId][settingId] === defaultValue) return true
         return false
       }
     }
