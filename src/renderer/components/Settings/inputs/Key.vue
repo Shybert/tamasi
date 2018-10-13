@@ -1,5 +1,8 @@
 <template>
-  <button class="settingKey" :class="{active: isSelected}" @keyup="setHotkey" @click="selectKeyInput">{{setting}}</button>
+  <div class="inputKey">
+    <div class="inputError" v-if="inputError">{{inputError}}</div>
+    <button class="settingKey" :class="{active: isSelected}" @keyup="setHotkey" @click="selectKeyInput">{{setting}}</button>    
+  </div>
 </template>
 
 <script lang="ts">
@@ -17,9 +20,22 @@ export default class Key extends Vue {
     return this.$store.state.settings.keyInputSelected === `${this.categoryId}.${this.settingId}`
   }
 
+  inputError: string | null = null
+  validateInput (key: string): void {
+    this.inputError = null
+
+    if (!this.$store.getters.isSettingValueAccepted(this.categoryId, this.settingId, key)) this.inputError = `The key "${key}" cannot be used as a hotkey.`
+    if (this.$store.getters.hotkeys.includes(key)) this.inputError = `The key "${key}" is already being used.`
+  }
+
   setHotkey (event: KeyboardEvent) {
     if (!this.isSelected) return
-    this.$store.dispatch('setHotkey', {categoryId: this.categoryId, settingId: this.settingId, setting: event.key})
+    this.validateInput(event.key)
+    if (this.inputError) return
+
+    this.$store.commit('setSetting', {categoryId: this.categoryId, settingId: this.settingId, setting: event.key})
+    this.$store.commit('deselectKeyInput')
+
   }
   selectKeyInput () {
     this.$store.commit('selectKeyInput', {categoryId: this.categoryId, settingId: this.settingId})
@@ -30,6 +46,9 @@ export default class Key extends Vue {
 <style scoped>
 .active {
   border: 4px solid green;
+}
+.inputError {
+  color: red;
 }
 </style>
 

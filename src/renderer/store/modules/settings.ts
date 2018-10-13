@@ -38,13 +38,6 @@ const mutations = {
   }
 }
 
-const actions = {
-  setHotkey ({commit}: {commit: any}, payload: {categoryId: string, settingId: string, setting: string}) {
-    commit('setSetting', payload)
-    commit('deselectKeyInput') // Reset selected key input when a hotkey has been set
-  }
-}
-
 const getters = {
   setting: (state: ISettingsState) => (category: string, setting: string) => {
     if (category in state.userSettings) {
@@ -54,6 +47,17 @@ const getters = {
 
     // No user setting, get default value
     return state.defaultSettings[category].settings[setting].default
+  },
+
+  hotkeys: (state: ISettingsState, getters: any) => {
+    return Object.keys(state.defaultSettings.hotkeys.settings).map(settingId => {
+      return getters.setting('hotkeys', settingId)
+    })
+  },
+
+  isSettingValueAccepted: (state: ISettingsState) => (categoryId: string, settingId: string, setting: any): boolean => {
+    if (state.defaultSettings[categoryId].settings[settingId].acceptedValues.includes(setting)) return true
+    return false
   },
 
   isSettingDefault: (state: ISettingsState) => (category: string, setting: string): boolean => {
@@ -72,6 +76,5 @@ const getters = {
 export default {
   state,
   mutations,
-  actions,
   getters
 }
