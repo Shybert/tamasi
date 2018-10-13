@@ -1,6 +1,6 @@
 <template>
   <div id="categories">
-    <div v-for="(category, categoryId) in settingsCategories" :key="categoryId" class="category">
+    <div v-for="(category, categoryId) in settingsCategories" :key="categoryId" class="category" :id="categoryId">
       <h2 class="categoryLabel">{{category.label}}</h2>
       <p class="categoryDesc">{{category.description}}</p>
 

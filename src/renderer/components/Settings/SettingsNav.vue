@@ -2,7 +2,7 @@
   <nav id="settingsNav">
     <ul>
       <li v-for="(category, categoryId) in categories" :key="categoryId" class="category">
-        {{category.label}}
+        <a :href="`#${categoryId}`">{{category.label}}</a>
       </li>
     </ul>
   </nav>
