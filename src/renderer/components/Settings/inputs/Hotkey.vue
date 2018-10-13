@@ -1,7 +1,7 @@
 <template>
-  <div class="inputKey">
+  <div class="inputHotkey">
     <div class="inputError" v-if="inputError">{{inputError}}</div>
-    <button class="settingKey" :class="{active: isSelected}" @keyup="setHotkey" @click="selectKeyInput">{{setting}}</button>    
+    <button class="settingHotkey" :class="{active: isSelected}" @keyup="setHotkey" @click="selectHotkeyInput">{{hotkey}}</button>    
   </div>
 </template>
 
@@ -10,14 +10,14 @@ import Vue from 'vue'
 import {Component, Prop} from 'vue-property-decorator'
 
 @Component
-export default class Key extends Vue {
+export default class Hotkey extends Vue {
   @Prop(String) categoryId!: string
   @Prop(String) settingId!: string
-  get setting (): string {
+  get hotkey (): string {
     return this.$store.getters.setting(this.categoryId, this.settingId)
   }
   get isSelected (): boolean {
-    return this.$store.state.settings.keyInputSelected === `${this.categoryId}.${this.settingId}`
+    return this.$store.state.settings.hotkeyInputSelected === `${this.categoryId}.${this.settingId}`
   }
 
   inputError: string | null = null
@@ -28,17 +28,17 @@ export default class Key extends Vue {
     if (this.$store.getters.hotkeys.includes(key)) this.inputError = `The key "${key}" is already being used.`
   }
 
-  setHotkey (event: KeyboardEvent) {
+  setHotkey (event: KeyboardEvent): void {
     if (!this.isSelected) return
     this.validateInput(event.key)
     if (this.inputError) return
 
     this.$store.commit('setSetting', {categoryId: this.categoryId, settingId: this.settingId, setting: event.key})
-    this.$store.commit('deselectKeyInput')
+    this.$store.commit('deselectHotkeyInput')
 
   }
-  selectKeyInput () {
-    this.$store.commit('selectKeyInput', {categoryId: this.categoryId, settingId: this.settingId})
+  selectHotkeyInput (): void {
+    this.$store.commit('selectHotkeyInput', {categoryId: this.categoryId, settingId: this.settingId})
   }
 }
 </script>

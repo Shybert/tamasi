@@ -12,9 +12,9 @@ import Vue from 'vue'
 import {Component, Prop} from 'vue-property-decorator'
 import {ISetting} from '../../store/settingsData'
 
-import KeyComponent from './inputs/Key.vue'
+import HotkeyComponent from './inputs/Hotkey.vue'
 
-@Component({components: {KeyComponent}})
+@Component({components: {HotkeyComponent}})
 export default class Setting extends Vue {
   @Prop(String) categoryId!: string
   @Prop(String) settingId!: string

@@ -12,12 +12,12 @@ interface IUserSettings {
 interface ISettingsState {
   userSettings: IUserSettings,
   defaultSettings: ISettingsCategories,
-  keyInputSelected: null | string
+  hotkeyInputSelected: null | string
 }
 const state: ISettingsState = {
   userSettings: userSettingsData.store,
   defaultSettings: settingsData,
-  keyInputSelected: null
+  hotkeyInputSelected: null
 }
 
 const mutations = {
@@ -30,11 +30,11 @@ const mutations = {
     userSettingsData.set(`${payload.categoryId}.${payload.settingId}`, payload.setting)
   },
 
-  selectKeyInput (state: ISettingsState, payload: {categoryId: string, settingId: string}) {
-    state.keyInputSelected = `${payload.categoryId}.${payload.settingId}`
+  selectHotkeyInput (state: ISettingsState, payload: {categoryId: string, settingId: string}) {
+    state.hotkeyInputSelected = `${payload.categoryId}.${payload.settingId}`
   },
-  deselectKeyInput (state: ISettingsState) {
-    state.keyInputSelected = null
+  deselectHotkeyInput (state: ISettingsState) {
+    state.hotkeyInputSelected = null
   }
 }
 

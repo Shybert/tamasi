@@ -3,7 +3,7 @@ const acceleratorKeys: string[] = ['Home', 'End', 'PageUp', 'PageDown', 'a', 'b'
 export interface ISetting {
   label: string,
   description: string,
-  type: 'key',
+  type: 'hotkey',
   default: string
   acceptedValues: string[]
 }
@@ -27,7 +27,7 @@ const settingsData: ISettingsCategories = {
       test: {
         label: 'Test setting',
         description: 'testytestytest',
-        type: 'key',
+        type: 'hotkey',
         default: 'P',
         acceptedValues: acceleratorKeys
       }
@@ -40,28 +40,28 @@ const settingsData: ISettingsCategories = {
       incrementDeaths: {
         label: 'Increment death counter',
         description: 'Hotkey for incrementing the death counter',
-        type: 'key',
+        type: 'hotkey',
         default: 'End',
         acceptedValues: acceleratorKeys
       },
       switchTimer: {
         label: 'Switch the timer on/off',
         description: 'Hotkey for switching the timer on/off',
-        type: 'key',
+        type: 'hotkey',
         default: 'Home',
         acceptedValues: acceleratorKeys
       },
       previousBoss: {
         label: 'Previous boss',
         description: 'Hotkey for selecting the previous boss',
-        type: 'key',
+        type: 'hotkey',
         default: 'PageUp',
         acceptedValues: acceleratorKeys
       },
       nextBoss: {
         label: 'Next boss',
         description: 'Hotkey for selecting the next boss',
-        type: 'key',
+        type: 'hotkey',
         default: 'PageDown',
         acceptedValues: acceleratorKeys
       }
