@@ -1,7 +1,7 @@
 <template>
   <div class="inputHotkey">
     <div class="inputError" v-if="inputError">{{inputError}}</div>
-    <button class="settingHotkey" :class="{active: isSelected}" @keyup="setHotkey" @click="selectHotkeyInput">{{hotkey}}</button>    
+    <button class="settingHotkey" :class="{active: isSelected}" @keyup="setHotkey" @click="selectOrDeselectHotkeyInput">{{hotkey}}</button>    
   </div>
 </template>
 
@@ -37,8 +37,9 @@ export default class Hotkey extends Vue {
     this.$store.commit('deselectHotkeyInput')
 
   }
-  selectHotkeyInput (): void {
-    this.$store.commit('selectHotkeyInput', {categoryId: this.categoryId, settingId: this.settingId})
+  selectOrDeselectHotkeyInput (): void {
+    if (this.isSelected) this.$store.commit('deselectHotkeyInput')
+    else this.$store.commit('selectHotkeyInput', {categoryId: this.categoryId, settingId: this.settingId})
   }
 }
 </script>
