@@ -9,7 +9,7 @@ interface IGameBosses {
   [x: string]: IGameBossInfo
 }
 export interface IGame {
-  name: string,
+  name: string
   bosses: IGameBosses
 }
 interface IGames {

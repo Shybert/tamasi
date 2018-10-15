@@ -10,8 +10,8 @@ interface IUserSettings {
 }
 
 interface ISettingsState {
-  userSettings: IUserSettings,
-  defaultSettings: ISettingsCategories,
+  userSettings: IUserSettings
+  defaultSettings: ISettingsCategories
   hotkeyInputSelected: null | string
 }
 const state: ISettingsState = {

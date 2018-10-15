@@ -7,8 +7,8 @@ const savesData = new Store({name: 'saves', cwd: 'storage'})
 
 // Saves interface
 export interface ISaveBossInfo {
-  name: string,
-  time: number,
+  name: string
+  time: number
   deaths: number
 }
 interface ISaveBosses {
@@ -26,7 +26,7 @@ export interface ISaves {
 }
 
 interface ISavesState {
-  showNewSaveOverlay: boolean,
+  showNewSaveOverlay: boolean
   saves: ISaves
 }
 
