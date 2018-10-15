@@ -56,7 +56,7 @@ const getters = {
   },
 
   isSettingValueAccepted: (state: ISettingsState) => (categoryId: string, settingId: string, settingValue: any): boolean => {
-    if (state.defaultSettings[categoryId].settings[settingId].acceptedValues.includes(settingValue)) return true
+    if (state.defaultSettings[categoryId].settings[settingId].acceptedValues.test(settingValue)) return true
     return false
   },
   isSettingValueDefault: (state: ISettingsState) => (categoryId: string, settingId: string): boolean => {

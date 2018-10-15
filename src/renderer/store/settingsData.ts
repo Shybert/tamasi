@@ -1,11 +1,11 @@
-const acceleratorKeys: string[] = ['Home', 'End', 'PageUp', 'PageDown', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i' ,'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'y', 'x', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'Y', 'X', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+const acceleratorKeysRegex: RegExp = /^([a-zA-Z0-9,_:;*?=(){}$&%#"!@^~|'`<>\.\-\[\]\/\\]|F1?([1-9]|10|2[0-4])|Plus|Space|Tab|Backspace|Delete|Insert|Return|Enter|Up|Down|Left|Right|Home|End|PageUp|PageDown|Escape|Esc|VolumeUp|VolumeDown|VolumeMute|MediaNextTrack|MediaPreviousTrack|MediaStop|MediaPlayPause|PrintScreen)$/
 
 export interface ISettingInfo {
   label: string
   description: string
   type: 'hotkey'
   default: string
-  acceptedValues: string[]
+  acceptedValues: RegExp
 }
 export interface ISettings {
   [x: string]: ISettingInfo
@@ -29,7 +29,7 @@ const settingsData: ISettingsCategories = {
         description: 'testytestytest',
         type: 'hotkey',
         default: 'P',
-        acceptedValues: acceleratorKeys
+        acceptedValues: acceleratorKeysRegex
       }
     }
   },
@@ -42,28 +42,28 @@ const settingsData: ISettingsCategories = {
         description: 'Hotkey for incrementing the death counter',
         type: 'hotkey',
         default: 'End',
-        acceptedValues: acceleratorKeys
+        acceptedValues: acceleratorKeysRegex
       },
       switchTimer: {
         label: 'Switch the timer on/off',
         description: 'Hotkey for switching the timer on/off',
         type: 'hotkey',
         default: 'Home',
-        acceptedValues: acceleratorKeys
+        acceptedValues: acceleratorKeysRegex
       },
       previousBoss: {
         label: 'Previous boss',
         description: 'Hotkey for selecting the previous boss',
         type: 'hotkey',
         default: 'PageUp',
-        acceptedValues: acceleratorKeys
+        acceptedValues: acceleratorKeysRegex
       },
       nextBoss: {
         label: 'Next boss',
         description: 'Hotkey for selecting the next boss',
         type: 'hotkey',
         default: 'PageDown',
-        acceptedValues: acceleratorKeys
+        acceptedValues: acceleratorKeysRegex
       }
     }
   }
