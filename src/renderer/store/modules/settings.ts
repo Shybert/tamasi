@@ -5,7 +5,7 @@ const userSettingsData = new Store({name: 'userSettings', cwd: 'storage'})
 
 interface IUserSettings {
   [x: string]: { // Category ID
-    [x: string]: any // Setting ID
+    [x: string]: string // Setting ID
   }
 }
 
@@ -62,11 +62,9 @@ const getters = {
   isSettingValueDefault: (state: ISettingsState) => (categoryId: string, settingId: string): boolean => {
     const defaultValue = state.defaultSettings[categoryId].settings[settingId].default
 
-    if (categoryId in state.userSettings) {
-      if (settingId in state.userSettings[categoryId]) {
-        if (state.userSettings[categoryId][settingId] === defaultValue) return true
-        return false
-      }
+    if (categoryId in state.userSettings && settingId in state.userSettings[categoryId]) {
+      if (state.userSettings[categoryId][settingId] === defaultValue) return true
+      return false
     }
     return true
   }
