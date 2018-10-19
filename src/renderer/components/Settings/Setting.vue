@@ -2,6 +2,7 @@
   <div class="setting" :class="{changed: isNotDefault}">
     <h3 class="settingLabel">{{settingInfo.label}}</h3>
     <p class="settingDesc">{{settingInfo.description}}</p>
+    <p class="settingAcceptedValuesDesc">{{settingInfo.acceptedValues.description}}</p>
 
     <component :is="getComponentName(settingInfo.type)" :categoryId="categoryId" :settingId="settingId"></component>    
   </div>
@@ -12,9 +13,9 @@ import Vue from 'vue'
 import {Component, Prop} from 'vue-property-decorator'
 import {ISettingInfo} from '../../store/settingsData'
 
-import HotkeyComponent from './inputs/Hotkey.vue'
+import KeybindComponent from './inputs/Keybind.vue'
 
-@Component({components: {HotkeyComponent}})
+@Component({components: {KeybindComponent}})
 export default class Setting extends Vue {
   @Prop(String) categoryId!: string
   @Prop(String) settingId!: string

@@ -12,12 +12,12 @@ interface IUserSettings {
 interface ISettingsState {
   userSettings: IUserSettings
   defaultSettings: ISettingsCategories
-  hotkeyInputSelected: null | string
+  keybindInputSelected: null | string
 }
 const state: ISettingsState = {
   userSettings: userSettingsData.store,
   defaultSettings: settingsData,
-  hotkeyInputSelected: null
+  keybindInputSelected: null
 }
 
 const mutations = {
@@ -30,11 +30,11 @@ const mutations = {
     userSettingsData.set(`${payload.categoryId}.${payload.settingId}`, payload.settingValue)
   },
 
-  selectHotkeyInput (state: ISettingsState, payload: {categoryId: string, settingId: string}) {
-    state.hotkeyInputSelected = `${payload.categoryId}.${payload.settingId}`
+  selectKeybindInput (state: ISettingsState, payload: {categoryId: string, settingId: string}) {
+    state.keybindInputSelected = `${payload.categoryId}.${payload.settingId}`
   },
-  deselectHotkeyInput (state: ISettingsState) {
-    state.hotkeyInputSelected = null
+  deselectKeybindInput (state: ISettingsState) {
+    state.keybindInputSelected = null
   }
 }
 
@@ -49,9 +49,9 @@ const getters = {
     return state.defaultSettings[categoryId].settings[settingId].default
   },
 
-  hotkeys: (state: ISettingsState, getters: any) => {
-    return Object.keys(state.defaultSettings.hotkeys.settings).map(settingId => {
-      return getters.settingValue('hotkeys', settingId)
+  keybinds: (state: ISettingsState, getters: any) => {
+    return Object.keys(state.defaultSettings.keybinds.settings).map(settingId => {
+      return getters.settingValue('keybinds', settingId)
     })
   },
 

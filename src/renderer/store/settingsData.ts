@@ -1,11 +1,19 @@
-const acceleratorKeysRegex: RegExp = /^([a-zA-Z0-9,_:;*?=(){}$&%#"!@^~|'`<>\.\-\[\]\/\\]|F1?([1-9]|10|2[0-4])|Plus|Space|Tab|Backspace|Delete|Insert|Return|Enter|Up|Down|Left|Right|Home|End|PageUp|PageDown|Escape|Esc|VolumeUp|VolumeDown|VolumeMute|MediaNextTrack|MediaPreviousTrack|MediaStop|MediaPlayPause|PrintScreen)$/
+import * as accelerators from '../utils/accelerators'
+
+const acceptedKeybinds = {
+  description: 'Accepted keybinds include...',
+  test: accelerators.isValidKeybind
+}
 
 export interface ISettingInfo {
   label: string
   description: string
-  type: 'hotkey'
+  type: 'keybind'
   default: string
-  acceptedValues: RegExp
+  acceptedValues: {
+    description: string
+    test: (value: string) => boolean
+  }
 }
 export interface ISettings {
   [x: string]: ISettingInfo
@@ -27,43 +35,43 @@ const settingsData: ISettingsCategories = {
       test: {
         label: 'Test setting',
         description: 'testytestytest',
-        type: 'hotkey',
+        type: 'keybind',
         default: 'P',
-        acceptedValues: acceleratorKeysRegex
+        acceptedValues: acceptedKeybinds
       }
     }
   },
-  hotkeys: {
-    label: 'Hotkeys',
-    description: 'Hotkeys...',
+  keybinds: {
+    label: 'Keybinds',
+    description: 'Keybinds...',
     settings: {
       incrementDeaths: {
         label: 'Increment death counter',
-        description: 'Hotkey for incrementing the death counter',
-        type: 'hotkey',
+        description: 'Keybind for incrementing the death counter',
+        type: 'keybind',
         default: 'End',
-        acceptedValues: acceleratorKeysRegex
+        acceptedValues: acceptedKeybinds
       },
       switchTimer: {
         label: 'Switch the timer on/off',
-        description: 'Hotkey for switching the timer on/off',
-        type: 'hotkey',
+        description: 'Keybind for switching the timer on/off',
+        type: 'keybind',
         default: 'Home',
-        acceptedValues: acceleratorKeysRegex
+        acceptedValues: acceptedKeybinds
       },
       previousBoss: {
         label: 'Previous boss',
-        description: 'Hotkey for selecting the previous boss',
-        type: 'hotkey',
+        description: 'Keybind for selecting the previous boss',
+        type: 'keybind',
         default: 'PageUp',
-        acceptedValues: acceleratorKeysRegex
+        acceptedValues: acceptedKeybinds
       },
       nextBoss: {
         label: 'Next boss',
-        description: 'Hotkey for selecting the next boss',
-        type: 'hotkey',
+        description: 'Keybind for selecting the next boss',
+        type: 'keybind',
         default: 'PageDown',
-        acceptedValues: acceleratorKeysRegex
+        acceptedValues: acceptedKeybinds
       }
     }
   }
