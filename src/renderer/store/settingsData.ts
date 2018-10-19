@@ -1,8 +1,8 @@
-import * as accelerators from '../utils/accelerators'
+import * as acceleratorHelpers from '../utils/acceleratorHelpers'
 
 const acceptedKeybinds = {
   description: 'Accepted keybinds include...',
-  test: accelerators.isValidKeybind
+  test: acceleratorHelpers.isValidKeybind
 }
 
 export interface ISettingInfo {
