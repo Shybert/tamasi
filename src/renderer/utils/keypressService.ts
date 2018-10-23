@@ -12,7 +12,10 @@ export default class KeypressService {
     // Remove keys that have been let go (from keyup)
     this.selectedKeysArray = this.selectedKeysArray.filter(selectedKey => this.pressedKeys.includes(selectedKey))
 
-    if (!acceleratorHelpers.isValidKeybind(key)) return
+    const valid = this.selectedKeys ? acceleratorHelpers.isValidKeybind(`${this.selectedKeys}+${key}`) : acceleratorHelpers.isValidKeybind(key)
+    if (!valid) return
+    if (this.pressedKeys.includes(key)) return
+
     this.pressedKeys.push(key)
     this.selectedKeysArray.push(key)
   }

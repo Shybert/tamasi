@@ -27,6 +27,26 @@ describe('keypressService.ts', () => {
     expect(keypressService.selectedKeys).toBe('a+b+c')
   })
 
+  test('If there are no previously selected keys it checks if the pressed key is valid', () => {
+    keypressService.keydown('a')
+    expect(mockedIsValidKeybind).toBeCalledWith('a')
+  })
+  test('If there are previously selected keys, it checks if the selected keys + the pressed key is valid', () => {
+    mockedIsValidKeybind.mockReturnValue(true)
+    keypressService.keydown('a')
+    keypressService.keydown('b')
+    keypressService.keydown('c')
+    expect(mockedIsValidKeybind).toBeCalledWith('a+b+c')
+  })
+
+  test('A key is only added to the selected keys once', () => {
+    mockedIsValidKeybind.mockReturnValue(true)
+    keypressService.keydown('a')
+    keypressService.keydown('a')
+    keypressService.keydown('a')
+    expect(keypressService.selectedKeys).toBe('a')
+  })
+
   test('Pressing invalid keys does not add them to the selected keys', () => {
     mockedIsValidKeybind.mockReturnValue(false).mockReturnValueOnce(true)
     keypressService.keydown('a')
