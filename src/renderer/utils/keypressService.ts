@@ -22,4 +22,9 @@ export default class KeypressService {
   keyup (key: string): void {
     this.pressedKeys = this.pressedKeys.filter(pressedKey => pressedKey !== key)
   }
+
+  reset (): void {
+    this.pressedKeys = []
+    this.selectedKeysArray = []
+  }
 }

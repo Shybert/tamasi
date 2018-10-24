@@ -76,4 +76,15 @@ describe('keypressService.ts', () => {
     keypressService.keydown('c')
     expect(keypressService.selectedKeys).toBe('b+c')
   })
+
+  test('Calling reset resets the service', () => {
+    mockedIsValidKeybind.mockReturnValue(true)
+    keypressService.keydown('a')
+    expect(keypressService.selectedKeys).toBe('a')
+    keypressService.reset()
+    expect(keypressService.selectedKeys).toBe('')
+    // Make sure that when you press a new key, previously pressed keys have been properly removed
+    keypressService.keydown('b')
+    expect(keypressService.selectedKeys).toBe('b')
+  })
 })
