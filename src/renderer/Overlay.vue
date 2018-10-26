@@ -34,16 +34,16 @@ export default class Overlay extends Vue {
     return this.$store.state.saves.saves[this.$route.params.gameId][this.$route.params.saveId]
   }
   get previousBossHotkey () {
-    return this.$store.getters.settingValue('hotkeys', 'previousBoss')
+    return this.$store.getters.settingValue('keybinds', 'previousBoss')
   }
   get nextBossHotkey () {
-    return this.$store.getters.settingValue('hotkeys', 'nextBoss')
+    return this.$store.getters.settingValue('keybinds', 'nextBoss')
   }
   get incrementDeathCounterHotkey () {
-    return this.$store.getters.settingValue('hotkeys', 'incrementDeaths')
+    return this.$store.getters.settingValue('keybinds', 'incrementDeaths')
   }
   get switchTimerHotkey () {
-    return this.$store.getters.settingValue('hotkeys', 'switchTimer')
+    return this.$store.getters.settingValue('keybinds', 'switchTimer')
   }
 
   timer = new Timer()
@@ -55,7 +55,7 @@ export default class Overlay extends Vue {
     // Check if selected boss is valid
     if (!bossIds.includes(this.save.selected)) this.selectBoss(bossIds[0])
 
-    // Unregister hotkeys incase they haven't been unregistered from a window close
+    // Unregister keybinds incase they haven't been unregistered from a window close
     remote.globalShortcut.unregisterAll()
     remote.globalShortcut.register(this.previousBossHotkey, () => {
       this.selectBoss(previousArrayValue(bossIds, bossIds.indexOf(this.save.selected)))

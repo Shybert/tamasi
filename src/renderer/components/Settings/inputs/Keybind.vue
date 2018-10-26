@@ -1,13 +1,15 @@
 <template>
   <div class="inputKeybind">
     <div class="inputError" v-if="inputError">{{inputError}}</div>
-    <button class="settingKeybind" :class="{active: isSelected}" @keyup="setKeybind" @click="selectOrDeselectKeybindInput">{{keybind}}</button>    
+    <input class="settingKeybind" :value="selectedKeys || inputError ? selectedKeys : keybind" readonly>
+    <button class="recordKeybind" :class="{active: isSelected}" @keydown.prevent="handleKeydown" @keyup.prevent="handleKeyup" @click.prevent="switchRecordingKeybindInput">Edit keybind</button>    
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import {Component, Prop} from 'vue-property-decorator'
+import KeypressService from '../../../utils/keypressService'
 
 @Component
 export default class Keybind extends Vue {
@@ -17,29 +19,34 @@ export default class Keybind extends Vue {
     return this.$store.getters.settingValue(this.categoryId, this.settingId)
   }
   get isSelected (): boolean {
-    return this.$store.state.settings.keybindInputSelected === `${this.categoryId}.${this.settingId}`
+    return this.$store.state.settings.recordingKeybindInput === `${this.categoryId}.${this.settingId}`
   }
 
-  inputError: string | null = null
-  validateInput (key: string): void {
-    this.inputError = null
-
-    if (!this.$store.getters.isSettingValueAccepted(this.categoryId, this.settingId, key)) this.inputError = `The key "${key}" cannot be used as a hotkey.`
-    if (this.$store.getters.keybinds.includes(key)) this.inputError = `The key "${key}" is already being used.`
+  keypressService = new KeypressService()
+  get selectedKeys (): string {
+    return this.keypressService.selectedKeys
+  }
+  get inputError (): string | null {
+    return this.keypressService.errorMessage
   }
 
-  setKeybind (event: KeyboardEvent): void {
+  handleKeydown (event: KeyboardEvent): void {
     if (!this.isSelected) return
-    this.validateInput(event.key)
-    if (this.inputError) return
-
-    this.$store.commit('setSettingValue', {categoryId: this.categoryId, settingId: this.settingId, settingValue: event.key})
-    this.$store.commit('deselectKeybindInput')
-
+    this.keypressService.keydown(event.key)
   }
-  selectOrDeselectKeybindInput (): void {
-    if (this.isSelected) this.$store.commit('deselectKeybindInput')
-    else this.$store.commit('selectKeybindInput', {categoryId: this.categoryId, settingId: this.settingId})
+  handleKeyup (event: KeyboardEvent): void {
+    if (!this.isSelected) return
+    this.keypressService.keyup(event.key)
+  }
+
+  switchRecordingKeybindInput (): void {
+    if (this.isSelected) {
+      if (this.selectedKeys) this.$store.commit('setSettingValue', {categoryId: this.categoryId, settingId: this.settingId, settingValue: this.selectedKeys})
+      this.$store.commit('stopRecordingKeybindInput')
+    }
+    else this.$store.commit('recordKeybindInput', {categoryId: this.categoryId, settingId: this.settingId})
+
+    this.keypressService.reset()
   }
 }
 </script>
