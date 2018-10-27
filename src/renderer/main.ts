@@ -6,22 +6,12 @@ import Overlay from './components/Overlay/Overlay.vue'
 import router from './router'
 import store from './store/store'
 
-if (window.location.hash.startsWith('#/overlay')) {
-  // tslint:disable-next-line:no-unused-expression
-  new Vue({
-    el: '#app',
-    template: '<Overlay></Overlay>',
-    components: {Overlay},
-    router,
-    store
-  })
-} else {
-  // tslint:disable-next-line:no-unused-expression
-  new Vue({
-    el: '#app',
-    template: '<App></App>',
-    components: {App},
-    router,
-    store
-  })
-}
+const isOverlay: boolean = window.location.hash.startsWith('#/overlay')
+// tslint:disable-next-line:no-unused-expression
+new Vue({
+  el: '#app',
+  template: isOverlay ? '<Overlay></Overlay>' : '<App></App>',
+  components: isOverlay ? {Overlay} : {App},
+  router,
+  store
+})
