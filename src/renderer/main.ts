@@ -2,7 +2,7 @@
 
 import Vue from 'vue'
 import App from './App.vue'
-import Overlay from './components/Overlay/Overlay.vue'
+import Overlay from './Overlay.vue'
 import router from './router'
 import store from './store/store'
 

@@ -3,12 +3,12 @@ import VueRouter from 'vue-router'
 
 import GamesComponent from './components/Games/Games.vue'
 import SavesComponent from './components/Saves/Saves.vue'
-import OverlayComponent from './components/Overlay/Overlay.vue'
+import Overlay from './Overlay.vue'
 
 const routes = [
   {path: '/', component: GamesComponent},
   {path: '/saves/:gameId', component: SavesComponent},
-  {path: '/overlay/:gameId/:saveId', component: OverlayComponent}
+  {path: '/overlay/:gameId/:saveId', component: Overlay}
 ]
 
 Vue.use(VueRouter)

@@ -12,10 +12,10 @@
 import Vue from 'vue'
 import {Component} from 'vue-property-decorator'
 import {remote} from 'electron'
-import Timer from '../../timer'
-import {ISave} from '../../store/modules/saves'
+import Timer from './utils/timer'
+import {ISave} from './store/modules/saves'
 
-import BossInfoComponent from './BossInfo.vue'
+import BossInfoComponent from './components/Overlay/BossInfo.vue'
 
 function previousArrayValue (array: string[], index: number): any {
   if (index === 0) index = array.length
