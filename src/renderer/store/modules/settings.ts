@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import throttle from 'lodash/throttle'
 import settingsData, {ISettingsCategories} from '../settingsData'
 import Store from 'electron-store'
 const userSettingsData = new Store({name: 'userSettings', cwd: 'storage'})
@@ -19,6 +20,10 @@ const state: ISettingsState = {
   defaultSettings: settingsData,
   recordingKeybindInput: null
 }
+function saveSettings (): void {
+  userSettingsData.store = state.userSettings
+}
+const throttledSaveSettings = throttle(saveSettings, 1000)
 
 const mutations = {
   setSettingValue (state: ISettingsState, payload: {categoryId: string, settingId: string, settingValue: string}) {
@@ -27,7 +32,7 @@ const mutations = {
     if (!(payload.settingId in state.userSettings[payload.categoryId])) Vue.set(state.userSettings[payload.categoryId], payload.settingId, {})
 
     state.userSettings[payload.categoryId][payload.settingId] = payload.settingValue
-    userSettingsData.set(`${payload.categoryId}.${payload.settingId}`, payload.settingValue)
+    throttledSaveSettings()
   },
 
   recordKeybindInput (state: ISettingsState, payload: {categoryId: string, settingId: string}) {
