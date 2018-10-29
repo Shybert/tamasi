@@ -5,8 +5,8 @@ import Store from 'electron-store'
 const userSettingsData = new Store({name: 'userSettings', cwd: 'storage'})
 
 interface IUserSettings {
-  [x: string]: { // Category ID
-    [x: string]: string // Setting ID
+  [categoryId: string]: {
+    [settingId: string]: any
   }
 }
 
@@ -46,12 +46,11 @@ const mutations = {
 const getters = {
   settingValue: (state: ISettingsState) => (categoryId: string, settingId: string) => {
     if (categoryId in state.userSettings) {
-      const userSetting: string = state.userSettings[categoryId][settingId]
-      if (userSetting) return userSetting
+      if (settingId in state.userSettings[categoryId]) return state.userSettings[categoryId][settingId]
     }
 
     // No user setting, get default value
-    return state.defaultSettings[categoryId].settings[settingId].default
+    return state.defaultSettings[categoryId].settings[settingId].defaultValue
   },
 
   keybinds: (state: ISettingsState, getters: any) => {
@@ -60,12 +59,22 @@ const getters = {
     })
   },
 
-  isSettingValueAccepted: (state: ISettingsState) => (categoryId: string, settingId: string, settingValue: any): boolean => {
-    if (state.defaultSettings[categoryId].settings[settingId].acceptedValues.test(settingValue)) return true
-    return false
+  validateSettingValue: (state: ISettingsState) => (categoryId: string, settingId: string, settingValue: any): string | null => {
+    const settingInfo = state.defaultSettings[categoryId].settings[settingId]
+
+    switch (settingInfo.type) {
+      case 'keybind':
+      case 'number':
+        const errorMessage = settingInfo.acceptedValues.validate(settingValue)
+        if (errorMessage) return errorMessage
+        break
+      default:
+        return null
+    }
+    return null
   },
   isSettingValueDefault: (state: ISettingsState) => (categoryId: string, settingId: string): boolean => {
-    const defaultValue = state.defaultSettings[categoryId].settings[settingId].default
+    const defaultValue = state.defaultSettings[categoryId].settings[settingId].defaultValue
 
     if (categoryId in state.userSettings && settingId in state.userSettings[categoryId]) {
       if (state.userSettings[categoryId][settingId] === defaultValue) return true
