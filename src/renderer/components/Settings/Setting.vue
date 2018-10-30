@@ -4,8 +4,7 @@
     <p class="settingDesc">{{settingInfo.description}}</p>
     <p class="settingAcceptedValuesDesc" v-if="settingInfo.acceptedValues.description">{{settingInfo.acceptedValues.description}}</p>
 
-    <p class="inputError" v-if="inputError">{{inputError}}</p>
-    <component :is="getComponentName(settingInfo.type)" v-model="settingValue"></component>    
+    <component :is="getComponentName(settingInfo.type)" v-model="settingValue" :categoryId="categoryId" :settingId="settingId"></component>    
   </div>
 </template>
 
@@ -28,19 +27,11 @@ export default class Setting extends Vue {
     return !this.$store.getters.isSettingValueDefault(this.categoryId, this.settingId)
   }
 
-  inputError: string | null = null
-  validate (settingValue: any): void {
-    this.inputError = null
-    const errorMessage: string | null = this.$store.getters.validateSettingValue(this.categoryId, this.settingId, settingValue)
-    if (errorMessage) this.inputError = errorMessage
-  }
-
   get settingValue (): number {
     return this.$store.getters.settingValue(this.categoryId, this.settingId)
   }
 
   set settingValue (settingValue: number) {
-    this.validate(settingValue)
     this.$store.commit('setSettingValue', {categoryId: this.categoryId, settingId: this.settingId, settingValue})
   }
 
@@ -48,18 +39,11 @@ export default class Setting extends Vue {
     const capitalizedType: string = `${type[0].toUpperCase()}${type.slice(1)}`
     return `${capitalizedType}Component`
   }
-
-  created () {
-    this.validate(this.settingValue)
-  }
 }
 </script>
 
 <style scoped>
 .changed {
   background-color: dimgray;
-}
-.inputError {
-  color: red;
 }
 </style>
