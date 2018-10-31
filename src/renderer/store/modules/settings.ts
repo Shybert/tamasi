@@ -44,9 +44,11 @@ const mutations = {
 }
 
 const getters = {
-  settingValue: (state: ISettingsState) => (categoryId: string, settingId: string) => {
-    if (categoryId in state.userSettings) {
-      if (settingId in state.userSettings[categoryId]) return state.userSettings[categoryId][settingId]
+  settingValue: (state: ISettingsState, getters: any) => (categoryId: string, settingId: string) => {
+    if (categoryId in state.userSettings && settingId in state.userSettings[categoryId]) {
+      const settingValue = state.userSettings[categoryId][settingId]
+      const errorMessage = getters.validateSettingValue(categoryId, settingId, settingValue)
+      if (!errorMessage) return settingValue
     }
 
     // No user setting, get default value
