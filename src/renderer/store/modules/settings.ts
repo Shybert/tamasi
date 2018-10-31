@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import {DefineMutations, DefineGetters} from 'vuex-type-helper'
 import throttle from 'lodash/throttle'
 import settingsData, {ISettingsCategories} from '../settingsData'
 import Store from 'electron-store'
@@ -25,26 +26,45 @@ function saveSettings (): void {
 }
 const throttledSaveSettings = throttle(saveSettings, 1000)
 
-const mutations = {
-  setSettingValue (state: ISettingsState, payload: {categoryId: string, settingId: string, settingValue: string}) {
-    // Since Vue cannot detect property addition
-    if (!(payload.categoryId in state.userSettings)) Vue.set(state.userSettings, payload.categoryId, {})
-    if (!(payload.settingId in state.userSettings[payload.categoryId])) Vue.set(state.userSettings[payload.categoryId], payload.settingId, {})
+interface ISettingsMutations {
+  setSettingValue: {
+    categoryId: string
+    settingId: string
+    settingValue: any
+  }
 
-    state.userSettings[payload.categoryId][payload.settingId] = payload.settingValue
+  recordKeybindInput: {
+    categoryId: string
+    settingId: string
+  }
+  stopRecordingKeybindInput: void
+}
+const mutations: DefineMutations<ISettingsMutations, ISettingsState> = {
+  setSettingValue (state, {categoryId, settingId, settingValue}) {
+    // Since Vue cannot detect property addition
+    if (!(categoryId in state.userSettings)) Vue.set(state.userSettings, categoryId, {})
+    if (!(settingId in state.userSettings[categoryId])) Vue.set(state.userSettings[categoryId], settingId, {})
+
+    state.userSettings[categoryId][settingId] = settingValue
     throttledSaveSettings()
   },
 
-  recordKeybindInput (state: ISettingsState, payload: {categoryId: string, settingId: string}) {
-    state.recordingKeybindInput = `${payload.categoryId}.${payload.settingId}`
+  recordKeybindInput (state, {categoryId, settingId}) {
+    state.recordingKeybindInput = `${categoryId}.${settingId}`
   },
-  stopRecordingKeybindInput (state: ISettingsState) {
+  stopRecordingKeybindInput (state) {
     state.recordingKeybindInput = null
   }
 }
 
-const getters = {
-  settingValue: (state: ISettingsState, getters: any) => (categoryId: string, settingId: string) => {
+interface ISettingsGetters {
+  settingValue: (categoryId: string, settingId: string) => any
+  keybinds: any[]
+  validateSettingValue: (categoryId: string, settingId: string, settingValue: any) => string | null
+  isSettingValueDefault: (categoryId: string, settingId: string) => boolean
+}
+const getters: DefineGetters<ISettingsGetters, ISettingsState> = {
+  settingValue: (state, getters) => (categoryId, settingId) => {
     if (categoryId in state.userSettings && settingId in state.userSettings[categoryId]) {
       const settingValue = state.userSettings[categoryId][settingId]
       const errorMessage = getters.validateSettingValue(categoryId, settingId, settingValue)
@@ -55,13 +75,13 @@ const getters = {
     return state.defaultSettings[categoryId].settings[settingId].defaultValue
   },
 
-  keybinds: (state: ISettingsState, getters: any) => {
+  keybinds: (state, getters) => {
     return Object.keys(state.defaultSettings.keybinds.settings).map(settingId => {
       return getters.settingValue('keybinds', settingId)
     })
   },
 
-  validateSettingValue: (state: ISettingsState) => (categoryId: string, settingId: string, settingValue: any): string | null => {
+  validateSettingValue: (state) => (categoryId, settingId, settingValue) => {
     const settingInfo = state.defaultSettings[categoryId].settings[settingId]
 
     switch (settingInfo.type) {
@@ -77,7 +97,7 @@ const getters = {
     }
     return null
   },
-  isSettingValueDefault: (state: ISettingsState) => (categoryId: string, settingId: string): boolean => {
+  isSettingValueDefault: (state) => (categoryId, settingId) => {
     const defaultValue = state.defaultSettings[categoryId].settings[settingId].defaultValue
 
     if (categoryId in state.userSettings && settingId in state.userSettings[categoryId]) {
