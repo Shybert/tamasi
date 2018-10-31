@@ -1,8 +1,8 @@
 <template>
   <div class="inputKeybind">
-    <div class="inputError" v-if="inputError">{{inputError}}</div>
-    <input class="settingKeybind" :value="selectedKeys || inputError ? selectedKeys : keybind" readonly>
-    <button class="recordKeybind" :class="{active: isSelected}" @keydown.prevent="handleKeydown" @keyup.prevent="handleKeyup" @click.prevent="switchRecordingKeybindInput">Edit keybind</button>    
+    <div class="inputError" v-if="inputError || (keybindErrorMessage && !isRecording)">{{isRecording ? inputError : keybindErrorMessage}}</div>
+    <input :value="isRecording ? selectedKeys : value" readonly>
+    <button class="recordKeybind" :class="{active: isRecording}" @keydown.prevent="handleKeydown" @keyup.prevent="handleKeyup" @click.prevent="switchRecordingKeybindInput">Edit keybind</button>    
   </div>
 </template>
 
@@ -13,13 +13,15 @@ import KeypressService from '../../../utils/keypressService'
 
 @Component
 export default class Keybind extends Vue {
+  @Prop() value: any
   @Prop(String) categoryId!: string
   @Prop(String) settingId!: string
-  get keybind (): string {
-    return this.$store.getters.settingValue(this.categoryId, this.settingId)
-  }
-  get isSelected (): boolean {
+
+  get isRecording (): boolean {
     return this.$store.state.settings.recordingKeybindInput === `${this.categoryId}.${this.settingId}`
+  }
+  get keybindErrorMessage (): string | null {
+    return this.$store.getters.validateSettingValue(this.categoryId, this.settingId, this.value)
   }
 
   keypressService = new KeypressService()
@@ -31,17 +33,17 @@ export default class Keybind extends Vue {
   }
 
   handleKeydown (event: KeyboardEvent): void {
-    if (!this.isSelected) return
+    if (!this.isRecording) return
     this.keypressService.keydown(event.key)
   }
   handleKeyup (event: KeyboardEvent): void {
-    if (!this.isSelected) return
+    if (!this.isRecording) return
     this.keypressService.keyup(event.key)
   }
 
   switchRecordingKeybindInput (): void {
-    if (this.isSelected) {
-      if (this.selectedKeys) this.$store.commit('setSettingValue', {categoryId: this.categoryId, settingId: this.settingId, settingValue: this.selectedKeys})
+    if (this.isRecording) {
+      this.$emit('input', this.selectedKeys)
       this.$store.commit('stopRecordingKeybindInput')
     }
     else this.$store.commit('recordKeybindInput', {categoryId: this.categoryId, settingId: this.settingId})

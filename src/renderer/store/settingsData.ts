@@ -2,9 +2,8 @@ import * as acceleratorHelpers from '../utils/acceleratorHelpers'
 
 const acceptedKeybinds = {
   description: 'Accepted keybinds include...',
-  test: acceleratorHelpers.isValidKeybind
+  validate: acceleratorHelpers.isValidKeybind
 }
-
 function acceptedIntegers (min: number, max?: number): INumberSettingInfo['acceptedValues'] {
   const description: string = max ? `Number between and including '${min}' and '${max}'` : `Number over and including '${min}'`
   return {
@@ -29,7 +28,7 @@ interface IKeybindSettingInfo extends IBaseSettingInfo {
   type: 'keybind'
   acceptedValues: {
     description: string,
-    validate: (value: any) => string | null
+    validate: (value: any) => boolean
   }
 }
 interface INumberSettingInfo extends IBaseSettingInfo {
@@ -79,28 +78,28 @@ const settingsData: ISettingsCategories = {
         label: 'Increment death counter',
         description: 'Keybind for incrementing the death counter',
         type: 'keybind',
-        default: 'End',
+        defaultValue: 'End',
         acceptedValues: acceptedKeybinds
       },
       switchTimer: {
         label: 'Switch the timer on/off',
         description: 'Keybind for switching the timer on/off',
         type: 'keybind',
-        default: 'Home',
+        defaultValue: 'Home',
         acceptedValues: acceptedKeybinds
       },
       previousBoss: {
         label: 'Previous boss',
         description: 'Keybind for selecting the previous boss',
         type: 'keybind',
-        default: 'PageUp',
+        defaultValue: 'PageUp',
         acceptedValues: acceptedKeybinds
       },
       nextBoss: {
         label: 'Next boss',
         description: 'Keybind for selecting the next boss',
         type: 'keybind',
-        default: 'PageDown',
+        defaultValue: 'PageDown',
         acceptedValues: acceptedKeybinds
       }
     }

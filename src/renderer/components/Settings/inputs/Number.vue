@@ -11,7 +11,7 @@ import {Component, Prop} from 'vue-property-decorator'
 
 @Component
 export default class Number extends Vue {
-  @Prop() value!: any
+  @Prop() value: any
   @Prop(String) categoryId!: string
   @Prop(String) settingId!: string
 

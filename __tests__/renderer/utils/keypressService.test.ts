@@ -44,11 +44,15 @@ describe('keypressService.ts', () => {
     expect(keypressService.selectedKeys).toBe('')
   })
 
-  test('Pressing a modifier key when there are no other selected keys adds the modifier to the selected keys, but also sets an error message', () => {
-    keypressService.keydown('modifier')
-    expect(keypressService.selectedKeys).toBe('modifier')
-    expect(keypressService.errorMessage).toBe('A single modifier is not a valid keybind.')
+  test('A keybind can not consist solely of modifiers', () => {
+    keypressService.keydown('modifier1')
+    expect(keypressService.selectedKeys).toBe('modifier1')
+    expect(keypressService.errorMessage).toBe('A keybind can not consist solely of modifiers.')
+    keypressService.keydown('modifier2')
+    expect(keypressService.selectedKeys).toBe('modifier1+modifier2')
+    expect(keypressService.errorMessage).toBe('A keybind can not consist solely of modifiers.')
   })
+
   test('Pressing a modifier key when there are other selected keys does not set an error message', () => {
     keypressService.keydown('a')
     keypressService.keydown('modifier')
@@ -77,12 +81,12 @@ describe('keypressService.ts', () => {
     expect(keypressService.errorMessage).toBeNull()
   })
   test('The same modifier is only added once, but no error message is set', () => {
-    // Need to add another modifier first for the test, otherwise keypressService.errorMessage will tell you that a single modifier is not a valid keybind (which is correct behavior)
-    keypressService.keydown('modifier1')
+    // Need to add another key first for the test, since only pressing modifiers sets an error
+    keypressService.keydown('a')
     keypressService.keydown('modifier2')
     keypressService.keydown('modifier2')
     keypressService.keydown('modifier2')
-    expect(keypressService.selectedKeys).toBe('modifier1+modifier2')
+    expect(keypressService.selectedKeys).toBe('a+modifier2')
     expect(keypressService.errorMessage).toBeNull()
   })
 

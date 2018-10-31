@@ -64,6 +64,8 @@ const getters = {
 
     switch (settingInfo.type) {
       case 'keybind':
+        if (!settingInfo.acceptedValues.validate(settingValue)) return 'Keybind is not valid.'
+        break
       case 'number':
         const errorMessage = settingInfo.acceptedValues.validate(settingValue)
         if (errorMessage) return errorMessage

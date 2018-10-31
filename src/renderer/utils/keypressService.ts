@@ -6,12 +6,13 @@ export default class KeypressService {
 
   errorMessage: string | null = null
   private validateInput (key: string): boolean {
+    const hasKey: boolean = this.selectedKeysArray.some(selectedKey => acceleratorHelpers.isValidKey(selectedKey))
+
     if (acceleratorHelpers.isModifier(key)) {
-      if (this.selectedKeysArray.length === 0) this.errorMessage = 'A single modifier is not a valid keybind.'
+      if (!hasKey) this.errorMessage = 'A keybind can not consist solely of modifiers.'
       return true
     }
 
-    const hasKey: boolean = this.selectedKeysArray.some(selectedKey => acceleratorHelpers.isValidKey(selectedKey))
     if (hasKey) {
       this.errorMessage = 'There can only be a single key (and multiple modifiers).'
       return false
