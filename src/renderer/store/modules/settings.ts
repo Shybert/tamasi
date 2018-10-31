@@ -59,6 +59,7 @@ const mutations: DefineMutations<ISettingsMutations, ISettingsState> = {
 
 interface ISettingsGetters {
   settingValue: (categoryId: string, settingId: string) => any
+  literalSettingValue: (categoryId: string, settingId: string) => any // Returns the user setting even if it isn't valid
   keybinds: any[]
   validateSettingValue: (categoryId: string, settingId: string, settingValue: any) => string | null
   isSettingValueDefault: (categoryId: string, settingId: string) => boolean
@@ -69,6 +70,14 @@ const getters: DefineGetters<ISettingsGetters, ISettingsState> = {
       const settingValue = state.userSettings[categoryId][settingId]
       const errorMessage = getters.validateSettingValue(categoryId, settingId, settingValue)
       if (!errorMessage) return settingValue
+    }
+
+    // No user setting, get default value
+    return state.defaultSettings[categoryId].settings[settingId].defaultValue
+  },
+  literalSettingValue: (state) => (categoryId, settingId) => {
+    if (categoryId in state.userSettings && settingId in state.userSettings[categoryId]) {
+      return state.userSettings[categoryId][settingId]
     }
 
     // No user setting, get default value

@@ -28,7 +28,7 @@ export default class Setting extends Vue {
   }
 
   get settingValue (): number {
-    return this.$store.getters.settingValue(this.categoryId, this.settingId)
+    return this.$store.getters.literalSettingValue(this.categoryId, this.settingId)
   }
 
   set settingValue (settingValue: number) {
