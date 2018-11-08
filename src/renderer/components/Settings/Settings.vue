@@ -4,12 +4,17 @@
     <SettingsNavComponent></SettingsNavComponent>
 
     <div id="categories">
-      <div class="category" v-for="(category, categoryId) in settings" :key="categoryId" :id="categoryId">
+      <section class="category" v-for="(category, categoryId) in settings" :key="categoryId" :id="categoryId">
         <h2 class="categoryLabel">{{category.label}}</h2>
         <p class="categoryDesc">{{category.description}}</p>
 
-        <SettingComponent v-for="(settingInfo, settingId) in category.settings" :key="settingId" :settingId="settingId" :categoryId="categoryId"></SettingComponent>
-      </div>
+        <div class="settings">
+          <section class="setting" v-for="(settingInfo, settingId) in category.settings" :key="settingId" :class="{changed: !$store.getters.isSettingValueDefault(categoryId, settingId)}">
+            <h3 class="settingLabel">{{settingInfo.label}}</h3>
+            <p class="settingDesc">{{settingInfo.description}}</p>
+          </section>
+        </div>
+      </section>
     </div>
   </div>
 </template>
@@ -20,12 +25,17 @@ import {Component} from 'vue-property-decorator'
 import {ISettingsCategories} from '../../store/settingsData'
 
 import SettingsNavComponent from './SettingsNav.vue'
-import SettingComponent from './Setting.vue'
 
-@Component({components: {SettingsNavComponent, SettingComponent}})
+@Component({components: {SettingsNavComponent}})
 export default class Settings extends Vue {
     get settings (): ISettingsCategories {
     return this.$store.state.settings.defaultSettings
   }
 }
 </script>
+
+<style scoped>
+.changed {
+  background-color: dimgray;
+}
+</style>
