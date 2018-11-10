@@ -33,10 +33,7 @@ interface ISettingsMutations {
     settingValue: any
   }
 
-  recordKeybindInput: {
-    categoryId: string
-    settingId: string
-  }
+  recordKeybindInput: string
   stopRecordingKeybindInput: void
 }
 const mutations: DefineMutations<ISettingsMutations, ISettingsState> = {
@@ -49,8 +46,8 @@ const mutations: DefineMutations<ISettingsMutations, ISettingsState> = {
     throttledSaveSettings()
   },
 
-  recordKeybindInput (state, {categoryId, settingId}) {
-    state.recordingKeybindInput = `${categoryId}.${settingId}`
+  recordKeybindInput (state, identifier) {
+    state.recordingKeybindInput = identifier
   },
   stopRecordingKeybindInput (state) {
     state.recordingKeybindInput = null
@@ -60,7 +57,7 @@ const mutations: DefineMutations<ISettingsMutations, ISettingsState> = {
 interface ISettingsGetters {
   settingValue: (categoryId: string, settingId: string) => any
   literalSettingValue: (categoryId: string, settingId: string) => any // Returns the user setting even if it isn't valid
-  keybinds: any[]
+
   validateSettingValue: (categoryId: string, settingId: string, settingValue: any) => string | null
   isSettingValueDefault: (categoryId: string, settingId: string) => boolean
 }
@@ -84,25 +81,13 @@ const getters: DefineGetters<ISettingsGetters, ISettingsState> = {
     return state.defaultSettings[categoryId].settings[settingId].defaultValue
   },
 
-  keybinds: (state, getters) => {
-    return Object.keys(state.defaultSettings.keybinds.settings).map(settingId => {
-      return getters.settingValue('keybinds', settingId)
-    })
-  },
-
   validateSettingValue: (state) => (categoryId, settingId, settingValue) => {
     const settingInfo = state.defaultSettings[categoryId].settings[settingId]
 
-    switch (settingInfo.type) {
-      case 'keybind':
-        if (!settingInfo.acceptedValues.validate(settingValue)) return 'Keybind is not valid.'
-        break
-      case 'number':
-        const errorMessage = settingInfo.acceptedValues.validate(settingValue)
-        if (errorMessage) return errorMessage
-        break
-      default:
-        return null
+    for (let i = 0; i < settingInfo.validators.length; i += 1) {
+      const option = settingInfo.validators[i].option
+      const errorMessage = option ? settingInfo.validators[i].validator(settingValue, option) : settingInfo.validators[i].validator(settingValue)
+      if (errorMessage) return errorMessage
     }
     return null
   },

@@ -1,51 +1,19 @@
+import * as validators from '../utils/validators'
 import * as acceleratorHelpers from '../utils/acceleratorHelpers'
 
-const acceptedKeybinds = {
-  description: 'Accepted keybinds include...',
-  validate: acceleratorHelpers.isValidKeybind
-}
-function acceptedIntegers (min: number, max?: number): INumberSettingInfo['acceptedValues'] {
-  const description: string = max ? `Number between and including '${min}' and '${max}'` : `Number over and including '${min}'`
-  return {
-    description,
-    validate: (value: any) => {
-      if (!(typeof value === 'number')) return 'Value must be a number.'
-      if (!Number.isInteger(value)) return 'Value must be an integer.'
-      if (value < min) return `Value cannot be lower than ${min}`
-      if (max && value > max) return `Value cannot be higher than ${max}`
-      return null
-    }
-  }
-}
-
-interface IBaseSettingInfo {
+interface ISettingInfo {
   label: string
   description: string
-  type: string
+  inputType: 'number' | 'keybind'
   defaultValue: any
+  validators: {
+    validator: (value: any, option?: any) => string | null
+    option?: any
+  }[]
+  acceptedValues?: string[]
 }
-interface IKeybindSettingInfo extends IBaseSettingInfo {
-  type: 'keybind'
-  acceptedValues: {
-    description: string,
-    validate: (value: any) => boolean
-  }
-}
-interface INumberSettingInfo extends IBaseSettingInfo {
-  type: 'number'
-  acceptedValues: {
-    description: string
-    validate: (value: any) => string | null
-  }
-}
-interface IEnumSettingInfo extends IBaseSettingInfo {
-  type: 'enum'
-  acceptedValues: string[]
-}
-export type TSettingInfo = IKeybindSettingInfo | INumberSettingInfo | IEnumSettingInfo
-
 export interface ISettings {
-  [x: string]: TSettingInfo
+  [settingId: string]: ISettingInfo
 }
 interface ISettingsCategory {
   label: string
@@ -53,7 +21,7 @@ interface ISettingsCategory {
   settings: ISettings
 }
 export interface ISettingsCategories {
-  [x: string]: ISettingsCategory
+  [categoryId: string]: ISettingsCategory
 }
 
 const settingsData: ISettingsCategories = {
@@ -64,10 +32,13 @@ const settingsData: ISettingsCategories = {
       test: {
         label: 'Test setting',
         description: 'testytestytest',
-        type: 'number',
+        inputType: 'number',
         defaultValue: 5,
-        acceptedValues: acceptedIntegers(23)
-      }
+        validators: [{validator: validators.number},
+        {validator: validators.integer},
+        {validator: validators.moreThan, option: 3}
+        ]
+      }// ,
     }
   },
   keybinds: {
@@ -77,30 +48,30 @@ const settingsData: ISettingsCategories = {
       incrementDeaths: {
         label: 'Increment death counter',
         description: 'Keybind for incrementing the death counter',
-        type: 'keybind',
+        inputType: 'keybind',
         defaultValue: 'End',
-        acceptedValues: acceptedKeybinds
+        validators: [{validator: acceleratorHelpers.validateKeybind}]
       },
       switchTimer: {
         label: 'Switch the timer on/off',
         description: 'Keybind for switching the timer on/off',
-        type: 'keybind',
+        inputType: 'keybind',
         defaultValue: 'Home',
-        acceptedValues: acceptedKeybinds
+        validators: [{validator: acceleratorHelpers.validateKeybind}]
       },
       previousBoss: {
         label: 'Previous boss',
         description: 'Keybind for selecting the previous boss',
-        type: 'keybind',
+        inputType: 'keybind',
         defaultValue: 'PageUp',
-        acceptedValues: acceptedKeybinds
+        validators: [{validator: acceleratorHelpers.validateKeybind}]
       },
       nextBoss: {
         label: 'Next boss',
         description: 'Keybind for selecting the next boss',
-        type: 'keybind',
+        inputType: 'keybind',
         defaultValue: 'PageDown',
-        acceptedValues: acceptedKeybinds
+        validators: [{validator: acceleratorHelpers.validateKeybind}]
       }
     }
   }
