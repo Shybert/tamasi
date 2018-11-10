@@ -8,6 +8,11 @@
     </select>
   </div>
 
+  <div v-else-if="inputType === 'checkbox'" class="settingInput">
+    <div class="inputError" v-if="inputError">{{inputError}}</div>
+    <input type="checkbox" v-model="settingValue">
+  </div>
+
   <div v-else class="settingInput">
     <div class="inputError" v-if="inputError">{{inputError}}</div>
   

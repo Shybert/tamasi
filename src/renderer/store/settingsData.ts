@@ -4,7 +4,7 @@ import * as acceleratorHelpers from '../utils/acceleratorHelpers'
 interface ISettingInfo {
   label: string
   description: string
-  inputType: 'number' | 'keybind' | 'enum'
+  inputType: 'number' | 'keybind' | 'enum' | 'checkbox'
   defaultValue: any
   validators: {
     validator: (value: any, option?: any) => string | null
@@ -46,6 +46,13 @@ const settingsData: ISettingsCategories = {
         defaultValue: 'A',
         acceptedValues: ['A', 'B', 'C'],
         validators: []
+      },
+      exampleCheckbox: {
+        label: 'Example checkbox setting',
+        description: 'example 2: electric boogaloo',
+        inputType: 'checkbox',
+        defaultValue: true,
+        validators: [{validator: validators.boolean}]
       }
     }
   },

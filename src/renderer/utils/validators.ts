@@ -14,3 +14,8 @@ export function lessThan (value: any, option: number): string | null {
   if (value > option) return `Value cannot be higher than ${option}`
   return null
 }
+
+export function boolean (value: any): string | null {
+  if (!(typeof value === 'boolean')) return 'Value must be a boolean'
+  return null
+}
