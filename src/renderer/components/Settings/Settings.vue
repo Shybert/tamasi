@@ -12,7 +12,7 @@
           <section class="setting" v-for="(settingInfo, settingId) in category.settings" :key="settingId" :class="{changed: !$store.getters.isSettingValueDefault(categoryId, settingId)}">
             <h3 class="settingLabel">{{settingInfo.label}}</h3>
             <p class="settingDesc">{{settingInfo.description}}</p>
-            <SettingInputComponent :categoryId="categoryId" :settingId="settingId" :inputType="settingInfo.inputType"></SettingInputComponent>
+            <SettingInputComponent :categoryId="categoryId" :settingId="settingId" :inputType="settingInfo.inputType" :acceptedValues="settingInfo.acceptedValues"></SettingInputComponent>
           </section>
         </div>
       </section>

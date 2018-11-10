@@ -8,10 +8,10 @@
 <script lang="ts">
 import Vue from 'vue'
 import {Component, Prop} from 'vue-property-decorator'
-import KeypressService from '../../../utils/keypressService'
+import KeypressService from '../../utils/keypressService'
 
 @Component
-export default class Keybind extends Vue {
+export default class InputKeybind extends Vue {
   @Prop() value: any
   @Prop(String) identifier!: string
 

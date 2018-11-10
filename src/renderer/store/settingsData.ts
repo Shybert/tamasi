@@ -4,7 +4,7 @@ import * as acceleratorHelpers from '../utils/acceleratorHelpers'
 interface ISettingInfo {
   label: string
   description: string
-  inputType: 'number' | 'keybind'
+  inputType: 'number' | 'keybind' | 'enum'
   defaultValue: any
   validators: {
     validator: (value: any, option?: any) => string | null
@@ -38,7 +38,15 @@ const settingsData: ISettingsCategories = {
         {validator: validators.integer},
         {validator: validators.moreThan, option: 3}
         ]
-      }// ,
+      },
+      exampleEnum: {
+        label: 'Example enum setting',
+        description: 'this is a only an example!',
+        inputType: 'enum',
+        defaultValue: 'A',
+        acceptedValues: ['A', 'B', 'C'],
+        validators: []
+      }
     }
   },
   keybinds: {
