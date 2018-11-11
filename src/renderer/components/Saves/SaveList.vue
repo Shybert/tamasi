@@ -1,7 +1,10 @@
 <template>
   <ul>
-    <li v-for="(save, saveId) in saveList" :key="saveId" @click="loadOverlayWindow(saveId)">
-      {{save.name}}
+    <li v-for="(save, saveId) in saveList" :key="saveId">
+      <ul>
+        <li @click="loadOverlayWindow(saveId)">{{save.name}}</li>
+        <li><router-link :to="`/charts/${$route.params.gameId}/${saveId}`">Charts</router-link></li>
+      </ul>
     </li>
   </ul>
 </template>
