@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import {DefineMutations, DefineActions} from 'vuex-type-helper'
 import * as crypto from 'crypto'
 import throttle from 'lodash/throttle'
 import {IGame} from './games'
@@ -12,7 +13,7 @@ export interface ISaveBossInfo {
   deaths: number
 }
 interface ISaveBosses {
-  [x: string]: ISaveBossInfo
+  [bossId: string]: ISaveBossInfo
 }
 export interface ISave {
   name: string
@@ -20,8 +21,8 @@ export interface ISave {
   selected: string
 }
 export interface ISaves {
-  [x: string]: { // Game ID
-    [x: string]: ISave // Save ID
+  [gameId: string]: {
+    [saveId: string]: ISave
   }
 }
 
@@ -29,7 +30,6 @@ interface ISavesState {
   showNewSaveOverlay: boolean
   saves: ISaves
 }
-
 const state: ISavesState = {
   showNewSaveOverlay: false,
   saves: savesData.get('games')
@@ -39,39 +39,71 @@ function saveSave (): void {
 }
 const throttledSaveSave = throttle(saveSave, 5000)
 
-const mutations = {
-  toggleNewSaveOverlay (state: ISavesState, payload: {showNewSaveOverlay: boolean}) {
-    state.showNewSaveOverlay = payload.showNewSaveOverlay
+interface ISavesMutations {
+  toggleNewSaveOverlay: {
+    showNewSaveOverlay: boolean
+  }
+  createSave: {
+    gameId: string
+    saveId: string
+    save: ISave
+  }
+
+  setSelectedBoss: {
+    gameId: string
+    saveId: string
+    selectedBossId: string
+  }
+  incrementDeaths: {
+    gameId: string
+    saveId: string
+    bossId: string
+  }
+  setBossTime: {
+    gameId: string
+    saveId: string
+    bossId: string
+    time: number
+  }
+}
+const mutations: DefineMutations<ISavesMutations, ISavesState> = {
+  toggleNewSaveOverlay (state, {showNewSaveOverlay}) {
+    state.showNewSaveOverlay = showNewSaveOverlay
   },
-  createSave (state: ISavesState, payload: {save: ISave, saveId: string, gameId: string}) {
+  createSave (state, {gameId, saveId, save}) {
     // Use Vue.set because otherwise Vue cannot detect property addition
-    Vue.set(state.saves[payload.gameId], payload.saveId, payload.save)
+    Vue.set(state.saves[gameId], saveId, save)
 
     throttledSaveSave()
   },
 
-  setSelectedBoss (state: ISavesState, payload: {gameId: string, saveId: string, selectedBossId: string}) {
-    state.saves[payload.gameId][payload.saveId].selected = payload.selectedBossId
+  setSelectedBoss (state: ISavesState, {gameId, saveId, selectedBossId}) {
+    state.saves[gameId][saveId].selected = selectedBossId
     throttledSaveSave()
   },
-  incrementDeaths (state: ISavesState, payload: {gameId: string, saveId: string, bossId: string}) {
-    state.saves[payload.gameId][payload.saveId].bosses[payload.bossId].deaths += 1
+  incrementDeaths (state: ISavesState, {gameId, saveId, bossId}) {
+    state.saves[gameId][saveId].bosses[bossId].deaths += 1
     throttledSaveSave()
   },
-  setBossTime (state: ISavesState, payload: {gameId: string, saveId: string, bossId: string, time: number}) {
-    state.saves[payload.gameId][payload.saveId].bosses[payload.bossId].time = payload.time
+  setBossTime (state: ISavesState, {gameId, saveId, bossId, time}) {
+    state.saves[gameId][saveId].bosses[bossId].time = time
     throttledSaveSave()
   }
 }
 
-const actions = {
-  createSave ({state, commit, rootState}: {state: ISavesState, commit: any, rootState: any},
-    payload: {gameId: string, saveName: string}) {
-    const gameData: IGame = rootState.games.games[payload.gameId]
-    const save = generateSave(payload.saveName, gameData)
+interface ISavesActions {
+  createSave: {
+    gameId: string,
+    saveName: string
+  }
+}
+const actions: DefineActions<ISavesActions, ISavesState, ISavesMutations> = {
+  createSave ({commit, rootState}, {gameId, saveName}) {
+    const gameData: IGame = rootState.games.games[gameId]
+    const save = generateSave(saveName, gameData)
     const generatedSaveId: string = crypto.randomBytes(16).toString('hex')
 
-    commit('createSave', {save, saveId: generatedSaveId, gameId: payload.gameId})
+    commit('createSave', {gameId: gameId, saveId: generatedSaveId, save})
   }
 }
 
