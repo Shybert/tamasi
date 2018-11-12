@@ -2,8 +2,10 @@ import Vue from 'vue'
 import {DefineMutations, DefineGetters, DefineActions} from 'vuex-type-helper'
 import * as crypto from 'crypto'
 import throttle from 'lodash/throttle'
-import {ChartData} from 'chart.js'
+import {ChartData, ChartOptions} from 'chart.js'
 import {IGame} from './games'
+import formatBossTime from '../../utils/formatBossTime'
+
 import Store from 'electron-store'
 const savesData = new Store({name: 'saves', cwd: 'storage'})
 
@@ -93,17 +95,59 @@ const mutations: DefineMutations<ISavesMutations, ISavesState> = {
 }
 
 interface ISavesGetters {
-  deathsChartData: (gameId: string, saveId: string) => ChartData
+  deathsChartData: (gameId: string, saveId: string) => {chartData: ChartData, chartOptions: ChartOptions}
+  timesChartData: (gameId: string, saveId: string) => {chartData: ChartData, chartOptions: ChartOptions}
 }
 const getters: DefineGetters<ISavesGetters, ISavesState> = {
   deathsChartData: (state) => (gameId, saveId) => {
     const labels = Object.values(state.saves[gameId][saveId].bosses).map(bossInfo => bossInfo.name)
     const deaths = Object.values(state.saves[gameId][saveId].bosses).map(bossInfo => bossInfo.deaths)
-    return {labels, datasets: [{
-      label: '# of Deaths',
-      data: deaths,
-      backgroundColor: 'rgb(255, 0, 0)'
-    }]}
+    return {
+      chartData: {labels, datasets: [{
+        label: '# of Deaths',
+        data: deaths,
+        backgroundColor: 'rgb(255, 0, 0)'
+      }]},
+      chartOptions: {
+        scales: {xAxes: [{ticks: {
+          min: 0
+        }}]}
+      }
+    }
+  },
+  timesChartData: (state) => (gameId, saveId) => {
+    const labels = Object.values(state.saves[gameId][saveId].bosses).map(bossInfo => bossInfo.name)
+    const millisecondTimes = Object.values(state.saves[gameId][saveId].bosses).map(bossInfo => bossInfo.time)
+    return {
+      chartData: {labels, datasets: [{
+        label: 'Boss time in hh:mm:ss',
+        data: millisecondTimes,
+        backgroundColor: 'rgb(0, 255, 0)',
+        xAxisID: 'xAxis'
+      }]},
+      chartOptions: {
+        tooltips: {
+          callbacks: {
+            label: (toolTipItem) => {
+              const label = toolTipItem.xLabel ? toolTipItem.xLabel : ''
+              return formatBossTime(Number.parseInt(label, 10), false)
+            }
+          }
+        },
+        scales: {
+          xAxes: [{
+            id: 'xAxis',
+            type: 'linear',
+            ticks: {
+              min: 0,
+              callback: value => {
+                return formatBossTime(Number.parseInt(value, 10), false)
+              }
+            }
+          }]
+        }
+      }
+    }
   }
 }
 
