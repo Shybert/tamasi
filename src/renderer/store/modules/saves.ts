@@ -1,7 +1,8 @@
 import Vue from 'vue'
-import {DefineMutations, DefineActions} from 'vuex-type-helper'
+import {DefineMutations, DefineGetters, DefineActions} from 'vuex-type-helper'
 import * as crypto from 'crypto'
 import throttle from 'lodash/throttle'
+import {ChartData} from 'chart.js'
 import {IGame} from './games'
 import Store from 'electron-store'
 const savesData = new Store({name: 'saves', cwd: 'storage'})
@@ -91,6 +92,21 @@ const mutations: DefineMutations<ISavesMutations, ISavesState> = {
   }
 }
 
+interface ISavesGetters {
+  deathsChartData: (gameId: string, saveId: string) => ChartData
+}
+const getters: DefineGetters<ISavesGetters, ISavesState> = {
+  deathsChartData: (state) => (gameId, saveId) => {
+    const labels = Object.values(state.saves[gameId][saveId].bosses).map(bossInfo => bossInfo.name)
+    const deaths = Object.values(state.saves[gameId][saveId].bosses).map(bossInfo => bossInfo.deaths)
+    return {labels, datasets: [{
+      label: '# of Deaths',
+      data: deaths,
+      backgroundColor: 'rgb(255, 0, 0)'
+    }]}
+  }
+}
+
 interface ISavesActions {
   createSave: {
     gameId: string,
@@ -134,5 +150,6 @@ function generateSave (name: string, gameData: IGame): ISave {
 export default {
   state,
   mutations,
+  getters,
   actions
 }
