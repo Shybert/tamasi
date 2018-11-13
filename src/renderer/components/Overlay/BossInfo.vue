@@ -17,7 +17,7 @@ export default class BossInfo extends Vue {
   @Prop(Object) bossInfo!: ISaveBossInfo
 
   get formattedTime () {
-    return formatBossTime(this.bossInfo.time, true)
+    return formatBossTime(this.bossInfo.time, this.$store.getters.settingValue('overlay', 'showBossTimeMilliseconds'))
   }
 }
 </script>

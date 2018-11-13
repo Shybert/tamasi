@@ -89,6 +89,19 @@ const settingsData: ISettingsCategories = {
         validators: [{validator: acceleratorHelpers.validateKeybind}]
       }
     }
+  },
+  overlay: {
+    label: 'Overlay',
+    description: 'Settings specific to the overlay',
+    settings: {
+      showBossTimeMilliseconds: {
+        label: 'Show boss time milliseconds',
+        description: 'Whether or not to show milliseconds when displaying the time for each boss',
+        inputType: 'checkbox',
+        defaultValue: true,
+        validators: [{validator: validators.boolean}]
+      }
+    }
   }
 }
 export default settingsData
