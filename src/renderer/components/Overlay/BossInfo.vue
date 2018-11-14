@@ -9,7 +9,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import {Component, Prop} from 'vue-property-decorator'
-import {ISaveBossInfo} from '../../store/modules/saves'
+import {ISaveBossInfo} from '../../store/savesData'
 import formatBossTime from '../../utils/formatBossTime'
 
 @Component

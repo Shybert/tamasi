@@ -13,7 +13,7 @@
 import Vue from 'vue'
 import {Component} from 'vue-property-decorator'
 import {ipcRenderer} from 'electron'
-import {ISaves} from '../../store/modules/saves'
+import {ISaves} from '../../store/savesData'
 
 @Component
 export default class SaveList extends Vue {

@@ -13,7 +13,7 @@ import Vue from 'vue'
 import {Component} from 'vue-property-decorator'
 import {remote} from 'electron'
 import Timer from './utils/timer'
-import {ISave} from './store/modules/saves'
+import {ISave} from './store/savesData'
 
 import BossInfoComponent from './components/Overlay/BossInfo.vue'
 

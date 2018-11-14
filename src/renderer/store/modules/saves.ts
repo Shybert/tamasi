@@ -1,46 +1,19 @@
 import Vue from 'vue'
 import {DefineMutations, DefineGetters, DefineActions} from 'vuex-type-helper'
 import * as crypto from 'crypto'
-import throttle from 'lodash/throttle'
 import {ChartData, ChartOptions} from 'chart.js'
+import * as savesData from '../savesData'
 import {IGame} from './games'
 import formatBossTime from '../../utils/formatBossTime'
 
-import Store from 'electron-store'
-const savesData = new Store({name: 'saves', cwd: 'storage'})
-
-// Saves interface
-export interface ISaveBossInfo {
-  name: string
-  time: number
-  deaths: number
-}
-interface ISaveBosses {
-  [bossId: string]: ISaveBossInfo
-}
-export interface ISave {
-  name: string
-  bosses: ISaveBosses
-  selected: string
-}
-export interface ISaves {
-  [gameId: string]: {
-    [saveId: string]: ISave
-  }
-}
-
 interface ISavesState {
   showNewSaveOverlay: boolean
-  saves: ISaves
+  saves: savesData.ISaves
 }
 const state: ISavesState = {
   showNewSaveOverlay: false,
-  saves: savesData.get('games')
+  saves: savesData.saves
 }
-function saveSave (): void {
-  savesData.set('games', state.saves)
-}
-const throttledSaveSave = throttle(saveSave, 5000)
 
 interface ISavesMutations {
   toggleNewSaveOverlay: {
@@ -49,7 +22,7 @@ interface ISavesMutations {
   createSave: {
     gameId: string
     saveId: string
-    save: ISave
+    save: savesData.ISave
   }
 
   setSelectedBoss: {
@@ -75,22 +48,23 @@ const mutations: DefineMutations<ISavesMutations, ISavesState> = {
   },
   createSave (state, {gameId, saveId, save}) {
     // Use Vue.set because otherwise Vue cannot detect property addition
+    if (!(gameId in state.saves)) Vue.set(state.saves, gameId, {})
     Vue.set(state.saves[gameId], saveId, save)
 
-    throttledSaveSave()
+    savesData.saveSaves()
   },
 
   setSelectedBoss (state: ISavesState, {gameId, saveId, selectedBossId}) {
     state.saves[gameId][saveId].selected = selectedBossId
-    throttledSaveSave()
+    savesData.saveSaves()
   },
   incrementDeaths (state: ISavesState, {gameId, saveId, bossId}) {
     state.saves[gameId][saveId].bosses[bossId].deaths += 1
-    throttledSaveSave()
+    savesData.saveSaves()
   },
   setBossTime (state: ISavesState, {gameId, saveId, bossId, time}) {
     state.saves[gameId][saveId].bosses[bossId].time = time
-    throttledSaveSave()
+    savesData.saveSaves()
   }
 }
 
@@ -167,7 +141,7 @@ const actions: DefineActions<ISavesActions, ISavesState, ISavesMutations> = {
   }
 }
 
-function generateSave (name: string, gameData: IGame): ISave {
+function generateSave (name: string, gameData: IGame): savesData.ISave {
   let saveName: string = name
 
   if (!saveName) {
@@ -175,7 +149,7 @@ function generateSave (name: string, gameData: IGame): ISave {
     saveName = gameData.name
   }
 
-  const bossList = gameData.bosses as ISaveBosses
+  const bossList = gameData.bosses as savesData.ISaveBosses
   // Insert properties for each boss
   Object.keys(bossList).forEach((bossId): void => {
     bossList[bossId].time = 0
@@ -183,7 +157,7 @@ function generateSave (name: string, gameData: IGame): ISave {
   })
 
   // Insert the save info
-  const save: ISave = {
+  const save: savesData.ISave = {
     name: saveName,
     bosses: bossList,
     selected: Object.keys(bossList)[0]
