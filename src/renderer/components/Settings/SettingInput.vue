@@ -1,5 +1,5 @@
 <template>
-  <div v-if="inputType === 'enum'" class="settingInput">
+  <div v-if="settingInfo.Type === 'enum'" class="settingInput">
     <div class="inputError" v-if="inputError">{{inputError}}</div>
     <select v-model="settingValue">
       <option v-for="value in acceptedValues" :value="value" :key="value">
@@ -8,7 +8,7 @@
     </select>
   </div>
 
-  <div v-else-if="inputType === 'checkbox'" class="settingInput">
+  <div v-else-if="settingInfo.type === 'checkbox'" class="settingInput">
     <div class="inputError" v-if="inputError">{{inputError}}</div>
     <input type="checkbox" v-model="settingValue">
   </div>
@@ -16,14 +16,15 @@
   <div v-else class="settingInput">
     <div class="inputError" v-if="inputError">{{inputError}}</div>
   
-    <input v-if="inputType === 'number'" type="number" v-model.number="settingValue">
-    <InputKeybindComponent v-else-if="inputType === 'keybind'" v-model="settingValue" :identifier="`${categoryId}.${settingId}`"></InputKeybindComponent>
+    <input v-if="settingInfo.type === 'number'" type="number" v-model.number="settingValue" :min="settingInfo.min" :max="settingInfo.max">
+    <InputKeybindComponent v-else-if="settingInfo.type === 'keybind'" v-model="settingValue" :identifier="`${categoryId}.${settingId}`"></InputKeybindComponent>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import {Component, Prop} from 'vue-property-decorator'
+import {TSettingInfo} from '../../store/settingsData'
 
 import InputKeybindComponent from './InputKeybind.vue'
 
@@ -31,8 +32,7 @@ import InputKeybindComponent from './InputKeybind.vue'
 export default class SettingInput extends Vue {
   @Prop(String) categoryId!: string
   @Prop(String) settingId!: string
-  @Prop(String) inputType!: string
-  @Prop() acceptedValues: string | undefined
+  @Prop(Object) settingInfo!: TSettingInfo
 
   get settingValue (): number {
     return this.$store.getters.literalSettingValue(this.categoryId, this.settingId)

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import {DefineMutations, DefineGetters} from 'vuex-type-helper'
 import throttle from 'lodash/throttle'
 import settingsData, {ISettingsCategories} from '../settingsData'
+import * as acceleratorHelpers from '../../utils/acceleratorHelpers'
 import Store from 'electron-store'
 const userSettingsData = new Store({name: 'userSettings', cwd: 'storage'})
 
@@ -58,7 +59,7 @@ interface ISettingsGetters {
   settingValue: (categoryId: string, settingId: string) => any
   literalSettingValue: (categoryId: string, settingId: string) => any // Returns the user setting even if it isn't valid
 
-  validateSettingValue: (categoryId: string, settingId: string, settingValue: any) => string | null
+  validateSettingValue: (categoryId: string, settingId: string, settingValue: unknown) => string | null
   isSettingValueDefault: (categoryId: string, settingId: string) => boolean
 }
 const getters: DefineGetters<ISettingsGetters, ISettingsState> = {
@@ -84,10 +85,28 @@ const getters: DefineGetters<ISettingsGetters, ISettingsState> = {
   validateSettingValue: (state) => (categoryId, settingId, settingValue) => {
     const settingInfo = state.defaultSettings[categoryId].settings[settingId]
 
-    for (let i = 0; i < settingInfo.validators.length; i += 1) {
-      const option = settingInfo.validators[i].option
-      const errorMessage = option ? settingInfo.validators[i].validator(settingValue, option) : settingInfo.validators[i].validator(settingValue)
-      if (errorMessage) return errorMessage
+    switch (settingInfo.type) {
+      case 'number':
+        if (!(typeof settingValue === 'number')) return 'Value must be a number.'
+        if (!Number.isInteger(settingValue)) return 'Value must be an integer.'
+        if (settingValue < settingInfo.min) return `Value cannot be lower than ${settingInfo.min}`
+        if (settingInfo.max && (settingValue > settingInfo.max)) return `Value cannot be higher than ${settingInfo.max}`
+        break
+
+      case 'keybind':
+        if (!(typeof settingValue === 'string')) return 'Value must be a string.'
+        const errorMessage = acceleratorHelpers.validateKeybind(settingValue)
+        if (errorMessage) return errorMessage
+        break
+
+      case 'enum':
+        if (!(typeof settingValue === 'string') && !(typeof settingValue === 'number')) return 'Value must be a string or a number.'
+        if (!settingInfo.acceptedValues.includes(settingValue)) return 'Value is not an accepted value.'
+        break
+
+      case 'checkbox':
+        if (!(typeof settingValue === 'boolean')) return 'Value must be a boolean'
+        break
     }
     return null
   },

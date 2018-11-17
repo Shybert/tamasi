@@ -1,19 +1,32 @@
-import * as validators from '../utils/validators'
-import * as acceleratorHelpers from '../utils/acceleratorHelpers'
-
-interface ISettingInfo {
+interface IBaseSettingInfo {
   label: string
   description: string
-  inputType: 'number' | 'keybind' | 'enum' | 'checkbox'
+  type: string
   defaultValue: any
-  validators: {
-    validator: (value: any, option?: any) => string | null
-    option?: any
-  }[]
-  acceptedValues?: string[]
 }
+interface INumberSettingInfo extends IBaseSettingInfo {
+  type: 'number'
+  defaultValue: number
+  min: number
+  max?: number
+}
+interface IKeybindSettingInfo extends IBaseSettingInfo {
+  type: 'keybind'
+  defaultValue: string
+}
+interface IEnumSettingInfo extends IBaseSettingInfo {
+  type: 'enum'
+  defaultValue: string | number
+  acceptedValues: (string | number)[]
+}
+interface ICheckboxSettingInfo extends IBaseSettingInfo {
+  type: 'checkbox'
+  defaultValue: boolean
+}
+export type TSettingInfo = INumberSettingInfo | IKeybindSettingInfo | IEnumSettingInfo | ICheckboxSettingInfo
+
 export interface ISettings {
-  [settingId: string]: ISettingInfo
+  [settingId: string]: TSettingInfo
 }
 interface ISettingsCategory {
   label: string
@@ -32,27 +45,23 @@ const settingsData: ISettingsCategories = {
       test: {
         label: 'Test setting',
         description: 'testytestytest',
-        inputType: 'number',
+        type: 'number',
         defaultValue: 5,
-        validators: [{validator: validators.number},
-        {validator: validators.integer},
-        {validator: validators.moreThan, option: 3}
-        ]
+        min: 3,
+        max: 6
       },
       exampleEnum: {
         label: 'Example enum setting',
         description: 'this is a only an example!',
-        inputType: 'enum',
+        type: 'enum',
         defaultValue: 'A',
-        acceptedValues: ['A', 'B', 'C'],
-        validators: []
+        acceptedValues: ['A', 'B', 'C']
       },
       exampleCheckbox: {
         label: 'Example checkbox setting',
         description: 'example 2: electric boogaloo',
-        inputType: 'checkbox',
-        defaultValue: true,
-        validators: [{validator: validators.boolean}]
+        type: 'checkbox',
+        defaultValue: true
       }
     }
   },
@@ -63,30 +72,26 @@ const settingsData: ISettingsCategories = {
       incrementDeaths: {
         label: 'Increment death counter',
         description: 'Keybind for incrementing the death counter',
-        inputType: 'keybind',
-        defaultValue: 'End',
-        validators: [{validator: acceleratorHelpers.validateKeybind}]
+        type: 'keybind',
+        defaultValue: 'End'
       },
       switchTimer: {
         label: 'Switch the timer on/off',
         description: 'Keybind for switching the timer on/off',
-        inputType: 'keybind',
-        defaultValue: 'Home',
-        validators: [{validator: acceleratorHelpers.validateKeybind}]
+        type: 'keybind',
+        defaultValue: 'Home'
       },
       previousBoss: {
         label: 'Previous boss',
         description: 'Keybind for selecting the previous boss',
-        inputType: 'keybind',
-        defaultValue: 'PageUp',
-        validators: [{validator: acceleratorHelpers.validateKeybind}]
+        type: 'keybind',
+        defaultValue: 'PageUp'
       },
       nextBoss: {
         label: 'Next boss',
         description: 'Keybind for selecting the next boss',
-        inputType: 'keybind',
-        defaultValue: 'PageDown',
-        validators: [{validator: acceleratorHelpers.validateKeybind}]
+        type: 'keybind',
+        defaultValue: 'PageDown'
       }
     }
   },
@@ -97,9 +102,8 @@ const settingsData: ISettingsCategories = {
       showBossTimeMilliseconds: {
         label: 'Show boss time milliseconds',
         description: 'Whether or not to show milliseconds when displaying the time for each boss',
-        inputType: 'checkbox',
-        defaultValue: true,
-        validators: [{validator: validators.boolean}]
+        type: 'checkbox',
+        defaultValue: true
       }
     }
   }
