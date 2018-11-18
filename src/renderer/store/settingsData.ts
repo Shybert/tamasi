@@ -42,6 +42,13 @@ const settingsData: ISettingsCategories = {
     label: 'General',
     description: 'General...',
     settings: {
+      defaultGame: {
+        label: 'Default game',
+        description: 'Which game to display by default when starting the application',
+        type: 'enum',
+        defaultValue: 'ds3',
+        acceptedValues: ['des', 'ds1', 'ds2', 'ds3', 'bb']
+      },
       test: {
         label: 'Test setting',
         description: 'testytestytest',
