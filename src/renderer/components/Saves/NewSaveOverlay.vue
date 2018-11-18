@@ -13,7 +13,7 @@ import {Component, Prop} from 'vue-property-decorator'
 
 @Component
 export default class NewSaveOverlay extends Vue {
-  @Prop(String) gameId!: string
+  @Prop({type: String, required: true}) gameId!: string
   newSaveName: string = ''
 
   createSave (): void {

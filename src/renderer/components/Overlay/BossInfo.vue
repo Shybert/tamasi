@@ -14,7 +14,7 @@ import formatBossTime from '../../utils/formatBossTime'
 
 @Component
 export default class BossInfo extends Vue {
-  @Prop(Object) bossInfo!: ISaveBossInfo
+  @Prop({type: Object, required: true}) bossInfo!: ISaveBossInfo
 
   get formattedTime () {
     return formatBossTime(this.bossInfo.time, this.$store.getters.settingValue('overlay', 'showBossTimeMilliseconds'))

@@ -30,9 +30,9 @@ import InputKeybindComponent from './InputKeybind.vue'
 
 @Component({components: {InputKeybindComponent}})
 export default class SettingInput extends Vue {
-  @Prop(String) categoryId!: string
-  @Prop(String) settingId!: string
-  @Prop(Object) settingInfo!: TSettingInfo
+  @Prop({type: String, required: true}) categoryId!: string
+  @Prop({type: String, required: true}) settingId!: string
+  @Prop({type: Object, required: true}) settingInfo!: TSettingInfo
 
   get settingValue (): number {
     return this.$store.getters.literalSettingValue(this.categoryId, this.settingId)

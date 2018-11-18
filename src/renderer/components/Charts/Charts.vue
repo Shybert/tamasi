@@ -15,8 +15,8 @@ import HorizontalBarChartComponent from './HorizontalBarChart'
 
 @Component({components: {HorizontalBarChartComponent}})
 export default class Charts extends Vue {
-  @Prop(String) gameId!: string
-  @Prop(String) saveId!: string
+  @Prop({type: String, required: true}) gameId!: string
+  @Prop({type: String, required: true}) saveId!: string
 
   get deathsChartData (): {chartData: ChartData, chartOptions: ChartOptions} {
     return this.$store.getters.deathsChartData(this.gameId, this.saveId)

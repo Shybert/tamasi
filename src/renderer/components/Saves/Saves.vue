@@ -16,7 +16,7 @@ import SaveListComponent from './SaveList.vue'
 
 @Component({components: {NewSaveOverlayComponent, SaveListComponent}})
 export default class Saves extends Vue {
-  @Prop(String) gameId!: string
+  @Prop({type: String, required: true}) gameId!: string
 
   get showNewSaveOverlay (): boolean {
     return this.$store.state.saves.showNewSaveOverlay

@@ -17,7 +17,7 @@ import {ISaves} from '../../store/savesData'
 
 @Component
 export default class SaveList extends Vue {
-  @Prop(String) gameId!: string
+  @Prop({type: String, required: true}) gameId!: string
 
   get saveList (): ISaves {
     return this.$store.state.saves.saves[this.gameId]

@@ -12,8 +12,8 @@ import KeypressService from '../../utils/keypressService'
 
 @Component
 export default class InputKeybind extends Vue {
-  @Prop() value: any
-  @Prop(String) identifier!: string
+  @Prop({required: true}) value: any
+  @Prop({type: String, required: true}) identifier!: string
 
   get isRecording (): boolean {
     return this.$store.state.settings.recordingKeybindInput === this.identifier
