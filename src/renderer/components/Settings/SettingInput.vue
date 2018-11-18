@@ -1,8 +1,8 @@
 <template>
-  <div v-if="settingInfo.Type === 'enum'" class="settingInput">
+  <div v-if="settingInfo.type === 'enum'" class="settingInput">
     <div class="inputError" v-if="inputError">{{inputError}}</div>
     <select v-model="settingValue">
-      <option v-for="value in acceptedValues" :value="value" :key="value">
+      <option v-for="value in settingInfo.acceptedValues" :value="value" :key="value">
         {{value}}
       </option>
     </select>
@@ -34,10 +34,10 @@ export default class SettingInput extends Vue {
   @Prop({type: String, required: true}) settingId!: string
   @Prop({type: Object, required: true}) settingInfo!: TSettingInfo
 
-  get settingValue (): number {
+  get settingValue (): any {
     return this.$store.getters.literalSettingValue(this.categoryId, this.settingId)
   }
-  set settingValue (settingValue: number) {
+  set settingValue (settingValue: any) {
     this.$store.commit('setSettingValue', {categoryId: this.categoryId, settingId: this.settingId, settingValue})
   }
 
