@@ -4,7 +4,7 @@ import store from './store/store'
 
 import SavesComponent from './components/Saves/Saves.vue'
 import ChartsComponent from './components/Charts/Charts.vue'
-import Overlay from './Overlay.vue'
+import Overlay from './components/Overlay/Overlay.vue'
 import SettingsComponent from './components/Settings/Settings.vue'
 
 const routes = [

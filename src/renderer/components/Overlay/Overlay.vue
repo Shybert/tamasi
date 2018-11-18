@@ -10,12 +10,12 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import {Component} from 'vue-property-decorator'
+import {Component, Prop} from 'vue-property-decorator'
 import {remote} from 'electron'
-import Timer from './utils/timer'
-import {ISave} from './store/savesData'
+import Timer from '../../utils/timer'
+import {ISave} from '../../store/savesData'
 
-import BossInfoComponent from './components/Overlay/BossInfo.vue'
+import BossInfoComponent from './BossInfo.vue'
 
 function previousArrayValue (array: string[], index: number): any {
   if (index === 0) index = array.length
@@ -30,8 +30,11 @@ function nextArrayValue (array: string[], index: number): any {
 
 @Component({components: {BossInfoComponent}})
 export default class Overlay extends Vue {
+  @Prop({type: String, required: true}) gameId!: string
+  @Prop({type: String, required: true}) saveId!: string
+
   get save (): ISave {
-    return this.$store.state.saves.saves[this.$route.params.gameId][this.$route.params.saveId]
+    return this.$store.state.saves.saves[this.gameId][this.saveId]
   }
   get previousBossHotkey () {
     return this.$store.getters.settingValue('keybinds', 'previousBoss')
@@ -75,21 +78,21 @@ export default class Overlay extends Vue {
     // Stop the timer if it is running
     this.timer.stop()
 
-    this.$store.commit('setSelectedBoss', {gameId: this.$route.params.gameId,
-      saveId: this.$route.params.saveId,
+    this.$store.commit('setSelectedBoss', {gameId: this.gameId,
+      saveId: this.saveId,
       selectedBossId: bossId})
     console.log(this.save.selected)
   }
 
   incrementDeaths (bossId: string): void {
-    this.$store.commit('incrementDeaths', {gameId: this.$route.params.gameId,
-      saveId: this.$route.params.saveId,
+    this.$store.commit('incrementDeaths', {gameId: this.gameId,
+      saveId: this.saveId,
       bossId})
   }
 
   setBossTime (time: number): void {
-    this.$store.commit('setBossTime', {gameId: this.$route.params.gameId,
-    saveId: this.$route.params.saveId,
+    this.$store.commit('setBossTime', {gameId: this.gameId,
+    saveId: this.saveId,
     bossId: this.save.selected,
     time})
   }

@@ -1,17 +1,19 @@
 <template>
   <div id="app">
-    <NavComponent></NavComponent>
+    <NavComponent v-if="!isOverlay"></NavComponent>
     <router-view></router-view>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import {Component, Prop} from 'vue-property-decorator'
 
 import NavComponent from './components/Nav.vue'
 
-export default Vue.extend({
-  components: {NavComponent}
-})
+@Component({components: {NavComponent}})
+export default class App extends Vue {
+  @Prop({type: Boolean, required: true}) isOverlay!: boolean
+}
 </script>
 
