@@ -8,11 +8,11 @@ import Overlay from './Overlay.vue'
 import SettingsComponent from './components/Settings/Settings.vue'
 
 const routes = [
-  {path: '/', component: GamesComponent},
-  {path: '/saves/:gameId', component: SavesComponent},
-  {path: '/charts/:gameId/:saveId', component: ChartsComponent},
-  {path: '/overlay/:gameId/:saveId', component: Overlay},
-  {path: '/settings', component: SettingsComponent}
+  {path: '/', component: GamesComponent, props: true},
+  {path: '/saves/:gameId', component: SavesComponent, props: true},
+  {path: '/charts/:gameId/:saveId', component: ChartsComponent, props: true},
+  {path: '/overlay/:gameId/:saveId', component: Overlay, props: true},
+  {path: '/settings', component: SettingsComponent, props: true}
 ]
 
 Vue.use(VueRouter)

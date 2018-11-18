@@ -1,21 +1,23 @@
 <template>
   <div class="saves">
-    <NewSaveOverlayComponent v-if="showNewSaveOverlay"></NewSaveOverlayComponent>
+    <NewSaveOverlayComponent v-if="showNewSaveOverlay" :gameId="gameId"></NewSaveOverlayComponent>
     <button @click="openNewSaveOverlay" id="openNewSaveOverlay">Open New Save Overlay</button>
 
-    <SaveListComponent></SaveListComponent>
+    <SaveListComponent :gameId="gameId"></SaveListComponent>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import {Component} from 'vue-property-decorator'
+import {Component, Prop} from 'vue-property-decorator'
 
 import NewSaveOverlayComponent from './NewSaveOverlay.vue'
 import SaveListComponent from './SaveList.vue'
 
 @Component({components: {NewSaveOverlayComponent, SaveListComponent}})
 export default class Saves extends Vue {
+  @Prop(String) gameId!: string
+
   get showNewSaveOverlay (): boolean {
     return this.$store.state.saves.showNewSaveOverlay
   }

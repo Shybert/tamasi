@@ -9,14 +9,15 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import {Component} from 'vue-property-decorator'
+import {Component, Prop} from 'vue-property-decorator'
 
 @Component
 export default class NewSaveOverlay extends Vue {
+  @Prop(String) gameId!: string
   newSaveName: string = ''
 
   createSave (): void {
-    this.$store.dispatch('createSave', {gameId: this.$route.params.gameId, saveName: this.newSaveName})
+    this.$store.dispatch('createSave', {gameId: this.gameId, saveName: this.newSaveName})
   }
 
   closeOverlay (): void {
