@@ -5,6 +5,8 @@
         <BossInfoComponent :bossInfo="boss"></BossInfoComponent>
       </li>
     </ul>
+
+    <SelectedBossInfoComponent :bossInfo="save.bosses[save.selected]"></SelectedBossInfoComponent>
   </div>
 </template>
 
@@ -16,6 +18,7 @@ import Timer from '../../utils/timer'
 import {ISave} from '../../store/savesData'
 
 import BossInfoComponent from './BossInfo.vue'
+import SelectedBossInfoComponent from './SelectedBossInfo.vue'
 
 function previousArrayValue (array: string[], index: number): any {
   if (index === 0) index = array.length
@@ -28,7 +31,7 @@ function nextArrayValue (array: string[], index: number): any {
   return array[index]
 }
 
-@Component({components: {BossInfoComponent}})
+@Component({components: {BossInfoComponent, SelectedBossInfoComponent}})
 export default class Overlay extends Vue {
   @Prop({type: String, required: true}) gameId!: string
   @Prop({type: String, required: true}) saveId!: string
