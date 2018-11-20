@@ -1,10 +1,12 @@
 <template>
   <div id="overlay">
-    <ul>
-      <li v-for="(boss, bossId) in save.bosses" :key="bossId" :id="bossId" :class="{selected: (bossId === save.selected)}" @click="selectBoss(bossId)">
-        <BossInfoComponent :bossInfo="boss"></BossInfoComponent>
-      </li>
-    </ul>
+    <div id="bossList" v-if="showBossList">
+      <ul>
+        <li v-for="(boss, bossId) in save.bosses" :key="bossId" :id="bossId" :class="{selected: (bossId === save.selected)}" @click="selectBoss(bossId)">
+          <BossInfoComponent :bossInfo="boss"></BossInfoComponent>
+        </li>
+      </ul>      
+    </div>
 
     <SelectedBossInfoComponent :bossInfo="save.bosses[save.selected]"></SelectedBossInfoComponent>
   </div>
@@ -54,8 +56,12 @@ export default class Overlay extends Vue {
   get hideShowOverlayKeybind () {
     return this.$store.getters.settingValue('keybinds', 'hideShowOverlay')
   }
+  get hideShowBossListOnOverlayKeybind () {
+    return this.$store.getters.settingValue('keybinds', 'hideShowBossListOnOverlay')
+  }
 
   timer = new Timer()
+  showBossList: boolean = true
 
   created () {
     this.timer.on('tick', this.setBossTime)
@@ -79,6 +85,7 @@ export default class Overlay extends Vue {
       this.timer.switch(this.save.bosses[this.save.selected].time)
     })
     remote.globalShortcut.register(this.hideShowOverlayKeybind, () => ipcRenderer.send('hideShowOverlay'))
+    remote.globalShortcut.register(this.hideShowBossListOnOverlayKeybind, () => this.showBossList = !this.showBossList)
   }
 
   selectBoss (bossId: string): void {

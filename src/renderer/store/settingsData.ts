@@ -106,9 +106,9 @@ const settingsData: ISettingsCategories = {
         type: 'keybind',
         defaultValue: 'Control+H'
       },
-      minimizeMaximizeOverlay: {
-        label: 'Minimize/maximize overlay',
-        description: 'Keybind for minimizing/maximizing the overlay',
+      hideShowBossListOnOverlay: {
+        label: 'Hide/show the boss list on the overlay',
+        description: 'Keybind for hiding/showing the boss list on the overlay',
         type: 'keybind',
         defaultValue: 'Control+M'
       }
