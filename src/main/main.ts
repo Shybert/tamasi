@@ -78,6 +78,12 @@ ipcMain.on('loadOverlayWindow', async (event: Event, gameId: string, saveId: str
   })
 })
 
+ipcMain.on('hideShowOverlay', () => {
+  if (!overlayWindow) return
+  if (overlayWindow.isMinimized()) overlayWindow.restore()
+  else overlayWindow.minimize()
+})
+
 // Wait for Electron to be ready before loading main window
 app.on('ready', createMainWindow)
 

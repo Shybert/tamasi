@@ -99,6 +99,18 @@ const settingsData: ISettingsCategories = {
         description: 'Keybind for selecting the next boss',
         type: 'keybind',
         defaultValue: 'PageDown'
+      },
+      hideShowOverlay: {
+        label: 'Hide/show overlay',
+        description: 'Keybind for hiding/showing the overlay',
+        type: 'keybind',
+        defaultValue: 'Control+H'
+      },
+      minimizeMaximizeOverlay: {
+        label: 'Minimize/maximize overlay',
+        description: 'Keybind for minimizing/maximizing the overlay',
+        type: 'keybind',
+        defaultValue: 'Control+M'
       }
     }
   },
