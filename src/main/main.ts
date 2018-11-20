@@ -17,7 +17,7 @@ let mainWindow: BrowserWindow | null
 let overlayWindow: BrowserWindow | null
 
 async function createMainWindow () {
-  mainWindow = new BrowserWindow({show: false})
+  mainWindow = new BrowserWindow({show: false, frame: false})
 
   if (isDevelopment) {
     mainWindow.webContents.openDevTools()
