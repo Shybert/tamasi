@@ -59,6 +59,9 @@ export default class Overlay extends Vue {
   get hideShowBossListOnOverlayKeybind () {
     return this.$store.getters.settingValue('keybinds', 'hideShowBossListOnOverlay')
   }
+  get preventBossSwitchIfTimerIsRunning () {
+    return this.$store.getters.settingValue('overlay', 'preventBossSwitchIfTimerIsRunning')
+  }
 
   timer = new Timer()
   showBossList: boolean = true
@@ -89,6 +92,7 @@ export default class Overlay extends Vue {
   }
 
   selectBoss (bossId: string): void {
+    if (this.timer.isRunning() && this.preventBossSwitchIfTimerIsRunning) return
     // Stop the timer if it is running
     this.timer.stop()
 

@@ -1,9 +1,13 @@
 import {EventEmitter} from 'events'
 
 export default class Timer extends EventEmitter {
-  private interval: NodeJS.Timer | undefined
+  private interval: number | undefined
   private previousIntervalTime: number | undefined
   private elapsedMilliseconds: number = 0
+
+  public isRunning (): boolean {
+    return Boolean(this.interval)
+  }
 
   public start (startTime: number): void {
     console.log('Starting timer')
@@ -12,12 +16,12 @@ export default class Timer extends EventEmitter {
     this.previousIntervalTime = Date.now()
     this.elapsedMilliseconds = startTime
 
-    this.interval = setInterval(() => this.timer(), 50)
+    this.interval = window.setInterval(() => this.timer(), 50)
   }
 
   public stop (): void {
     // Check if timer is running first
-    if (this.interval) {
+    if (this.isRunning()) {
       console.log('Stopping timer')
       clearInterval(this.interval)
       this.reset()
@@ -27,7 +31,7 @@ export default class Timer extends EventEmitter {
   }
 
   public switch (startTime?: number): void {
-    if (this.interval) {
+    if (this.isRunning()) {
       this.stop()
     } else {
       if (typeof startTime === 'undefined') throw new Error('Start time must be provided when starting the timer!')

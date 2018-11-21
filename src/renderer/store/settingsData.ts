@@ -123,6 +123,12 @@ const settingsData: ISettingsCategories = {
         description: 'Whether or not to show milliseconds when displaying the time for each boss',
         type: 'checkbox',
         defaultValue: true
+      },
+      preventBossSwitchIfTimerIsRunning: {
+        label: 'Prevent switching boss if the timer is running',
+        description: 'Whether or not to prevent switching bosses if the timer is running. If false and the timer is running when you switch to a different boss, the timer will be stopped.',
+        type: 'checkbox',
+        defaultValue: true
       }
     }
   }
