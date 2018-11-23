@@ -1,6 +1,6 @@
 <template>
   <ul>
-    <li v-for="(save, saveId) in saveList" :key="saveId">
+    <li v-for="(save, saveId) in savesList" :key="saveId">
       <ul>
         <li @click="loadOverlayWindow(saveId)">{{save.name}}</li>
         <li><router-link :to="`/charts/${gameId}/${saveId}`">Charts</router-link></li>
@@ -16,10 +16,10 @@ import {ipcRenderer} from 'electron'
 import {ISaves} from '../../store/savesData'
 
 @Component
-export default class SaveList extends Vue {
+export default class SavesList extends Vue {
   @Prop({type: String, required: true}) gameId!: string
 
-  get saveList (): ISaves {
+  get savesList (): ISaves {
     return this.$store.state.saves.saves[this.gameId]
   }
 

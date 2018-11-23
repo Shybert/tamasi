@@ -3,7 +3,7 @@
     <NewSaveOverlayComponent v-if="showNewSaveOverlay" :gameId="gameId"></NewSaveOverlayComponent>
     <button @click="openNewSaveOverlay" id="openNewSaveOverlay">Open New Save Overlay</button>
 
-    <SaveListComponent :gameId="gameId"></SaveListComponent>
+    <SavesListComponent :gameId="gameId"></SavesListComponent>
   </div>
 </template>
 
@@ -12,9 +12,9 @@ import Vue from 'vue'
 import {Component, Prop} from 'vue-property-decorator'
 
 import NewSaveOverlayComponent from './NewSaveOverlay.vue'
-import SaveListComponent from './SaveList.vue'
+import SavesListComponent from './SavesList.vue'
 
-@Component({components: {NewSaveOverlayComponent, SaveListComponent}})
+@Component({components: {NewSaveOverlayComponent, SavesListComponent}})
 export default class Saves extends Vue {
   @Prop({type: String, required: true}) gameId!: string
 
