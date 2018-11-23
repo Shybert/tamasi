@@ -19,8 +19,13 @@ export default class App extends Vue {
 }
 </script>
 
-<style>
+<style scoped>
 * {
+  margin: 0;
+}
+</style>
+<style>
+body {
   margin: 0;
 }
 </style>
