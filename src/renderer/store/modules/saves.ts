@@ -138,6 +138,7 @@ const actions: DefineActions<ISavesActions, ISavesState, ISavesMutations> = {
     const generatedSaveId: string = crypto.randomBytes(16).toString('hex')
 
     commit('createSave', {gameId: gameId, saveId: generatedSaveId, save})
+    commit('toggleNewSaveOverlay', {showNewSaveOverlay: false})
   }
 }
 
