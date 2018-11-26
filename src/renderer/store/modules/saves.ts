@@ -16,31 +16,13 @@ const state: ISavesState = {
 }
 
 interface ISavesMutations {
-  toggleNewSaveOverlay: {
-    showNewSaveOverlay: boolean
-  }
-  createSave: {
-    gameId: string
-    saveId: string
-    save: savesData.ISave
-  }
+  toggleNewSaveOverlay: {showNewSaveOverlay: boolean}
+  createSave: {gameId: string, saveId: string, save: savesData.ISave}
 
-  setSelectedBoss: {
-    gameId: string
-    saveId: string
-    selectedBossId: string
-  }
-  incrementDeaths: {
-    gameId: string
-    saveId: string
-    bossId: string
-  }
-  setBossTime: {
-    gameId: string
-    saveId: string
-    bossId: string
-    time: number
-  }
+  setSelectedBoss: {gameId: string, saveId: string, selectedBossId: string}
+  incrementDeaths: {gameId: string, saveId: string, bossId: string}
+  decrementDeaths: {gameId: string, saveId: string, bossId: string}
+  setBossTime: {gameId: string, saveId: string, bossId: string, time: number}
 }
 const mutations: DefineMutations<ISavesMutations, ISavesState> = {
   toggleNewSaveOverlay (state, {showNewSaveOverlay}) {
@@ -54,15 +36,20 @@ const mutations: DefineMutations<ISavesMutations, ISavesState> = {
     savesData.saveSaves()
   },
 
-  setSelectedBoss (state: ISavesState, {gameId, saveId, selectedBossId}) {
+  setSelectedBoss (state, {gameId, saveId, selectedBossId}) {
     state.saves[gameId][saveId].selected = selectedBossId
     savesData.saveSaves()
   },
-  incrementDeaths (state: ISavesState, {gameId, saveId, bossId}) {
+  incrementDeaths (state, {gameId, saveId, bossId}) {
     state.saves[gameId][saveId].bosses[bossId].deaths += 1
     savesData.saveSaves()
   },
-  setBossTime (state: ISavesState, {gameId, saveId, bossId, time}) {
+  decrementDeaths (state, {gameId, saveId, bossId}) {
+    if (state.saves[gameId][saveId].bosses[bossId].deaths <= 0) return
+    state.saves[gameId][saveId].bosses[bossId].deaths -= 1
+    savesData.saveSaves()
+  },
+  setBossTime (state, {gameId, saveId, bossId, time}) {
     state.saves[gameId][saveId].bosses[bossId].time = time
     savesData.saveSaves()
   }

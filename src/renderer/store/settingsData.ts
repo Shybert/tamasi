@@ -82,6 +82,12 @@ const settingsData: ISettingsCategories = {
         type: 'keybind',
         defaultValue: 'End'
       },
+      decrementDeaths: {
+        label: 'Decrement death counter',
+        description: 'Keybind for decrementing the death counter',
+        type: 'keybind',
+        defaultValue: 'Delete'
+      },
       switchTimer: {
         label: 'Switch the timer on/off',
         description: 'Keybind for switching the timer on/off',

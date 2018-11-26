@@ -50,6 +50,9 @@ export default class Overlay extends Vue {
   get incrementDeathCounterKeybind () {
     return this.$store.getters.settingValue('keybinds', 'incrementDeaths')
   }
+  get decrementDeathCounterKeybind () {
+    return this.$store.getters.settingValue('keybinds', 'decrementDeaths')
+  }
   get switchTimerKeybind () {
     return this.$store.getters.settingValue('keybinds', 'switchTimer')
   }
@@ -84,6 +87,9 @@ export default class Overlay extends Vue {
     remote.globalShortcut.register(this.incrementDeathCounterKeybind, () => {
       this.incrementDeaths(this.save.selected)
     })
+    remote.globalShortcut.register(this.decrementDeathCounterKeybind, () => {
+      this.decrementDeaths(this.save.selected)
+    })
     remote.globalShortcut.register(this.switchTimerKeybind, () => {
       this.timer.switch(this.save.bosses[this.save.selected].time)
     })
@@ -107,12 +113,17 @@ export default class Overlay extends Vue {
       saveId: this.saveId,
       bossId})
   }
+  decrementDeaths (bossId: string): void {
+    this.$store.commit('decrementDeaths', {gameId: this.gameId,
+      saveId: this.saveId,
+      bossId})
+  }
 
   setBossTime (time: number): void {
     this.$store.commit('setBossTime', {gameId: this.gameId,
-    saveId: this.saveId,
-    bossId: this.save.selected,
-    time})
+      saveId: this.saveId,
+      bossId: this.save.selected,
+      time})
   }
 }
 </script>
