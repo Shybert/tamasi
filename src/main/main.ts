@@ -5,11 +5,7 @@ import {app, BrowserWindow, ipcMain, globalShortcut} from 'electron'
 const isDevelopment: boolean = process.env.NODE_ENV !== 'production'
 
 // Set correct userData path
-if (isDevelopment) {
-  app.setPath('userData', path.join(app.getPath('appData'), 'dsdt-dev'))
-} else {
-  app.setPath('userData', path.join(app.getPath('appData'), 'dsdt'))
-}
+isDevelopment ? app.setPath('userData', path.join(app.getPath('appData'), 'dsdt-dev')) : app.setPath('userData', path.join(app.getPath('appData'), 'dsdt'))
 console.log(`userData path: ${app.getPath('userData')}`)
 
 // Keeping a global reference to windows to prevent garbage collection
