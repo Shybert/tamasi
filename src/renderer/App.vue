@@ -1,6 +1,8 @@
 <template>
   <div id="app">
     <TitleBarComponent v-if="!isOverlay"></TitleBarComponent>
+    <h1>{{aSetting.settingValue}}</h1>
+    <button @click="aSetting.setSettingValue([0, 1])">Set setting</button>
     <NavComponent v-if="!isOverlay"></NavComponent>
     <router-view></router-view>
   </div>
@@ -9,6 +11,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import {Component, Prop} from 'vue-property-decorator'
+import Settings from './settingsData'
 
 import TitleBarComponent from './components/TitleBar.vue'
 import NavComponent from './components/Nav.vue'
@@ -16,6 +19,8 @@ import NavComponent from './components/Nav.vue'
 @Component({components: {NavComponent, TitleBarComponent}})
 export default class App extends Vue {
   @Prop({type: Boolean, required: true}) isOverlay!: boolean
+
+  aSetting = Settings.keybinds.incrementDeaths
 }
 </script>
 
