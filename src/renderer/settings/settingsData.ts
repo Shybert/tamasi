@@ -1,6 +1,6 @@
 import * as settingsService from './settingsService'
 
-interface ISettings {
+export interface ISettings {
   keybinds: {
     incrementDeaths: settingsService.SettingKeybind
     // decrementDeaths: settingsService.SettingKeybind
@@ -14,7 +14,7 @@ interface ISettings {
 
 const settings: ISettings = {
   keybinds: {
-    incrementDeaths: new settingsService.SettingKeybind('test', 'test', [65, 66])
+    incrementDeaths: new settingsService.SettingKeybind('keybind.incrementDeaths', 'test', 'test', [65, 66])
   }
 }
 export default settings
