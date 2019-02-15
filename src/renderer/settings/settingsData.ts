@@ -14,7 +14,7 @@ export interface ISettings {
 
 const settings: ISettings = {
   keybinds: {
-    incrementDeaths: new settingsService.SettingKeybind('keybind.incrementDeaths', 'test', 'test', [65, 66])
+    incrementDeaths: new settingsService.SettingKeybind('keybinds.incrementDeaths', 'test', 'test', [65, 66])
   }
 }
 export default settings

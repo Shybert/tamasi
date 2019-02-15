@@ -1,19 +1,14 @@
 import Store from 'electron-store'
-const userSettings: IUserSettings = new Store({name: 'userSettings', cwd: 'storage'}).store
-
-interface IUserSettings {
-  [id: string]: unknown
-}
+const userSettings = new Store({name: 'userSettings', cwd: 'storage'})
 
 class Setting<T> {
   private id: string
   public label: string
   public description: string
   public settingValue: T
-  private defaultValue: T
 
-  private getUserSetting (): unknown | null {
-    const userSetting = userSettings[this.id]
+  private getUserSetting (): unknown {
+    const userSetting: unknown = userSettings.get(this.id)
     if (userSetting) return userSetting
     return null
   }
@@ -26,7 +21,6 @@ class Setting<T> {
     this.id = id
     this.label = label
     this.description = description
-    this.defaultValue = defaultValue
 
     const userSetting = this.getUserSetting()
     if (userSetting && this.isValidSettingValue(userSetting)) this.settingValue = userSetting as T
@@ -34,7 +28,10 @@ class Setting<T> {
   }
 
   public setSettingValue (value: any): void {
-    this.settingValue = value
+    if (this.isValidSettingValue(value)) {
+      this.settingValue = value
+      userSettings.set(this.id, value)
+    }
   }
 }
 
