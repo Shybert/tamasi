@@ -6,6 +6,7 @@ class Setting<T> {
   public label: string
   public description: string
   public settingValue: T
+  private defaultValue: T
 
   private getUserSetting (): unknown {
     const userSetting: unknown = userSettings.get(this.id)
@@ -21,10 +22,15 @@ class Setting<T> {
     this.id = id
     this.label = label
     this.description = description
+    this.defaultValue = defaultValue
 
     const userSetting = this.getUserSetting()
     if (userSetting && this.isValidSettingValue(userSetting)) this.settingValue = userSetting as T
     else this.settingValue = defaultValue
+  }
+
+  public isSettingValueDefault (): boolean {
+    return this.settingValue === this.defaultValue
   }
 
   public setSettingValue (value: any): void {
