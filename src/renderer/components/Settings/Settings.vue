@@ -9,10 +9,10 @@
         <p class="categoryDesc">{{category.description}}</p> -->
 
         <div class="settings">
-          <section class="setting" v-for="(setting, settingId) in category" :key="settingId" :class="{changed: !setting.isSettingValueDefault()}">
+          <section class="setting" v-for="(setting, settingId) in category" :key="settingId" :class="{changed: !setting.isUserSettingValueDefault()}">
             <h3 class="settingLabel">{{setting.label}}</h3>
             <p class="settingDesc">{{setting.description}}</p>
-            <!-- <SettingInputComponent :categoryId="categoryId" :settingId="settingId" :setting="setting"></SettingInputComponent> -->
+            <component :is="setting.inputComponent" :settingInfo="setting"></component>
           </section>
         </div>
       </section>
