@@ -8,13 +8,10 @@
 <script lang="ts">
 import Vue from 'vue'
 import {Component} from 'vue-property-decorator'
+import {games} from '../store/modules/games'
 
-@Component
-export default class Nav extends Vue {
-  get games () {
-    return this.$store.state.games.games
-  }
-}
+@Component({computed: games.mapState(['games'])})
+export default class Nav extends Vue {}
 </script>
 
 <style scoped>

@@ -1,5 +1,6 @@
 import * as fs from 'fs'
 import * as path from 'path'
+import {Module} from 'vuex-smart-module'
 
 // gameData.json interface
 interface IGameBossInfo {
@@ -20,10 +21,10 @@ declare const __static: string
 const gameDataPath = path.join(__static, 'storage', 'gameData.json')
 const data: {games: IGames} = JSON.parse(fs.readFileSync(gameDataPath, 'UTF8'))
 
-const state = {
-  games: data.games
+class GamesState {
+  games: IGames = data.games
 }
 
-export default {
-  state
-}
+export const games = new Module({
+  state: GamesState
+})
