@@ -1,6 +1,9 @@
 import * as path from 'path'
 import * as url from 'url'
-import {app, BrowserWindow, ipcMain, globalShortcut, BrowserWindowConstructorOptions} from 'electron'
+import {app, BrowserWindow, ipcMain, BrowserWindowConstructorOptions} from 'electron'
+
+import * as iohook from 'iohook'
+iohook.start(false)
 
 const isDevelopment: boolean = process.env.NODE_ENV !== 'production'
 
@@ -60,10 +63,6 @@ ipcMain.on('loadOverlayWindow', async (event: Event, gameId: string, saveId: str
     overlayWindow!.show()
   })
 
-  overlayWindow.on('close', () => {
-    globalShortcut.unregisterAll()
-  })
-
   // Dereference window when closed
   overlayWindow.on('closed', () => {
     overlayWindow = null
@@ -90,4 +89,13 @@ app.on('activate', () => {
   if (mainWindow === null) {
     createMainWindow()
   }
+})
+
+iohook.on('keydown', event => {
+  if (mainWindow) mainWindow.webContents.send('keydown', event.rawcode)
+  if (overlayWindow) overlayWindow.webContents.send('keydown', event.rawcode)
+})
+iohook.on('keyup', event => {
+  if (mainWindow) mainWindow.webContents.send('keyup', event.rawcode)
+  if (overlayWindow) overlayWindow.webContents.send('keyup', event.rawcode)
 })
