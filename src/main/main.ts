@@ -1,6 +1,6 @@
 import * as path from 'path'
 import * as url from 'url'
-import {app, BrowserWindow, ipcMain, globalShortcut} from 'electron'
+import {app, BrowserWindow, ipcMain, globalShortcut, BrowserWindowConstructorOptions} from 'electron'
 
 const isDevelopment: boolean = process.env.NODE_ENV !== 'production'
 
@@ -12,7 +12,7 @@ console.log(`userData path: ${app.getPath('userData')}`)
 let mainWindow: BrowserWindow | null
 let overlayWindow: BrowserWindow | null
 
-async function createMainWindow () {
+function createMainWindow () {
   mainWindow = new BrowserWindow({show: false, frame: false})
 
   if (isDevelopment) {
@@ -40,15 +40,11 @@ async function createMainWindow () {
 }
 
 ipcMain.on('loadOverlayWindow', async (event: Event, gameId: string, saveId: string) => {
-  let windowOptions: Object
-  if (isDevelopment) windowOptions = {show: false}
-  else windowOptions = {show: false, alwaysOnTop: true, frame: false}
+  const windowOptions: BrowserWindowConstructorOptions = isDevelopment ? {show: false} : {show: false, alwaysOnTop: true, frame: false}
 
   overlayWindow = new BrowserWindow(windowOptions)
 
-  if (isDevelopment) {
-    overlayWindow.webContents.openDevTools()
-  }
+  if (isDevelopment) overlayWindow.webContents.openDevTools()
 
   if (isDevelopment) {
     overlayWindow.loadURL(`http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}/#/overlay/${gameId}/${saveId}`)
