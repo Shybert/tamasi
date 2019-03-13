@@ -1,11 +1,9 @@
 import Vue from 'vue'
 import {Store} from 'vuex'
-import {Getters, Mutations, Actions, Module, Context} from 'vuex-smart-module'
+import {Mutations, Getters, Actions, Module, Context} from 'vuex-smart-module'
 import {games, IGame} from './games'
 import * as crypto from 'crypto'
-import {ChartData, ChartOptions} from 'chart.js'
 import * as savesData from '../savesData'
-import formatBossTime from '../../utils/formatBossTime'
 
 class SavesState {
   showNewSaveOverlay: boolean = false
@@ -43,60 +41,7 @@ class SavesMutations extends Mutations<SavesState> {
   }
 }
 
-class SavesGetters extends Getters<SavesState> {
-  deathsChartData (gameId: string, saveId: string): {chartData: ChartData, chartOptions: ChartOptions} {
-    const labels = Object.values(this.state.saves[gameId][saveId].bosses).map(bossInfo => bossInfo.name)
-    const deaths = Object.values(this.state.saves[gameId][saveId].bosses).map(bossInfo => bossInfo.deaths)
-    return {
-      chartData: {labels, datasets: [{
-        label: '# of Deaths',
-        data: deaths,
-        backgroundColor: 'rgb(255, 0, 0)'
-      }]},
-      chartOptions: {
-        scales: {xAxes: [{ticks: {
-          min: 0
-        }}]}
-      }
-    }
-  }
-  timesChartData (gameId: string, saveId: string): {chartData: ChartData, chartOptions: ChartOptions} {
-    const labels = Object.values(this.state.saves[gameId][saveId].bosses).map(bossInfo => bossInfo.name)
-    const millisecondTimes = Object.values(this.state.saves[gameId][saveId].bosses).map(bossInfo => bossInfo.time)
-    return {
-      chartData: {labels, datasets: [{
-        label: 'Boss time in hh:mm:ss',
-        data: millisecondTimes,
-        backgroundColor: 'rgb(0, 255, 0)',
-        xAxisID: 'xAxis'
-      }]},
-      chartOptions: {
-        tooltips: {
-          callbacks: {
-            label: (toolTipItem) => {
-              const label = toolTipItem.xLabel ? toolTipItem.xLabel : ''
-              return formatBossTime(Number.parseInt(label, 10), false)
-            }
-          }
-        },
-        scales: {
-          xAxes: [{
-            id: 'xAxis',
-            type: 'linear',
-            ticks: {
-              min: 0,
-              callback: value => {
-                return formatBossTime(Number.parseInt(value, 10), false)
-              }
-            }
-          }]
-        }
-      }
-    }
-  }
-}
-
-class SavesActions extends Actions<SavesState, SavesGetters, SavesMutations, SavesActions> {
+class SavesActions extends Actions<SavesState, Getters<SavesState>, SavesMutations, SavesActions> {
   games!: Context<typeof games>
   $init (store: Store<any>): void {
     // Create and retain games module context
@@ -139,6 +84,5 @@ export const saves = new Module({
   namespaced: false,
   state: SavesState,
   mutations: SavesMutations,
-  getters: SavesGetters,
   actions: SavesActions
 })

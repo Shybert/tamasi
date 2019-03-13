@@ -1,8 +1,6 @@
 <template>
   <div id="charts">
-    <HorizontalBarChartComponent :chartData="deathsChartData(gameId, saveId).chartData" :chartOptions="deathsChartData(gameId, saveId).chartOptions"></HorizontalBarChartComponent>
-
-    <HorizontalBarChartComponent :chartData="timesChartData(gameId, saveId).chartData" :chartOptions="timesChartData(gameId, saveId).chartOptions"></HorizontalBarChartComponent>
+    <ChartBossDeathsComponent :bossNames="bossNames" :bossDeaths="bossDeaths"></ChartBossDeathsComponent>
   </div>
 </template>
 
@@ -11,14 +9,21 @@ import Vue from 'vue'
 import {Component, Prop} from 'vue-property-decorator'
 import {saves} from '../../store/modules/saves'
 
-import HorizontalBarChartComponent from './HorizontalBarChart'
+import ChartBossDeathsComponent from './ChartBossDeaths'
 
 const Super = Vue.extend({
-  computed: saves.mapGetters(['deathsChartData', 'timesChartData'])
+  computed: saves.mapState(['saves'])
 })
-@Component({components: {HorizontalBarChartComponent}})
+@Component({components: {ChartBossDeathsComponent}})
 export default class Charts extends Super {
   @Prop({type: String, required: true}) gameId!: string
   @Prop({type: String, required: true}) saveId!: string
+
+  get bossNames () {
+    return Object.values(this.saves[this.gameId][this.saveId].bosses).map(bossInfo => bossInfo.name)
+  }
+  get bossDeaths () {
+    return Object.values(this.saves[this.gameId][this.saveId].bosses).map(bossInfo => bossInfo.deaths)
+  }
 }
 </script>
