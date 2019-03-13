@@ -1,68 +1,52 @@
 import Vue from 'vue'
-import {DefineMutations, DefineGetters, DefineActions} from 'vuex-type-helper'
+import {Store} from 'vuex'
+import {Getters, Mutations, Actions, Module, Context} from 'vuex-smart-module'
+import {games, IGame} from './games'
 import * as crypto from 'crypto'
 import {ChartData, ChartOptions} from 'chart.js'
 import * as savesData from '../savesData'
-import {IGame} from './games'
 import formatBossTime from '../../utils/formatBossTime'
 
-interface ISavesState {
-  showNewSaveOverlay: boolean
-  saves: savesData.ISaves
-}
-const state: ISavesState = {
-  showNewSaveOverlay: false,
-  saves: savesData.saves
+class SavesState {
+  showNewSaveOverlay: boolean = false
+  saves: savesData.ISaves = savesData.saves
 }
 
-interface ISavesMutations {
-  toggleNewSaveOverlay: {showNewSaveOverlay: boolean}
-  createSave: {gameId: string, saveId: string, save: savesData.ISave}
-
-  setSelectedBoss: {gameId: string, saveId: string, selectedBossId: string}
-  incrementDeaths: {gameId: string, saveId: string, bossId: string}
-  decrementDeaths: {gameId: string, saveId: string, bossId: string}
-  setBossTime: {gameId: string, saveId: string, bossId: string, time: number}
-}
-const mutations: DefineMutations<ISavesMutations, ISavesState> = {
-  toggleNewSaveOverlay (state, {showNewSaveOverlay}) {
-    state.showNewSaveOverlay = showNewSaveOverlay
-  },
-  createSave (state, {gameId, saveId, save}) {
+class SavesMutations extends Mutations<SavesState> {
+  toggleNewSaveOverlay (payload: {showNewSaveOverlay: boolean}) {
+    this.state.showNewSaveOverlay = payload.showNewSaveOverlay
+  }
+  writeSave (payload: {gameId: string, saveId: string, save: savesData.ISave}) {
     // Use Vue.set because otherwise Vue cannot detect property addition
-    if (!(gameId in state.saves)) Vue.set(state.saves, gameId, {})
-    Vue.set(state.saves[gameId], saveId, save)
+    if (!(payload.gameId in this.state.saves)) Vue.set(this.state.saves, payload.gameId, {})
+    Vue.set(this.state.saves[payload.gameId], payload.saveId, payload.save)
 
     savesData.saveSaves()
-  },
+  }
 
-  setSelectedBoss (state, {gameId, saveId, selectedBossId}) {
-    state.saves[gameId][saveId].selected = selectedBossId
+  setSelectedBoss (payload: {gameId: string, saveId: string, selectedBossId: string}) {
+    this.state.saves[payload.gameId][payload.saveId].selected = payload.selectedBossId
     savesData.saveSaves()
-  },
-  incrementDeaths (state, {gameId, saveId, bossId}) {
-    state.saves[gameId][saveId].bosses[bossId].deaths += 1
+  }
+  incrementDeaths (payload: {gameId: string, saveId: string, bossId: string}) {
+    this.state.saves[payload.gameId][payload.saveId].bosses[payload.bossId].deaths += 1
     savesData.saveSaves()
-  },
-  decrementDeaths (state, {gameId, saveId, bossId}) {
-    if (state.saves[gameId][saveId].bosses[bossId].deaths <= 0) return
-    state.saves[gameId][saveId].bosses[bossId].deaths -= 1
+  }
+  decrementDeaths (payload: {gameId: string, saveId: string, bossId: string}) {
+    if (this.state.saves[payload.gameId][payload.saveId].bosses[payload.bossId].deaths <= 0) return
+    this.state.saves[payload.gameId][payload.saveId].bosses[payload.bossId].deaths -= 1
     savesData.saveSaves()
-  },
-  setBossTime (state, {gameId, saveId, bossId, time}) {
-    state.saves[gameId][saveId].bosses[bossId].time = time
+  }
+  setBossTime (payload: {gameId: string, saveId: string, bossId: string, time: number}) {
+    this.state.saves[payload.gameId][payload.saveId].bosses[payload.bossId].time = payload.time
     savesData.saveSaves()
   }
 }
 
-interface ISavesGetters {
-  deathsChartData: (gameId: string, saveId: string) => {chartData: ChartData, chartOptions: ChartOptions}
-  timesChartData: (gameId: string, saveId: string) => {chartData: ChartData, chartOptions: ChartOptions}
-}
-const getters: DefineGetters<ISavesGetters, ISavesState> = {
-  deathsChartData: (state) => (gameId, saveId) => {
-    const labels = Object.values(state.saves[gameId][saveId].bosses).map(bossInfo => bossInfo.name)
-    const deaths = Object.values(state.saves[gameId][saveId].bosses).map(bossInfo => bossInfo.deaths)
+class SavesGetters extends Getters<SavesState> {
+  deathsChartData (gameId: string, saveId: string): {chartData: ChartData, chartOptions: ChartOptions} {
+    const labels = Object.values(this.state.saves[gameId][saveId].bosses).map(bossInfo => bossInfo.name)
+    const deaths = Object.values(this.state.saves[gameId][saveId].bosses).map(bossInfo => bossInfo.deaths)
     return {
       chartData: {labels, datasets: [{
         label: '# of Deaths',
@@ -75,10 +59,10 @@ const getters: DefineGetters<ISavesGetters, ISavesState> = {
         }}]}
       }
     }
-  },
-  timesChartData: (state) => (gameId, saveId) => {
-    const labels = Object.values(state.saves[gameId][saveId].bosses).map(bossInfo => bossInfo.name)
-    const millisecondTimes = Object.values(state.saves[gameId][saveId].bosses).map(bossInfo => bossInfo.time)
+  }
+  timesChartData (gameId: string, saveId: string): {chartData: ChartData, chartOptions: ChartOptions} {
+    const labels = Object.values(this.state.saves[gameId][saveId].bosses).map(bossInfo => bossInfo.name)
+    const millisecondTimes = Object.values(this.state.saves[gameId][saveId].bosses).map(bossInfo => bossInfo.time)
     return {
       chartData: {labels, datasets: [{
         label: 'Boss time in hh:mm:ss',
@@ -112,20 +96,18 @@ const getters: DefineGetters<ISavesGetters, ISavesState> = {
   }
 }
 
-interface ISavesActions {
-  createSave: {
-    gameId: string,
-    saveName: string
+class SavesActions extends Actions<SavesState, SavesGetters, SavesMutations, SavesActions> {
+  games!: Context<typeof games>
+  $init (store: Store<any>): void {
+    // Create and retain games module context
+    this.games = games.context(store)
   }
-}
-const actions: DefineActions<ISavesActions, ISavesState, ISavesMutations> = {
-  createSave ({commit, rootState}, {gameId, saveName}) {
-    const gameData: IGame = rootState.games.games[gameId]
-    const save = generateSave(saveName, gameData)
+
+  async createSave (payload: {gameId: string, saveName: string}): Promise<void> {
+    const save = generateSave(payload.saveName, this.games.state.games[payload.gameId])
     const generatedSaveId: string = crypto.randomBytes(16).toString('hex')
 
-    commit('createSave', {gameId: gameId, saveId: generatedSaveId, save})
-    commit('toggleNewSaveOverlay', {showNewSaveOverlay: false})
+    this.commit('writeSave', {gameId: payload.gameId, saveId: generatedSaveId, save})
   }
 }
 
@@ -153,9 +135,10 @@ function generateSave (name: string, gameData: IGame): savesData.ISave {
   return save
 }
 
-export default {
-  state,
-  mutations,
-  getters,
-  actions
-}
+export const saves = new Module({
+  namespaced: false,
+  state: SavesState,
+  mutations: SavesMutations,
+  getters: SavesGetters,
+  actions: SavesActions
+})
