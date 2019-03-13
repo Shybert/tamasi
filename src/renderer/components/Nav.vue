@@ -10,8 +10,11 @@ import Vue from 'vue'
 import {Component} from 'vue-property-decorator'
 import {games} from '../store/modules/games'
 
-@Component({computed: games.mapState(['games'])})
-export default class Nav extends Vue {}
+const Super = Vue.extend({
+  computed: games.mapState(['games'])
+})
+@Component
+export default class Nav extends Super {}
 </script>
 
 <style scoped>
