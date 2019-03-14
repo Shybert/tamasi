@@ -1,6 +1,7 @@
 <template>
   <div id="charts">
     <ChartBossDeathsComponent :bossNames="bossNames" :bossDeaths="bossDeaths"></ChartBossDeathsComponent>
+    <ChartBossTimesComponent :bossNames="bossNames" :bossTimes="bossTimes"></ChartBossTimesComponent>
   </div>
 </template>
 
@@ -10,11 +11,12 @@ import {Component, Prop} from 'vue-property-decorator'
 import {saves} from '../../store/modules/saves'
 
 import ChartBossDeathsComponent from './ChartBossDeaths'
+import ChartBossTimesComponent from './ChartBossTimes'
 
 const Super = Vue.extend({
   computed: saves.mapState(['saves'])
 })
-@Component({components: {ChartBossDeathsComponent}})
+@Component({components: {ChartBossDeathsComponent, ChartBossTimesComponent}})
 export default class Charts extends Super {
   @Prop({type: String, required: true}) gameId!: string
   @Prop({type: String, required: true}) saveId!: string
@@ -24,6 +26,9 @@ export default class Charts extends Super {
   }
   get bossDeaths () {
     return Object.values(this.saves[this.gameId][this.saveId].bosses).map(bossInfo => bossInfo.deaths)
+  }
+  get bossTimes () {
+    return Object.values(this.saves[this.gameId][this.saveId].bosses).map(bossInfo => bossInfo.time)
   }
 }
 </script>
