@@ -6,7 +6,6 @@ const isDevelopment: boolean = process.env.NODE_ENV !== 'production'
 
 // Set correct userData path
 isDevelopment ? app.setPath('userData', path.join(app.getPath('appData'), 'dsdt-dev')) : app.setPath('userData', path.join(app.getPath('appData'), 'dsdt'))
-console.log(`userData path: ${app.getPath('userData')}`)
 
 // Keeping a global reference to windows to prevent garbage collection
 let mainWindow: BrowserWindow | null
@@ -15,9 +14,7 @@ let overlayWindow: BrowserWindow | null
 function createMainWindow () {
   mainWindow = new BrowserWindow({show: false, frame: false})
 
-  if (isDevelopment) {
-    mainWindow.webContents.openDevTools()
-  }
+  if (isDevelopment) mainWindow.webContents.openDevTools()
 
   if (isDevelopment) {
     mainWindow.loadURL(`http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`)
@@ -29,14 +26,10 @@ function createMainWindow () {
     }))
   }
 
-  mainWindow.once('ready-to-show', () => {
-    mainWindow!.show()
-  })
+  mainWindow.once('ready-to-show', () => mainWindow!.show())
 
   // Dereference window when closed
-  mainWindow.on('closed', () => {
-    mainWindow = null
-  })
+  mainWindow.on('closed', () => mainWindow = null)
 }
 
 ipcMain.on('loadOverlayWindow', async (event: Event, gameId: string, saveId: string) => {
@@ -56,20 +49,15 @@ ipcMain.on('loadOverlayWindow', async (event: Event, gameId: string, saveId: str
     }))
   }
 
-  overlayWindow.once('ready-to-show', () => {
-    overlayWindow!.show()
-  })
+  overlayWindow.once('ready-to-show', () => overlayWindow!.show())
 
   // Dereference window when closed
-  overlayWindow.on('closed', () => {
-    overlayWindow = null
-  })
+  overlayWindow.on('closed', () => overlayWindow = null)
 })
 
 ipcMain.on('hideShowOverlay', () => {
   if (!overlayWindow) return
-  if (overlayWindow.isMinimized()) overlayWindow.restore()
-  else overlayWindow.minimize()
+  overlayWindow.isMinimized() ? overlayWindow.restore() : overlayWindow.minimize()
 })
 
 // Wait for Electron to be ready before loading main window
@@ -77,13 +65,9 @@ app.on('ready', createMainWindow)
 
 app.on('window-all-closed', () => {
   // Don't quit on close if on MacOS
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
+  if (process.platform !== 'darwin') app.quit()
 })
 
 app.on('activate', () => {
-  if (mainWindow === null) {
-    createMainWindow()
-  }
+  if (mainWindow === null) createMainWindow()
 })
