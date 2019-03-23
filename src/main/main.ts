@@ -2,9 +2,6 @@ import * as path from 'path'
 import * as url from 'url'
 import {app, BrowserWindow, ipcMain, BrowserWindowConstructorOptions} from 'electron'
 
-import * as iohook from 'iohook'
-iohook.start(false)
-
 const isDevelopment: boolean = process.env.NODE_ENV !== 'production'
 
 // Set correct userData path
@@ -89,13 +86,4 @@ app.on('activate', () => {
   if (mainWindow === null) {
     createMainWindow()
   }
-})
-
-iohook.on('keydown', event => {
-  if (mainWindow) mainWindow.webContents.send('keydown', event.rawcode)
-  if (overlayWindow) overlayWindow.webContents.send('keydown', event.rawcode)
-})
-iohook.on('keyup', event => {
-  if (mainWindow) mainWindow.webContents.send('keyup', event.rawcode)
-  if (overlayWindow) overlayWindow.webContents.send('keyup', event.rawcode)
 })
