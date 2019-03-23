@@ -25,9 +25,8 @@ import Vue from 'vue'
 import {Component} from 'vue-property-decorator'
 
 import SettingsNavComponent from './SettingsNav.vue'
-import SettingInputComponent from './SettingInput.vue'
 
-@Component({components: {SettingsNavComponent, SettingInputComponent}})
+@Component({components: {SettingsNavComponent}})
 export default class Settings extends Vue {}
 </script>
 
