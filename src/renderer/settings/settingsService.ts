@@ -1,11 +1,12 @@
 import {VueConstructor} from 'vue'
 import InputIntegerComponent from '../components/Settings/InputInteger.vue'
+import InputKeybindComponent from '../components/Settings/InputKeybind.vue'
 import Store from 'electron-store'
 const userSettings = new Store({name: 'userSettings', cwd: 'storage'})
 
 abstract class BaseSetting<T> {
   abstract inputComponent: VueConstructor
-  private id: string
+  public id: string
   public label: string
   public description: string
   private defaultValue: T
@@ -59,8 +60,8 @@ export class SettingInteger extends BaseSetting<number> {
   }
 }
 
-export class SettingKeybind extends BaseSetting<number[]> {
-  inputComponent = InputIntegerComponent
+export class SettingKeybind extends BaseSetting<string> {
+  inputComponent = InputKeybindComponent
   isValidSettingValue (value: any): boolean {
     return true
   }

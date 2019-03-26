@@ -1,7 +1,7 @@
 <template>
   <div class="inputKeybind">
-    <input :value="isRecording ? selectedKeys : value" readonly>
-    <button class="recordKeybind" :class="{active: isRecording}" @keydown.prevent="handleKeydown" @keyup.prevent="handleKeyup" @click.prevent="switchRecordingKeybindInput">Edit keybind</button>    
+    <input type="text" :value="isRecording ? keypressService.keybind : settingInfo.settingValue" readonly>
+    <button type="button" :class="{active: isRecording}" @keydown.prevent="handleKeydown" @keyup.prevent="handleKeyup" @click.prevent="switchRecordingKeybindInput" @blur="stopRecordingKeybindInput">Edit keybind</button>    
   </div>
 </template>
 
@@ -9,36 +9,36 @@
 import Vue from 'vue'
 import {Component, Prop} from 'vue-property-decorator'
 import KeypressService from '../../utils/keypressService'
+import {SettingKeybind} from '../../settings/settingsService'
 
 @Component
 export default class InputKeybind extends Vue {
-  @Prop({required: true}) value: any
-  @Prop({type: String, required: true}) identifier!: string
+  @Prop({type: Object, required: true}) settingInfo!: SettingKeybind
 
-  get isRecording (): boolean {
-    return this.$store.state.settings.recordingKeybindInput === this.identifier
-  }
+  isRecording: boolean = false
 
   keypressService = new KeypressService()
-  get selectedKeys (): string {
-    const selectedKeys = this.keypressService.selectedKeys
-    this.$emit('input', selectedKeys)
-    return selectedKeys
+
+  handleKeydown (key: KeyboardEvent): void {
+    this.keypressService.keydown(key)
   }
-  handleKeydown (event: KeyboardEvent): void {
-    if (!this.isRecording) return
-    this.keypressService.keydown(event.key)
-  }
-  handleKeyup (event: KeyboardEvent): void {
-    if (!this.isRecording) return
-    this.keypressService.keyup(event.key)
+  handleKeyup (key: KeyboardEvent): void {
+    this.keypressService.keyup(key)
   }
 
-  switchRecordingKeybindInput (): void {
-    if (this.isRecording) this.$store.commit('stopRecordingKeybindInput')
-    else this.$store.commit('recordKeybindInput', this.identifier)
+  saveKeybind (): void {
+    this.settingInfo.userSettingValue = this.keypressService.keybind
+  }
 
+  stopRecordingKeybindInput (): void {
+    this.isRecording = false
+    // Only save keybind if there was any input
+    if (this.keypressService.keybind) this.saveKeybind()
     this.keypressService.reset()
+  }
+  switchRecordingKeybindInput (): void {
+    if (this.isRecording) this.stopRecordingKeybindInput()
+    else this.isRecording = true
   }
 }
 </script>
@@ -51,4 +51,3 @@ export default class InputKeybind extends Vue {
   color: red;
 }
 </style>
-
