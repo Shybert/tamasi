@@ -1,7 +1,6 @@
 import Vue from 'vue'
-import {Store} from 'vuex'
-import {Mutations, Getters, Actions, Module, Context} from 'vuex-smart-module'
-import {games, IGame} from './games'
+import {Mutations, Getters, Actions, Module} from 'vuex-smart-module'
+import {games, IGame} from '../gamesData'
 import * as crypto from 'crypto'
 import * as savesData from '../savesData'
 
@@ -42,14 +41,8 @@ class SavesMutations extends Mutations<SavesState> {
 }
 
 class SavesActions extends Actions<SavesState, Getters<SavesState>, SavesMutations, SavesActions> {
-  games!: Context<typeof games>
-  $init (store: Store<any>): void {
-    // Create and retain games module context
-    this.games = games.context(store)
-  }
-
   async createSave (payload: {gameId: string, saveName: string}): Promise<void> {
-    const save = generateSave(payload.saveName, this.games.state.games[payload.gameId])
+    const save = generateSave(payload.saveName, games[payload.gameId])
     const generatedSaveId: string = crypto.randomBytes(16).toString('hex')
 
     this.commit('writeSave', {gameId: payload.gameId, saveId: generatedSaveId, save})
