@@ -49,14 +49,7 @@ class SavesActions extends Actions<SavesState, Getters<SavesState>, SavesMutatio
   }
 }
 
-function generateSave (name: string, gameData: IGame): savesData.ISave {
-  let saveName: string = name
-
-  if (!saveName) {
-    // No name provided for save, use default name
-    saveName = gameData.name
-  }
-
+function generateSave (saveName: string, gameData: IGame): savesData.ISave {
   const bossList = gameData.bosses as savesData.ISaveBosses
   // Insert properties for each boss
   Object.keys(bossList).forEach((bossId): void => {
