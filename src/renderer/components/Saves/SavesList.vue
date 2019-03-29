@@ -13,7 +13,7 @@
 import Vue from 'vue'
 import {Component, Prop} from 'vue-property-decorator'
 import {ipcRenderer} from 'electron'
-import {saves} from '../../store/modules/saves'
+import {saves} from '../../store/modules/savesStore'
 
 const Super = Vue.extend({
   computed: saves.mapState(['saves'])

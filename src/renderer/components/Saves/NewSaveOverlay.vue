@@ -13,7 +13,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import {Component, Prop} from 'vue-property-decorator'
-import {saves} from '../../store/modules/saves'
+import {saves} from '../../store/modules/savesStore'
 
 const Super = Vue.extend({
   methods: {...saves.mapMutations(['toggleNewSaveOverlay']), ...saves.mapActions(['createSave'])}
