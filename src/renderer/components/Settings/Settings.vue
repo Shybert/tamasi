@@ -1,7 +1,7 @@
 <template>
   <div id="settings">
     <h1>Settings</h1>
-    <!-- <SettingsNavComponent></SettingsNavComponent> -->
+    <SettingsNavComponent></SettingsNavComponent>
 
     <div id="categories">
       <section class="category" v-for="(category, categoryId) in settingCategories" :key="categoryId" :id="categoryId">
