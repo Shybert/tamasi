@@ -9,7 +9,7 @@ class SettingsState {
 }
 
 class SettingsGetters extends Getters<SettingsState> {
-  isUserSettingValueDefault (settingId: keyof ISettings): boolean {
+  isSettingValueDefault (settingId: keyof ISettings): boolean {
     if (!this.state.userSettings[settingId]) return true
     if (this.state.userSettings[settingId] === settings[settingId].defaultValue) return true
     return false
