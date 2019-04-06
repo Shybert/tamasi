@@ -18,12 +18,13 @@ class SettingsMutations extends Mutations<SettingsState> {
 class SettingsGetters extends Getters<SettingsState> {
   getSettingValue<TSettingId extends keyof ISettings> (settingId: TSettingId): ISettings[TSettingId]['defaultValue'] {
     const userSettingValue = this.state.userSettings[settingId]
-    if (userSettingValue && isValidSettingValue(settings[settingId], userSettingValue)) return userSettingValue
+    if (!isUndefined(userSettingValue) && isValidSettingValue(settings[settingId], userSettingValue)) return userSettingValue
     return settings[settingId].defaultValue
   }
   isSettingValueDefault (settingId: keyof ISettings): boolean {
-    if (!this.state.userSettings[settingId]) return true
-    if (this.state.userSettings[settingId] === settings[settingId].defaultValue) return true
+    const userSettingValue = this.state.userSettings[settingId]
+    if (isUndefined(userSettingValue)) return true
+    if (userSettingValue === settings[settingId].defaultValue) return true
     return false
   }
 }
@@ -33,3 +34,7 @@ export const settingsStore = new Module({
   mutations: SettingsMutations,
   getters: SettingsGetters
 })
+
+function isUndefined (value: any): value is undefined {
+  return value === undefined
+}
