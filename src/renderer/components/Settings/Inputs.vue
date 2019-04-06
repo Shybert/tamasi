@@ -1,6 +1,7 @@
 <template>
   <InputIntegerComponent v-if="settingInfo.type === 'integer'" v-model="settingValue" :settingInfo="settingInfo"></InputIntegerComponent>
   <InputKeybindComponent v-else-if="settingInfo.type === 'keybind'" v-model="settingValue" :settingInfo="settingInfo"></InputKeybindComponent>
+  <input v-else-if="settingInfo.type === 'checkbox'" type="checkbox" v-model="settingValue">
 </template>
 
 <script lang="ts">

@@ -28,10 +28,15 @@ export interface ISettingInteger extends IBaseSetting {
   readonly min?: number
   readonly max?: number
 }
-export type TSettingTypes = ISettingKeybind | ISettingInteger
+export interface ISettingCheckbox extends IBaseSetting {
+  readonly type: 'checkbox'
+  readonly defaultValue: boolean
+}
+export type TSettingTypes = ISettingKeybind | ISettingInteger | ISettingCheckbox
 
 export interface ISettings {
   readonly test: ISettingInteger
+  readonly testCheckbox: ISettingCheckbox
   readonly keybindDeathsIncrement: ISettingKeybind
   readonly keybindDeathsDecrement: ISettingKeybind
 }
@@ -45,6 +50,14 @@ export const settings: ISettings = {
     defaultValue: 5,
     min: 3,
     max: 6
+  },
+  testCheckbox: {
+    id: 'testCheckbox',
+    category: 'general',
+    label: 'Test setting',
+    description: 'testytestytest',
+    type: 'checkbox',
+    defaultValue: false
   },
   keybindDeathsIncrement: {
     id: 'keybindDeathsIncrement',
@@ -68,7 +81,7 @@ export const settingCategories: ISettingCategories = {
   general: {
     label: 'General',
     description: 'General...',
-    settings: [settings.test]
+    settings: [settings.test, settings.testCheckbox]
   },
   keybinds: {
     label: 'Keybinds',
