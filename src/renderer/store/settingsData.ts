@@ -18,7 +18,7 @@ interface IBaseSetting {
   readonly type: string
   readonly defaultValue: any
 }
-interface ISettingKeybind extends IBaseSetting {
+export interface ISettingKeybind extends IBaseSetting {
   readonly type: 'keybind'
   readonly defaultValue: string
 }
