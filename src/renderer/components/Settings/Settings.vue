@@ -9,9 +9,11 @@
         <p class="categoryDescription">{{category.description}}</p>
 
         <div class="settings">
-          <section class="setting" v-for="setting in category.settings" :key="setting.id" :class="{changed: !isSettingValueDefault(setting.id)}">
-            <h3 class="settingLabel">{{setting.label}}</h3>
-            <p class="settingDescription">{{setting.description}}</p>
+          <section class="setting" v-for="settingInfo in category.settings" :key="settingInfo.id" :class="{changed: !isSettingValueDefault(settingInfo.id)}">
+            <h3 class="settingLabel">{{settingInfo.label}}</h3>
+            <p class="settingDescription">{{settingInfo.description}}</p>
+
+            <InputsComponent :settingInfo="settingInfo"></InputsComponent>
           </section>
         </div>
       </section>
@@ -26,11 +28,12 @@ import {settingCategories} from '../../store/settingsData'
 import {settingsStore} from '../../store/modules/settingsStore'
 
 import SettingsNavComponent from './SettingsNav.vue'
+import InputsComponent from './Inputs.vue'
 
 const Super = Vue.extend({
   computed: settingsStore.mapGetters(['isSettingValueDefault'])
 })
-@Component({components: {SettingsNavComponent}})
+@Component({components: {SettingsNavComponent, InputsComponent}})
 export default class Settings extends Super {
   settingCategories = settingCategories
 }
