@@ -1,31 +1,44 @@
 <template>
-  <InputIntegerComponent v-if="settingInfo.type === 'integer'" v-model="settingValue" :settingInfo="settingInfo"></InputIntegerComponent>
-  <InputKeybindComponent v-else-if="settingInfo.type === 'keybind'" v-model="settingValue" :settingInfo="settingInfo"></InputKeybindComponent>
-  <input v-else-if="settingInfo.type === 'checkbox'" type="checkbox" v-model="settingValue">
+  <div class="settingInput">
+    <div class="inputError" v-if="!settingValueValidation.valid">{{settingValueValidation.errorMessage}}</div>
+
+    <input v-if="settingInfo.type === 'integer'" type="number" v-model.number="settingValue" step="1" :min="settingInfo.min" :max="settingInfo.max">
+    <InputKeybindComponent v-else-if="settingInfo.type === 'keybind'" v-model="settingValue"></InputKeybindComponent>
+    <input v-else-if="settingInfo.type === 'checkbox'" type="checkbox" v-model="settingValue">    
+  </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import {Component, Prop} from 'vue-property-decorator'
-import {TSettingTypes} from '../../store/settingsData'
+import {TSettingTypes, validateSettingValue} from '../../store/settingsData'
 import {settingsStore} from '../../store/modules/settingsStore'
 
-import InputIntegerComponent from './InputInteger.vue'
 import InputKeybindComponent from './InputKeybind.vue'
 
 const Super = Vue.extend({
-  computed: settingsStore.mapGetters(['getSettingValue']),
+  computed: settingsStore.mapGetters(['getUserSettingValue']),
   methods: settingsStore.mapMutations(['setSettingValue'])
 })
-@Component({components: {InputIntegerComponent, InputKeybindComponent}})
+@Component({components: {InputKeybindComponent}})
 export default class Inputs extends Super {
   @Prop({type: Object, required: true}) settingInfo!: TSettingTypes
 
   get settingValue () {
-    return this.getSettingValue(this.settingInfo.id)
+    return this.getUserSettingValue(this.settingInfo.id)
   }
-  set settingValue (value: TSettingTypes['defaultValue']) {
+  set settingValue (value: any) {
     this.setSettingValue({settingId: this.settingInfo.id, value})
+  }
+
+  get settingValueValidation () {
+    return validateSettingValue(this.settingInfo, this.settingValue)
   }
 }
 </script>
+
+<style scoped>
+.inputError {
+  color: red;
+}
+</style>

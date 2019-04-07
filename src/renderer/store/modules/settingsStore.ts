@@ -10,15 +10,20 @@ class SettingsState {
 }
 
 class SettingsMutations extends Mutations<SettingsState> {
-  setSettingValue<TSettingId extends keyof ISettings> (payload: {settingId: TSettingId, value: ISettings[TSettingId]['defaultValue']}): void {
+  setSettingValue (payload: {settingId: keyof ISettings, value: any}): void {
     Vue.set(this.state.userSettings, payload.settingId, payload.value)
   }
 }
 
 class SettingsGetters extends Getters<SettingsState> {
-  getSettingValue<TSettingId extends keyof ISettings> (settingId: TSettingId): ISettings[TSettingId]['defaultValue'] {
+  getValidSettingValue<TSettingId extends keyof ISettings> (settingId: TSettingId): ISettings[TSettingId]['defaultValue'] {
     const userSettingValue = this.state.userSettings[settingId]
     if (!isUndefined(userSettingValue) && isValidSettingValue(settings[settingId], userSettingValue)) return userSettingValue
+    return settings[settingId].defaultValue
+  }
+  getUserSettingValue (settingId: keyof ISettings): any {
+    const userSettingValue = this.state.userSettings[settingId]
+    if (!isUndefined(userSettingValue)) return userSettingValue
     return settings[settingId].defaultValue
   }
   isSettingValueDefault (settingId: keyof ISettings): boolean {
