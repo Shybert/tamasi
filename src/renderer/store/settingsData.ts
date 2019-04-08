@@ -1,18 +1,7 @@
 import {validateKeybind} from '../utils/acceleratorHelpers'
 
-interface ISettingCategory {
-  readonly label: string
-  readonly description: string
-  readonly settings: TSettingTypes[]
-}
-interface ISettingCategories {
-  readonly general: ISettingCategory
-  readonly keybinds: ISettingCategory
-}
-
 interface IBaseSetting {
   readonly id: keyof ISettings
-  readonly category: keyof ISettingCategories
   readonly label: string
   readonly description: string
   readonly type: string
@@ -43,7 +32,6 @@ export interface ISettings {
 export const settings: ISettings = {
   test: {
     id: 'test',
-    category: 'general',
     label: 'Test setting',
     description: 'testytestytest',
     type: 'integer',
@@ -53,7 +41,6 @@ export const settings: ISettings = {
   },
   testCheckbox: {
     id: 'testCheckbox',
-    category: 'general',
     label: 'Test setting',
     description: 'testytestytest',
     type: 'checkbox',
@@ -61,7 +48,6 @@ export const settings: ISettings = {
   },
   keybindDeathsIncrement: {
     id: 'keybindDeathsIncrement',
-    category: 'keybinds',
     label: 'Increment death counter',
     description: 'Keybind for incrementing the death counter',
     type: 'keybind',
@@ -69,7 +55,6 @@ export const settings: ISettings = {
   },
   keybindDeathsDecrement: {
     id: 'keybindDeathsDecrement',
-    category: 'keybinds',
     label: 'Decrement death counter',
     description: 'Keybind for decrementing the death counter',
     type: 'keybind',
@@ -77,6 +62,15 @@ export const settings: ISettings = {
   }
 }
 
+interface ISettingCategory {
+  readonly label: string
+  readonly description: string
+  readonly settings: TSettingTypes[]
+}
+interface ISettingCategories {
+  readonly general: ISettingCategory
+  readonly keybinds: ISettingCategory
+}
 export const settingCategories: ISettingCategories = {
   general: {
     label: 'General',
