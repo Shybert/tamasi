@@ -12,6 +12,16 @@ interface IGames {
   [gameName: string]: IGame
 }
 
+// Utils
+export function getGames (): {id: string, name: string}[] {
+  return Object.entries(games).map(([id, game]) => {
+    return {
+      id,
+      name: game.name
+    }
+  })
+}
+
 export const games: IGames = {
   des: {
     name: "Demon's Souls",

@@ -4,7 +4,10 @@
 
     <input v-if="settingInfo.type === 'integer'" type="number" v-model.number="settingValue" step="1" :min="settingInfo.min" :max="settingInfo.max">
     <InputKeybindComponent v-else-if="settingInfo.type === 'keybind'" v-model="settingValue"></InputKeybindComponent>
-    <input v-else-if="settingInfo.type === 'checkbox'" type="checkbox" v-model="settingValue">    
+    <input v-else-if="settingInfo.type === 'checkbox'" type="checkbox" v-model="settingValue">
+    <select v-else-if="settingInfo.type === 'enum'" v-model="settingValue">
+      <option v-for="value in settingInfo.acceptedValues" :key="value.id" :value="value.id">{{value.name}}</option>
+    </select>
   </div>
 </template>
 
