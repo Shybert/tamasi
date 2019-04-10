@@ -20,7 +20,7 @@ export default class KeypressService {
     this.pressedKeys = this.pressedKeys.filter(pressedKey => pressedKey !== key.key)
   }
 
-  reset (): void {
+  public reset (): void {
     this.pressedKeys = []
     this.selectedKeys = []
   }

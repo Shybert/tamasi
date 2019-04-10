@@ -6,8 +6,7 @@
   "scripts": {
     "start": "electron-webpack dev",
     "lint": "wotan",
-    "test": "jest",
-    "rebuild": "electron-builder install-app-deps"
+    "test": "jest"
   },
   "author": "Shybert",
   "repository": {
@@ -27,7 +26,6 @@
     "@types/write-file-atomic": "^2.1.1",
     "@vue/test-utils": "^1.0.0-beta.28",
     "electron": "^3.0.13",
-    "electron-builder": "^20.38.4",
     "electron-webpack": "^2.6.1",
     "electron-webpack-ts": "^3.1.0",
     "electron-webpack-vue": "^2.2.2",
@@ -81,21 +79,6 @@
     ],
     "coverageReporters": [
       "text-summary"
-    ]
-  },
-  "iohook": {
-    "targets": [
-      "node-64",
-      "electron-64"
-    ],
-    "platforms": [
-      "win32",
-      "darwin",
-      "linux"
-    ],
-    "arches": [
-      "x64",
-      "ia32"
     ]
   }
 }
