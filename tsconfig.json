@@ -1,15 +1,29 @@
 {
-    "extends": "./node_modules/electron-webpack/tsconfig-base.json",
-    "compilerOptions": {
-        "sourceMap": true,
-        "target": "es2017",
-        "module": "esnext",
-        "moduleResolution": "node",
-        "esModuleInterop": true,
-        "strict": true,
-        "noImplicitReturns": true,
-        "plugins": [
-            { "name": "typescript-tslint-plugin" }
-        ]
-    }
+  "compilerOptions": {
+    "target": "es2018",
+    "module": "esnext",
+    "strict": true,
+    "noImplicitReturns": true,
+    "jsx": "preserve",
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "types": ["webpack-env", "jest"],
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "tests/**/*.ts",
+    "tests/**/*.tsx"
+  ],
+  "exclude": ["node_modules"]
 }

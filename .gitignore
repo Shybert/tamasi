@@ -1,12 +1,24 @@
-# logs
-logs
-*.log
+.DS_Store
+node_modules
+/dist
 
-# Node
-node_modules/
+# local env files
+.env.local
+.env.*.local
 
-# Webpack compilation
-dist/
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# VS Code
-.vscode/
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw*
+
+#Electron-builder output
+/dist_electron

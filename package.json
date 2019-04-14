@@ -2,83 +2,117 @@
   "name": "dsdt",
   "version": "0.1.0",
   "description": "A death counter and timer application & overlay built for Dark Souls.",
-  "main": "dist/main/main.js",
-  "scripts": {
-    "start": "electron-webpack dev",
-    "lint": "wotan",
-    "test": "jest"
-  },
   "author": "Shybert",
   "repository": {
     "type": "git",
     "url": "https://github.com/Shybert/Dark-Souls-DT"
   },
-  "license": "GPL-3.0",
-  "devDependencies": {
-    "@fimbul/valtyr": "^0.17.0",
-    "@fimbul/ve": "^0.17.0",
-    "@fimbul/wotan": "^0.17.0",
-    "@types/chart.js": "^2.7.48",
-    "@types/electron-store": "^1.3.0",
-    "@types/fs-extra": "^5.0.4",
-    "@types/jest": "^23.3.11",
-    "@types/lodash": "^4.14.119",
-    "@types/write-file-atomic": "^2.1.1",
-    "@vue/test-utils": "^1.0.0-beta.28",
-    "electron": "^3.0.13",
-    "electron-webpack": "^2.6.1",
-    "electron-webpack-ts": "^3.1.0",
-    "electron-webpack-vue": "^2.2.2",
-    "jest": "^23.6.0",
-    "ts-jest": "^23.10.5",
-    "tslint": "^5.12.0",
-    "tslint-config-standard": "^8.0.1",
-    "typescript": "^3.2.2",
-    "typescript-tslint-plugin": "^0.2.1",
-    "vue-class-component": "^6.3.2",
-    "vue-jest": "^3.0.2",
-    "vue-property-decorator": "^7.2.0",
-    "webpack": "^4.28.3"
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "electron:build": "vue-cli-service electron:build",
+    "electron:serve": "vue-cli-service electron:serve",
+    "postinstall": "electron-builder install-app-deps",
+    "postuninstall": "electron-builder install-app-deps",
+    "test:unit": "vue-cli-service test:unit"
   },
+  "main": "background.js",
   "dependencies": {
     "chart.js": "^2.7.3",
     "electron-store": "^2.0.0",
     "lodash": "^4.17.11",
-    "vue": "^2.5.21",
+    "vue": "^2.6.6",
     "vue-chartjs": "github:Shybert/vue-chartjs",
-    "vue-router": "^3.0.2",
+    "vue-class-component": "^6.0.0",
+    "vue-property-decorator": "^8.0.0",
+    "vue-router": "^3.0.1",
     "vuex": "^3.0.1",
-    "vuex-smart-module": "^0.2.2",
+    "vuex-smart-module": "^0.2.6",
     "write-file-atomic": "^2.3.0"
   },
-  "jest": {
-    "globals": {
-      "vue-jest": {
-        "tsConfigFile": "tsconfig.json"
-      }
+  "devDependencies": {
+    "@types/chart.js": "^2.7.48",
+    "@types/electron-store": "^1.3.0",
+    "@types/fs-extra": "^5.0.4",
+    "@types/jest": "^23.1.4",
+    "@types/lodash": "^4.14.119",
+    "@types/write-file-atomic": "^2.1.1",
+    "@vue/cli-plugin-eslint": "^3.5.0",
+    "@vue/cli-plugin-typescript": "^3.5.0",
+    "@vue/cli-plugin-unit-jest": "^3.5.0",
+    "@vue/cli-service": "^3.5.0",
+    "@vue/eslint-config-prettier": "^4.0.1",
+    "@vue/eslint-config-typescript": "^4.0.0",
+    "@vue/test-utils": "1.0.0-beta.29",
+    "babel-eslint": "^10.0.1",
+    "electron": "^4.0.0",
+    "eslint": "^5.8.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "fibers": "^3.1.1",
+    "sass": "^1.17.2",
+    "sass-loader": "^7.1.0",
+    "ts-jest": "^23.0.0",
+    "typescript": "^3.2.1",
+    "vue-cli-plugin-electron-builder": "^1.2.0",
+    "vue-template-compiler": "^2.5.21"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
     },
+    "extends": [
+      "plugin:vue/essential",
+      "@vue/prettier",
+      "@vue/typescript"
+    ],
+    "rules": {},
+    "parserOptions": {
+      "parser": "@typescript-eslint/parser"
+    }
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
+  "jest": {
     "moduleFileExtensions": [
-      "ts",
-      "tsx",
       "js",
       "jsx",
       "json",
-      "node",
-      "vue"
+      "vue",
+      "ts",
+      "tsx"
     ],
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
     "transform": {
-      ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest",
+      "^.+\\.vue$": "vue-jest",
+      ".+\\.(css|styl|less|sass|scss|svg|png|jpg|ttf|woff|woff2)$": "jest-transform-stub",
       "^.+\\.tsx?$": "ts-jest"
     },
-    "collectCoverage": true,
-    "collectCoverageFrom": [
-      "**/*.{ts,vue}",
-      "!**/*.d.ts",
-      "!**/node_modules/**"
+    "transformIgnorePatterns": [
+      "/node_modules/"
     ],
-    "coverageReporters": [
-      "text-summary"
-    ]
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/src/$1"
+    },
+    "snapshotSerializers": [
+      "jest-serializer-vue"
+    ],
+    "testMatch": [
+      "**/tests/unit/**/*.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx)"
+    ],
+    "testURL": "http://localhost/"
   }
 }
