@@ -63,12 +63,12 @@ export default class TitleBar extends Vue {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 #titleBar {
   -webkit-app-region: drag;
   -webkit-user-select: none;
   display: flex;
-  margin: 0;
+  height: $titleBarHeight;
   background-color: #455a64;
   color: #ffffff;
 }

@@ -1,8 +1,10 @@
 <template>
   <div id="app">
     <TitleBarComponent v-if="!isOverlay" />
-    <NavComponent v-if="!isOverlay" />
-    <router-view />
+    <div id="content">
+      <NavComponent v-if="!isOverlay" />
+      <router-view />
+    </div>
   </div>
 </template>
 
@@ -19,9 +21,12 @@ export default class App extends Vue {
 }
 </script>
 
-<style scoped>
-* {
-  margin: 0;
+<style lang="scss" scoped>
+#content {
+  height: calc(100vh - #{$titleBarHeight});
+  box-sizing: border-box;
+  padding: 0.5em;
+  overflow: auto;
 }
 </style>
 <style>
