@@ -2,28 +2,41 @@ import Vue from 'vue'
 import { Mutations, Getters, Actions, Module } from 'vuex-smart-module'
 import { games, IGame } from '../gamesData'
 import * as crypto from 'crypto'
-import * as savesData from '../savesData'
+
+// Saves interface
+interface ISaveBossInfo {
+  name: string
+  time: number
+  deaths: number
+}
+interface ISaveBosses {
+  [bossId: string]: ISaveBossInfo
+}
+interface ISave {
+  name: string
+  bosses: ISaveBosses
+  selected: string
+}
+interface ISaves {
+  [gameId: string]: {
+    [saveId: string]: ISave
+  }
+}
 
 class SavesState {
   showNewSaveOverlay: boolean = false
-  saves: savesData.ISaves = savesData.saves
+  saves: ISaves = {}
 }
 
 class SavesMutations extends Mutations<SavesState> {
   toggleNewSaveOverlay(payload: { showNewSaveOverlay: boolean }) {
     this.state.showNewSaveOverlay = payload.showNewSaveOverlay
   }
-  writeSave(payload: {
-    gameId: string
-    saveId: string
-    save: savesData.ISave
-  }) {
+  writeSave(payload: { gameId: string; saveId: string; save: ISave }) {
     // Use Vue.set because otherwise Vue cannot detect property addition
     if (!(payload.gameId in this.state.saves))
       Vue.set(this.state.saves, payload.gameId, {})
     Vue.set(this.state.saves[payload.gameId], payload.saveId, payload.save)
-
-    savesData.saveSaves()
   }
 
   setSelectedBoss(payload: {
@@ -33,13 +46,11 @@ class SavesMutations extends Mutations<SavesState> {
   }) {
     this.state.saves[payload.gameId][payload.saveId].selected =
       payload.selectedBossId
-    savesData.saveSaves()
   }
   incrementDeaths(payload: { gameId: string; saveId: string; bossId: string }) {
     this.state.saves[payload.gameId][payload.saveId].bosses[
       payload.bossId
     ].deaths += 1
-    savesData.saveSaves()
   }
   decrementDeaths(payload: { gameId: string; saveId: string; bossId: string }) {
     if (
@@ -50,7 +61,6 @@ class SavesMutations extends Mutations<SavesState> {
     this.state.saves[payload.gameId][payload.saveId].bosses[
       payload.bossId
     ].deaths -= 1
-    savesData.saveSaves()
   }
   setBossTime(payload: {
     gameId: string
@@ -61,7 +71,6 @@ class SavesMutations extends Mutations<SavesState> {
     this.state.saves[payload.gameId][payload.saveId].bosses[
       payload.bossId
     ].time = payload.time
-    savesData.saveSaves()
   }
 }
 
@@ -86,8 +95,8 @@ class SavesActions extends Actions<
   }
 }
 
-function generateSave(saveName: string, gameData: IGame): savesData.ISave {
-  const bossList = gameData.bosses as savesData.ISaveBosses
+function generateSave(saveName: string, gameData: IGame): ISave {
+  const bossList = gameData.bosses as ISaveBosses
   // Insert properties for each boss
   Object.keys(bossList).forEach(
     (bossId): void => {
@@ -97,7 +106,7 @@ function generateSave(saveName: string, gameData: IGame): savesData.ISave {
   )
 
   // Insert the save info
-  const save: savesData.ISave = {
+  const save: ISave = {
     name: saveName,
     bosses: bossList,
     selected: Object.keys(bossList)[0]
