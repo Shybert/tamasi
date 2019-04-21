@@ -1,6 +1,6 @@
 export default function formatBossTime(
   timeInMilliseconds: number,
-  includeMilliseconds: boolean
+  includeMilliseconds: boolean = true
 ) {
   const date: Date = new Date(timeInMilliseconds)
 
