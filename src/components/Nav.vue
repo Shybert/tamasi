@@ -6,7 +6,6 @@
       :to="`/saves/${gameId}`"
       >{{ game.name }}</router-link
     >
-    <router-link to="/settings" id="settingsLink">Settings</router-link>
   </nav>
 </template>
 
