@@ -3,7 +3,7 @@
     <router-link
       v-for="(game, gameId) in games"
       :key="gameId"
-      :to="`/saves/${gameId}`"
+      :to="`/${gameId}`"
       >{{ game.name }}</router-link
     >
   </nav>
