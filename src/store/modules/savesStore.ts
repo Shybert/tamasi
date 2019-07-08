@@ -98,12 +98,10 @@ class SavesActions extends Actions<
 function generateSave(saveName: string, gameData: IGame): ISave {
   const bossList = gameData.bosses as ISaveBosses
   // Insert properties for each boss
-  Object.keys(bossList).forEach(
-    (bossId): void => {
-      bossList[bossId].time = 0
-      bossList[bossId].deaths = 0
-    }
-  )
+  Object.keys(bossList).forEach(bossId => {
+    bossList[bossId].time = 0
+    bossList[bossId].deaths = 0
+  })
 
   // Insert the save info
   const save: ISave = {
