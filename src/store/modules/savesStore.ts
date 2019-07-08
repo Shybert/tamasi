@@ -39,13 +39,8 @@ class SavesMutations extends Mutations<SavesState> {
     Vue.set(this.state.saves[payload.gameId], payload.saveId, payload.save)
   }
 
-  setSelectedBoss(payload: {
-    gameId: string
-    saveId: string
-    selectedBossId: string
-  }) {
-    this.state.saves[payload.gameId][payload.saveId].selected =
-      payload.selectedBossId
+  setSelectedBoss(payload: { gameId: string; saveId: string; bossId: string }) {
+    this.state.saves[payload.gameId][payload.saveId].selected = payload.bossId
   }
   incrementDeaths(payload: { gameId: string; saveId: string; bossId: string }) {
     this.state.saves[payload.gameId][payload.saveId].bosses[
