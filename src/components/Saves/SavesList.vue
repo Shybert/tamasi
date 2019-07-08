@@ -2,7 +2,12 @@
   <ul>
     <li v-for="(save, saveId) in savesList" :key="saveId">
       <ul>
-        <li @click="loadOverlayWindow(saveId)">{{ save.name }}</li>
+        <li>{{ save.name }}</li>
+        <li>
+          <router-link :to="`/overlay/${gameId}/${saveId}`"
+            >Overlay</router-link
+          >
+        </li>
         <li>
           <router-link :to="`/charts/${gameId}/${saveId}`">Charts</router-link>
         </li>
@@ -14,7 +19,6 @@
 <script lang="ts">
 import Vue from 'vue'
 import { Component, Prop } from 'vue-property-decorator'
-import { ipcRenderer } from 'electron'
 import { saves } from '@/store/modules/savesStore'
 
 const Super = Vue.extend({
@@ -26,10 +30,6 @@ export default class SavesList extends Super {
 
   get savesList() {
     return this.saves[this.gameId]
-  }
-
-  loadOverlayWindow(saveId: string): void {
-    ipcRenderer.send('loadOverlayWindow', this.gameId, saveId)
   }
 }
 </script>
