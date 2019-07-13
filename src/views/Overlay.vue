@@ -7,10 +7,21 @@
 <script lang="ts">
 import Vue from 'vue'
 import { Component, Prop } from 'vue-property-decorator'
+import { remote } from 'electron'
+const { globalShortcut } = remote
 
 @Component
 export default class Overlay extends Vue {
   @Prop({ type: String, required: true }) gameId!: string
   @Prop({ type: String, required: true }) saveId!: string
+
+  mounted() {
+    globalShortcut.register('Home', () => {
+      this.$router.push({ path: `/${this.gameId}` })
+    })
+  }
+  beforeDestroy() {
+    globalShortcut.unregisterAll()
+  }
 }
 </script>
