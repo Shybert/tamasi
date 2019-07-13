@@ -17,7 +17,9 @@ import NavComponent from '@/components/Nav.vue'
 
 @Component({ components: { NavComponent, TitleBarComponent } })
 export default class App extends Vue {
-  isOverlay: boolean = window.location.hash.startsWith('#/overlay')
+  get isOverlay(): boolean {
+    return this.$route.path.startsWith('/overlay')
+  }
 }
 </script>
 
