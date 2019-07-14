@@ -8,9 +8,6 @@
             >Overlay</router-link
           >
         </li>
-        <li>
-          <router-link :to="`/charts/${gameId}/${saveId}`">Charts</router-link>
-        </li>
       </ul>
     </li>
   </ul>
