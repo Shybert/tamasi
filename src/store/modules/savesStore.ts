@@ -24,14 +24,10 @@ interface ISaves {
 }
 
 class SavesState {
-  showNewSaveOverlay: boolean = false
   saves: ISaves = {}
 }
 
 class SavesMutations extends Mutations<SavesState> {
-  toggleNewSaveOverlay(payload: { showNewSaveOverlay: boolean }) {
-    this.state.showNewSaveOverlay = payload.showNewSaveOverlay
-  }
   writeSave(payload: { gameId: string; saveId: string; save: ISave }) {
     // Use Vue.set because otherwise Vue cannot detect property addition
     if (!(payload.gameId in this.state.saves))

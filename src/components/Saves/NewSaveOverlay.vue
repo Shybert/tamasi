@@ -11,7 +11,7 @@
     />
     <button @click="localCreateSave" id="createSave">Create New Save</button>
 
-    <button @click="closeOverlay" id="closeOverlay">Close Overlay</button>
+    <button @click="$emit('close')" id="closeOverlay">Close Overlay</button>
   </div>
 </template>
 
@@ -21,10 +21,7 @@ import { Component, Prop } from 'vue-property-decorator'
 import { saves } from '@/store/modules/savesStore'
 
 const Super = Vue.extend({
-  methods: {
-    ...saves.mapMutations(['toggleNewSaveOverlay']),
-    ...saves.mapActions(['createSave'])
-  }
+  methods: saves.mapActions(['createSave'])
 })
 @Component
 export default class NewSaveOverlay extends Super {
@@ -41,13 +38,9 @@ export default class NewSaveOverlay extends Super {
 
     this.createSave({ gameId: this.gameId, saveName: this.newSaveName }).then(
       () => {
-        this.toggleNewSaveOverlay({ showNewSaveOverlay: false })
+        this.$emit('close')
       }
     )
-  }
-
-  closeOverlay(): void {
-    this.toggleNewSaveOverlay({ showNewSaveOverlay: false })
   }
 }
 </script>
