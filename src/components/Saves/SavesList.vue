@@ -1,8 +1,9 @@
 <template>
   <ul>
-    <li v-for="(save, saveId) in savesList" :key="saveId">
+    <li v-for="(save, saveId) in saves" :key="saveId">
       <ul>
-        <li>{{ save.name }}</li>
+        <li>Name: {{ save.name }}</li>
+        <li>Game: {{ save.gameId }}</li>
         <li>
           <router-link :to="`/overlay/${gameId}/${saveId}`"
             >Overlay</router-link
@@ -24,9 +25,5 @@ const Super = Vue.extend({
 @Component
 export default class SavesList extends Super {
   @Prop({ type: String, required: true }) gameId!: string
-
-  get savesList() {
-    return this.saves[this.gameId]
-  }
 }
 </script>

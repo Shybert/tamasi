@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import { Mutations, Getters, Actions, Module } from 'vuex-smart-module'
-import { games, IGame } from '../gamesData'
+import { games } from '../gamesData'
 import * as crypto from 'crypto'
 
 // Saves interface
@@ -13,14 +13,13 @@ interface ISaveBosses {
   [bossId: string]: ISaveBossInfo
 }
 interface ISave {
+  gameId: string
   name: string
   bosses: ISaveBosses
   selected: string
 }
 interface ISaves {
-  [gameId: string]: {
-    [saveId: string]: ISave
-  }
+  [saveId: string]: ISave
 }
 
 class SavesState {
@@ -28,40 +27,23 @@ class SavesState {
 }
 
 class SavesMutations extends Mutations<SavesState> {
-  writeSave(payload: { gameId: string; saveId: string; save: ISave }) {
-    // Use Vue.set because otherwise Vue cannot detect property addition
-    if (!(payload.gameId in this.state.saves))
-      Vue.set(this.state.saves, payload.gameId, {})
-    Vue.set(this.state.saves[payload.gameId], payload.saveId, payload.save)
+  writeSave(payload: { saveId: string; save: ISave }) {
+    Vue.set(this.state.saves, payload.saveId, payload.save)
   }
 
-  setSelectedBoss(payload: { gameId: string; saveId: string; bossId: string }) {
-    this.state.saves[payload.gameId][payload.saveId].selected = payload.bossId
+  setSelectedBoss(payload: { saveId: string; bossId: string }) {
+    this.state.saves[payload.saveId].selected = payload.bossId
   }
-  incrementDeaths(payload: { gameId: string; saveId: string; bossId: string }) {
-    this.state.saves[payload.gameId][payload.saveId].bosses[
-      payload.bossId
-    ].deaths += 1
+  incrementDeaths(payload: { saveId: string; bossId: string }) {
+    this.state.saves[payload.saveId].bosses[payload.bossId].deaths += 1
   }
-  decrementDeaths(payload: { gameId: string; saveId: string; bossId: string }) {
-    if (
-      this.state.saves[payload.gameId][payload.saveId].bosses[payload.bossId]
-        .deaths <= 0
-    )
+  decrementDeaths(payload: { saveId: string; bossId: string }) {
+    if (this.state.saves[payload.saveId].bosses[payload.bossId].deaths <= 0)
       return
-    this.state.saves[payload.gameId][payload.saveId].bosses[
-      payload.bossId
-    ].deaths -= 1
+    this.state.saves[payload.saveId].bosses[payload.bossId].deaths -= 1
   }
-  setBossTime(payload: {
-    gameId: string
-    saveId: string
-    bossId: string
-    time: number
-  }) {
-    this.state.saves[payload.gameId][payload.saveId].bosses[
-      payload.bossId
-    ].time = payload.time
+  setBossTime(payload: { saveId: string; bossId: string; time: number }) {
+    this.state.saves[payload.saveId].bosses[payload.bossId].time = payload.time
   }
 }
 
@@ -75,19 +57,18 @@ class SavesActions extends Actions<
     gameId: string
     saveName: string
   }): Promise<void> {
-    const save = generateSave(payload.saveName, games[payload.gameId])
-    const generatedSaveId: string = crypto.randomBytes(16).toString('hex')
+    const save = generateSave(payload.gameId, payload.saveName)
+    const saveId: string = crypto.randomBytes(16).toString('hex')
 
     this.commit('writeSave', {
-      gameId: payload.gameId,
-      saveId: generatedSaveId,
+      saveId,
       save
     })
   }
 }
 
-function generateSave(saveName: string, gameData: IGame): ISave {
-  const bossList = gameData.bosses as ISaveBosses
+function generateSave(gameId: string, saveName: string): ISave {
+  const bossList = games[gameId].bosses as ISaveBosses
   // Insert properties for each boss
   Object.keys(bossList).forEach(bossId => {
     bossList[bossId].time = 0
@@ -96,6 +77,7 @@ function generateSave(saveName: string, gameData: IGame): ISave {
 
   // Insert the save info
   const save: ISave = {
+    gameId,
     name: saveName,
     bosses: bossList,
     selected: Object.keys(bossList)[0]
