@@ -9,6 +9,11 @@
       placeholder="New Save Name"
       required
     />
+    <select v-model="selectedGame">
+      <option v-for="game in games" :value="game.id" :key="game.id">{{
+        game.name
+      }}</option>
+    </select>
     <button @click="localCreateSave" id="createSave">Create New Save</button>
 
     <button @click="$emit('close')" id="closeOverlay">Close Overlay</button>
@@ -18,6 +23,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { Component, Prop } from 'vue-property-decorator'
+import { getGames } from '@/store/gamesData'
 import { saves } from '@/store/modules/savesStore'
 
 const Super = Vue.extend({
@@ -25,10 +31,11 @@ const Super = Vue.extend({
 })
 @Component
 export default class NewSaveOverlay extends Super {
-  @Prop({ type: String, required: true }) gameId!: string
   newSaveName: string = ''
-  inputError: string | null = null
+  games = getGames()
+  selectedGame: string = this.games[0].id
 
+  inputError: string | null = null
   localCreateSave(): void {
     this.inputError = null
     if (!this.newSaveName) {
@@ -36,11 +43,12 @@ export default class NewSaveOverlay extends Super {
       return
     }
 
-    this.createSave({ gameId: this.gameId, saveName: this.newSaveName }).then(
-      () => {
-        this.$emit('close')
-      }
-    )
+    this.createSave({
+      gameId: this.selectedGame,
+      saveName: this.newSaveName
+    }).then(() => {
+      this.$emit('close')
+    })
   }
 }
 </script>

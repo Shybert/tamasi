@@ -3,7 +3,6 @@
     <NewSaveOverlayComponent
       v-if="showNewSaveOverlay"
       @close="showNewSaveOverlay = false"
-      :gameId="gameId"
     />
     <button @click="showNewSaveOverlay = true" id="openNewSaveOverlay">
       Open New Save Overlay
