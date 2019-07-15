@@ -2,7 +2,6 @@
   <div id="app">
     <TitleBarComponent v-if="!isOverlay" />
     <div id="content">
-      <NavComponent v-if="!isOverlay" />
       <router-view />
     </div>
   </div>
@@ -13,9 +12,8 @@ import Vue from 'vue'
 import { Component } from 'vue-property-decorator'
 
 import TitleBarComponent from '@/components/TitleBar.vue'
-import NavComponent from '@/components/Nav.vue'
 
-@Component({ components: { NavComponent, TitleBarComponent } })
+@Component({ components: { TitleBarComponent } })
 export default class App extends Vue {
   get isOverlay(): boolean {
     return this.$route.path.startsWith('/overlay')
