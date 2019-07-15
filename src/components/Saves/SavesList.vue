@@ -5,9 +5,7 @@
         <li>Name: {{ save.name }}</li>
         <li>Game: {{ save.gameId }}</li>
         <li>
-          <router-link :to="`/overlay/${gameId}/${saveId}`"
-            >Overlay</router-link
-          >
+          <router-link :to="`/overlay/${saveId}`">Overlay</router-link>
         </li>
       </ul>
     </li>
@@ -23,7 +21,5 @@ const Super = Vue.extend({
   computed: saves.mapState(['saves'])
 })
 @Component
-export default class SavesList extends Super {
-  @Prop({ type: String, required: true }) gameId!: string
-}
+export default class SavesList extends Super {}
 </script>

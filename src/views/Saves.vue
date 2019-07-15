@@ -1,20 +1,15 @@
 <template>
   <section class="saves">
-    <div v-if="gameId">
-      <NewSaveOverlayComponent
-        v-if="showNewSaveOverlay"
-        @close="showNewSaveOverlay = false"
-        :gameId="gameId"
-      />
-      <button @click="showNewSaveOverlay = true" id="openNewSaveOverlay">
-        Open New Save Overlay
-      </button>
+    <NewSaveOverlayComponent
+      v-if="showNewSaveOverlay"
+      @close="showNewSaveOverlay = false"
+      :gameId="gameId"
+    />
+    <button @click="showNewSaveOverlay = true" id="openNewSaveOverlay">
+      Open New Save Overlay
+    </button>
 
-      <SavesListComponent :gameId="gameId" />
-    </div>
-    <div v-else>
-      <p>You have not selected a game.</p>
-    </div>
+    <SavesListComponent />
   </section>
 </template>
 
@@ -27,8 +22,6 @@ import SavesListComponent from '@/components/Saves/SavesList.vue'
 
 @Component({ components: { NewSaveOverlayComponent, SavesListComponent } })
 export default class Saves extends Vue {
-  @Prop({ type: String }) gameId: string | undefined
-
   showNewSaveOverlay: boolean = false
 }
 </script>
