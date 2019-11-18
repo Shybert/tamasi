@@ -18,10 +18,16 @@ isDevelopment
 let win: BrowserWindow | null
 
 // Standard scheme must be registered before the app is ready
-protocol.registerStandardSchemes(['app'], { secure: true })
+protocol.registerSchemesAsPrivileged([
+  { scheme: 'app', privileges: { secure: true } }
+])
 function createWindow() {
   // Create the browser window.
-  win = new BrowserWindow({ show: false, frame: false })
+  win = new BrowserWindow({
+    show: false,
+    frame: false,
+    webPreferences: { nodeIntegration: true }
+  })
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
