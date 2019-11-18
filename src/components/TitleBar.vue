@@ -5,6 +5,7 @@
     <div id="minimizeWindow" @click="minimizeWindow" class="titleBarButton">
       Minimize
     </div>
+
     <div
       id="maximizeWindow"
       v-if="!isWindowMaximized"
@@ -21,6 +22,7 @@
     >
       Unmaximize
     </div>
+
     <div id="closeWindow" @click="closeWindow" class="titleBarButton">
       Close
     </div>
@@ -28,39 +30,40 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Component } from 'vue-property-decorator'
+import { createComponent, ref } from '@vue/composition-api'
 import { remote } from 'electron'
 
-@Component
-export default class TitleBar extends Vue {
-  currentWindow = remote.getCurrentWindow()
-  isWindowMaximized: boolean = this.currentWindow.isMaximized()
+export default createComponent({
+  name: 'TitleBar',
+  setup() {
+    const window = remote.getCurrentWindow()
+    let isWindowMaximized = ref(window.isMaximized())
 
-  created() {
-    this.currentWindow.addListener(
-      'maximize',
-      () => (this.isWindowMaximized = true)
-    )
-    this.currentWindow.addListener(
-      'unmaximize',
-      () => (this.isWindowMaximized = false)
-    )
-  }
+    window.on('maximize', () => (isWindowMaximized.value = true))
+    window.on('unmaximize', () => (isWindowMaximized.value = false))
 
-  minimizeWindow(): void {
-    this.currentWindow.minimize()
+    function minimizeWindow(): void {
+      window.minimize()
+    }
+    function maximizeWindow(): void {
+      window.maximize()
+    }
+    function unmaximizeWindow(): void {
+      window.unmaximize()
+    }
+    function closeWindow(): void {
+      window.close()
+    }
+
+    return {
+      isWindowMaximized,
+      minimizeWindow,
+      maximizeWindow,
+      unmaximizeWindow,
+      closeWindow
+    }
   }
-  maximizeWindow(): void {
-    this.currentWindow.maximize()
-  }
-  unmaximizeWindow(): void {
-    this.currentWindow.unmaximize()
-  }
-  closeWindow(): void {
-    this.currentWindow.close()
-  }
-}
+})
 </script>
 
 <style lang="scss" scoped>

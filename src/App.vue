@@ -1,24 +1,17 @@
 <template>
   <div id="app">
-    <TitleBarComponent v-if="!isOverlay" />
-    <div id="content">
-      <router-view />
-    </div>
+    <TitleBar />
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Component } from 'vue-property-decorator'
+import { createComponent } from '@vue/composition-api'
+import TitleBar from '@/components/TitleBar.vue'
 
-import TitleBarComponent from '@/components/TitleBar.vue'
-
-@Component({ components: { TitleBarComponent } })
-export default class App extends Vue {
-  get isOverlay(): boolean {
-    return this.$route.path.startsWith('/overlay')
-  }
-}
+export default createComponent({
+  name: 'App',
+  components: { TitleBar }
+})
 </script>
 
 <style lang="scss" scoped>
