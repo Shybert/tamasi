@@ -22,7 +22,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { Component, Prop } from 'vue-property-decorator'
+import { Component } from 'vue-property-decorator'
 import { getGames } from '@/store/gamesData'
 import { saves } from '@/store/modules/savesStore'
 

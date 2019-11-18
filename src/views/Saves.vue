@@ -14,7 +14,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { Component, Prop } from 'vue-property-decorator'
+import { Component } from 'vue-property-decorator'
 
 import NewSaveOverlayComponent from '@/components/Saves/NewSaveOverlay.vue'
 import SavesListComponent from '@/components/Saves/SavesList.vue'
