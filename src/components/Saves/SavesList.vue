@@ -1,6 +1,5 @@
 <template>
-  <ul>
-    <li style="display: none">{{ state.forceRerender }}s</li>
+  <ul :key="state.forceRerender">
     <li v-for="(save, saveId) in state.saves" :key="saveId">
       <ul>
         <li>Name: {{ save.name }}</li>
