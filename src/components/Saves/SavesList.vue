@@ -1,6 +1,7 @@
 <template>
   <ul>
-    <li v-for="(save, saveId) in saves" :key="saveId">
+    <li style="display: none">{{ state.forceRerender }}s</li>
+    <li v-for="(save, saveId) in state.saves" :key="saveId">
       <ul>
         <li>Name: {{ save.name }}</li>
         <li>Game: {{ save.gameId }}</li>
@@ -13,13 +14,16 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Component } from 'vue-property-decorator'
-import { saves } from '@/store/modules/savesStore'
+import { createComponent } from '@vue/composition-api'
+import { useSavesStore } from '@/store/savesStore'
 
-const Super = Vue.extend({
-  computed: saves.mapState(['saves'])
+export default createComponent({
+  name: 'SavesList',
+  setup() {
+    const savesStore = useSavesStore()
+    return {
+      state: savesStore.state
+    }
+  }
 })
-@Component
-export default class SavesList extends Super {}
 </script>

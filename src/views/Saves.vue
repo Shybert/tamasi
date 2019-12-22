@@ -1,6 +1,6 @@
 <template>
   <section class="saves">
-    <NewSaveOverlayComponent
+    <NewSaveOverlay
       v-if="showNewSaveOverlay"
       @close="showNewSaveOverlay = false"
     />
@@ -8,19 +8,21 @@
       Open New Save Overlay
     </button>
 
-    <SavesListComponent />
+    <SavesList />
   </section>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Component } from 'vue-property-decorator'
+import { createComponent, ref } from '@vue/composition-api'
+import NewSaveOverlay from '@/components/Saves/NewSaveOverlay.vue'
+import SavesList from '@/components/Saves/SavesList.vue'
 
-import NewSaveOverlayComponent from '@/components/Saves/NewSaveOverlay.vue'
-import SavesListComponent from '@/components/Saves/SavesList.vue'
-
-@Component({ components: { NewSaveOverlayComponent, SavesListComponent } })
-export default class Saves extends Vue {
-  showNewSaveOverlay: boolean = false
-}
+export default createComponent({
+  name: 'Saves',
+  components: { NewSaveOverlay, SavesList },
+  setup() {
+    const showNewSaveOverlay = ref(true)
+    return { showNewSaveOverlay }
+  }
+})
 </script>

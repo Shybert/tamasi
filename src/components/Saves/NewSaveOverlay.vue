@@ -1,14 +1,8 @@
 <template>
-  <div class="newSaveOverlay">
-    <h2>New Save Overlay</h2>
+  <div>
+    <h2>Create new save</h2>
 
-    <div class="inputError" v-if="inputError">{{ inputError }}</div>
-    <input
-      id="newSaveName"
-      v-model="newSaveName"
-      placeholder="New Save Name"
-      required
-    />
+    <input id="saveName" v-model="saveName" placeholder="Save Name" required />
     <select v-model="selectedGame">
       <option v-for="game in games" :value="game.id" :key="game.id">{{
         game.name
@@ -21,40 +15,29 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Component } from 'vue-property-decorator'
+import { createComponent, ref } from '@vue/composition-api'
+import { createSave } from '@/store/savesStore'
 import { getGames } from '@/store/gamesData'
-import { saves } from '@/store/modules/savesStore'
 
-const Super = Vue.extend({
-  methods: saves.mapActions(['createSave'])
-})
-@Component
-export default class NewSaveOverlay extends Super {
-  newSaveName: string = ''
-  games = getGames()
-  selectedGame: string = this.games[0].id
+export default createComponent({
+  name: 'SavesList',
+  setup(props, ctx) {
+    const games = getGames()
 
-  inputError: string | null = null
-  localCreateSave(): void {
-    this.inputError = null
-    if (!this.newSaveName) {
-      this.inputError = 'A name for the save is required.'
-      return
+    const saveName = ref('')
+    const selectedGame = ref(games[0].id)
+
+    function localCreateSave(): void {
+      createSave(selectedGame.value, saveName.value)
+      ctx.emit('close')
     }
 
-    this.createSave({
-      gameId: this.selectedGame,
-      saveName: this.newSaveName
-    }).then(() => {
-      this.$emit('close')
-    })
+    return {
+      games,
+      saveName,
+      selectedGame,
+      localCreateSave
+    }
   }
-}
+})
 </script>
-
-<style scoped>
-.inputError {
-  color: red;
-}
-</style>
