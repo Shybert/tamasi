@@ -4,7 +4,7 @@ interface IGameBossInfo {
 interface IGameBosses {
   [bossName: string]: IGameBossInfo
 }
-export interface IGame {
+interface IGame {
   name: string
   bosses: IGameBosses
 }
