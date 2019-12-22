@@ -50,12 +50,12 @@ const savesState: ISavesState = {
   forceRerender: 0
 }
 
+const store = createStore('saves', savesState)
 export function useSavesStore() {
-  return createStore(savesState)
+  return store
 }
 
 export function createSave(gameId: string, saveName: string): void {
-  const store = useSavesStore()
   const save: ISave = generateSave(gameId, saveName)
   const saveId: string = crypto.randomBytes(16).toString('hex')
   store.state.value.saves[saveId] = save
