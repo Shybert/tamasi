@@ -1,12 +1,13 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import { createStore } from 'vuex-smart-module'
-import persistedStatePlugin from './persistedStatePlugin'
-import { root } from './modules/rootModule'
+import { ref, Ref } from '@vue/composition-api'
 
-Vue.use(Vuex)
+interface IStore<State> {
+  state: Ref<State>
+}
 
-export const store = createStore(root, {
-  strict: process.env.NODE_ENV !== 'production',
-  plugins: [persistedStatePlugin]
-})
+export function createStore<State>(state: State): IStore<State> {
+  const store: IStore<State> = {
+    state: ref(state)
+  }
+
+  return store
+}
