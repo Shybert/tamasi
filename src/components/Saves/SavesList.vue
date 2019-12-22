@@ -4,9 +4,9 @@
       <ul>
         <li>Name: {{ save.name }}</li>
         <li>Game: {{ save.gameId }}</li>
-        <li>
+        <!-- <li>
           <router-link :to="`/overlay/${saveId}`">Overlay</router-link>
-        </li>
+        </li> -->
       </ul>
     </li>
   </ul>
