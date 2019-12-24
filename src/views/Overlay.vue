@@ -15,9 +15,9 @@ export default class Overlay extends Vue {
   @Prop({ type: String, required: true }) saveId!: string
 
   mounted() {
-    // globalShortcut.register('Home', () => {
-    //   this.$router.push({ path: `/` })
-    // })
+    globalShortcut.register('Home', () => {
+      this.$router.push({ path: `/` })
+    })
   }
   beforeDestroy() {
     globalShortcut.unregisterAll()

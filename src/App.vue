@@ -2,8 +2,7 @@
   <div id="app">
     <TitleBar />
     <div id="content">
-      <Saves />
-      <!-- <router-view /> -->
+      <router-view></router-view>
     </div>
   </div>
 </template>
@@ -11,11 +10,10 @@
 <script lang="ts">
 import { createComponent } from '@vue/composition-api'
 import TitleBar from '@/components/TitleBar.vue'
-import Saves from '@/views/Saves.vue'
 
 export default createComponent({
   name: 'App',
-  components: { TitleBar, Saves }
+  components: { TitleBar }
 })
 </script>
 
