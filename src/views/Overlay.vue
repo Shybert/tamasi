@@ -5,22 +5,17 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Component, Prop } from 'vue-property-decorator'
+import { createComponent, onUnmounted } from '@vue/composition-api'
 import { remote } from 'electron'
 const { globalShortcut } = remote
 
-@Component
-export default class Overlay extends Vue {
-  @Prop({ type: String, required: true }) saveId!: string
-
-  mounted() {
+export default createComponent({
+  name: 'Overlay',
+  setup(props, ctx) {
     globalShortcut.register('Home', () => {
-      this.$router.push({ path: `/` })
+      ctx.root.$router.push({ path: `/` })
     })
+    onUnmounted(() => globalShortcut.unregisterAll())
   }
-  beforeDestroy() {
-    globalShortcut.unregisterAll()
-  }
-}
+})
 </script>
