@@ -22,6 +22,9 @@ function nextBoss(save: ISave): void {
   const bossIds = Object.keys(save.bosses)
   save.selected = nextArrayValue(bossIds, bossIds.indexOf(save.selected))
 }
+function incrementDeaths(save: ISave): void {
+  save.bosses[save.selected].deaths += 1
+}
 
 export default createComponent({
   name: 'Overlay',
@@ -39,6 +42,9 @@ export default createComponent({
     })
     globalShortcut.register('PageDown', () => {
       nextBoss(save)
+    })
+    globalShortcut.register('End', () => {
+      incrementDeaths(save)
     })
     onUnmounted(() => globalShortcut.unregisterAll())
 
