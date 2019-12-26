@@ -2,7 +2,7 @@ import { createStore } from './store'
 import { games } from './gamesData'
 import * as crypto from 'crypto'
 
-interface ISaveBossInfo {
+export interface ISaveBossInfo {
   name: string
   time: number
   deaths: number
