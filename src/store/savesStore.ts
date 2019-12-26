@@ -10,7 +10,7 @@ export interface ISaveBossInfo {
 interface ISaveBosses {
   [bossId: string]: ISaveBossInfo
 }
-interface ISave {
+export interface ISave {
   gameId: string
   name: string
   bosses: ISaveBosses
