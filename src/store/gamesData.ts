@@ -322,5 +322,100 @@ export const games: IGames = {
   bb: {
     name: 'Bloodborne',
     bosses: {}
+  },
+  sekiro: {
+    name: 'Sekiro: Shadows Die Twice',
+    bosses: {
+      placeholder: {
+        name: 'Placeholder 1'
+      },
+      placeholder2: {
+        name: 'Placeholder 2'
+      },
+      placeholder3: {
+        name: 'Placeholder 3'
+      },
+      placeholder4: {
+        name: 'Placeholder 4'
+      },
+      placeholder5: {
+        name: 'Placeholder 5'
+      },
+      placeholder6: {
+        name: 'Placeholder 6'
+      },
+      placeholder7: {
+        name: 'Placeholder 7'
+      },
+      placeholder8: {
+        name: 'Placeholder 8'
+      },
+      placeholder9: {
+        name: 'Placeholder 9'
+      },
+      placeholder10: {
+        name: 'Placeholder 10'
+      },
+      placeholder11: {
+        name: 'Placeholder 11'
+      },
+      placeholder12: {
+        name: 'Placeholder 12'
+      },
+      placeholder13: {
+        name: 'Placeholder 13'
+      },
+      placeholder14: {
+        name: 'Placeholder 14'
+      },
+      placeholder15: {
+        name: 'Placeholder 15'
+      },
+      placeholder16: {
+        name: 'Placeholder 16'
+      },
+      placeholder17: {
+        name: 'Placeholder 17'
+      },
+      placeholder18: {
+        name: 'Placeholder 18'
+      },
+      placeholder19: {
+        name: 'Placeholder 19'
+      },
+      placeholder20: {
+        name: 'Placeholder 20'
+      },
+      placeholder21: {
+        name: 'Placeholder 21'
+      },
+      placeholder22: {
+        name: 'Placeholder 22'
+      },
+      placeholder23: {
+        name: 'Placeholder 23'
+      },
+      placeholder24: {
+        name: 'Placeholder 24'
+      },
+      placeholder25: {
+        name: 'Placeholder 25'
+      },
+      placeholder26: {
+        name: 'Placeholder 26'
+      },
+      placeholder27: {
+        name: 'Placeholder 27'
+      },
+      placeholder28: {
+        name: 'Placeholder 28'
+      },
+      placeholder29: {
+        name: 'Placeholder 29'
+      },
+      placeholder30: {
+        name: 'Placeholder 30'
+      }
+    }
   }
 }
