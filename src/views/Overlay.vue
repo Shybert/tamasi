@@ -7,6 +7,7 @@
 <script lang="ts">
 import { createComponent, onUnmounted } from '@vue/composition-api'
 import { previousArrayValue, nextArrayValue } from '@/utils/arrayUtils'
+import Timer from '@/utils/timer'
 // eslint does not properly detect TS interface usage
 // eslint-disable-next-line no-unused-vars
 import { useSavesStore, ISave } from '../store/savesStore'
@@ -25,6 +26,9 @@ function nextBoss(save: ISave): void {
 function incrementDeaths(save: ISave): void {
   save.bosses[save.selected].deaths += 1
 }
+function incrementTime(save: ISave, time: number): void {
+  save.bosses[save.selected].time += time
+}
 
 export default createComponent({
   name: 'Overlay',
@@ -34,19 +38,28 @@ export default createComponent({
     const saveId: string = ctx.root.$route.params.saveId
     const save = savesStore.state.value.saves[saveId]
 
+    const timer = new Timer()
+    timer.on('tick', (time: number) => incrementTime(save, time))
+
     globalShortcut.register('Home', () => {
-      ctx.root.$router.push({ path: `/` })
+      if (!timer.isRunning()) ctx.root.$router.push({ path: `/` })
     })
     globalShortcut.register('PageUp', () => {
-      previousBoss(save)
+      if (!timer.isRunning()) previousBoss(save)
     })
     globalShortcut.register('PageDown', () => {
-      nextBoss(save)
+      if (!timer.isRunning()) nextBoss(save)
     })
     globalShortcut.register('End', () => {
       incrementDeaths(save)
     })
-    onUnmounted(() => globalShortcut.unregisterAll())
+    globalShortcut.register('Insert', () => {
+      timer.switch()
+    })
+    onUnmounted(() => {
+      timer.stop()
+      globalShortcut.unregisterAll()
+    })
 
     return { saveId, save }
   }
