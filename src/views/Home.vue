@@ -1,9 +1,6 @@
 <template>
   <section class="saves">
-    <NewSaveOverlay
-      v-if="showNewSaveOverlay"
-      @close="showNewSaveOverlay = false"
-    />
+    <NewSave v-if="showNewSaveOverlay" @close="showNewSaveOverlay = false" />
     <button @click="showNewSaveOverlay = true" id="openNewSaveOverlay">
       Open New Save Overlay
     </button>
@@ -14,12 +11,12 @@
 
 <script lang="ts">
 import { createComponent, ref } from '@vue/composition-api'
-import NewSaveOverlay from '@/components/Saves/NewSaveOverlay.vue'
+import NewSave from '@/components/Saves/NewSave.vue'
 import SavesList from '@/components/Saves/SavesList.vue'
 
 export default createComponent({
-  name: 'Saves',
-  components: { NewSaveOverlay, SavesList },
+  name: 'Home',
+  components: { NewSave, SavesList },
   setup() {
     const showNewSaveOverlay = ref(true)
     return { showNewSaveOverlay }

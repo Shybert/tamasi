@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <h2>Create new save</h2>
-
+  <section id="newSave">
     <input id="saveName" v-model="saveName" placeholder="Save Name" required />
     <select v-model="selectedGame">
       <option v-for="game in games" :value="game.id" :key="game.id">{{
@@ -9,9 +7,7 @@
       }}</option>
     </select>
     <button @click="localCreateSave" id="createSave">Create New Save</button>
-
-    <button @click="$emit('close')" id="closeOverlay">Close Overlay</button>
-  </div>
+  </section>
 </template>
 
 <script lang="ts">
@@ -20,7 +16,7 @@ import { createSave } from '@/store/savesStore'
 import { getGames } from '@/store/gamesData'
 
 export default createComponent({
-  name: 'SavesList',
+  name: 'NewSave',
   setup(props, ctx) {
     const games = getGames()
 
@@ -29,7 +25,7 @@ export default createComponent({
 
     function localCreateSave(): void {
       createSave(selectedGame.value, saveName.value)
-      ctx.emit('close')
+      ctx.emit('createdSave')
     }
 
     return {
