@@ -1,15 +1,20 @@
 <template>
-  <ul :key="state.forceRerender">
-    <li v-for="(save, saveId) in state.saves" :key="saveId">
-      <ul>
-        <li>Name: {{ save.name }}</li>
-        <li>Game: {{ save.gameId }}</li>
-        <li>
-          <router-link :to="`/overlay/${saveId}`">Overlay</router-link>
-        </li>
-      </ul>
-    </li>
-  </ul>
+  <section>
+    <ul id="saves" :key="state.forceRerender">
+      <li v-for="(save, saveId) in state.saves" :key="saveId">
+        <ul>
+          <li>Name: {{ save.name }}</li>
+          <li>Game: {{ save.gameId }}</li>
+          <li>
+            <router-link :to="`/overlay/${saveId}`">Overlay</router-link>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <button @click="$emit('newSave')">New Save</button>
+      </li>
+    </ul>
+  </section>
 </template>
 
 <script lang="ts">
