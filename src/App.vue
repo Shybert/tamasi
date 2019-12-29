@@ -18,15 +18,23 @@ export default createComponent({
 </script>
 
 <style lang="scss" scoped>
+#app {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 #content {
-  height: calc(100vh - #{$titleBarHeight});
-  box-sizing: border-box;
+  flex: 1 1 auto;
   padding: 0.5em;
-  overflow: auto;
 }
 </style>
 <style>
+html,
 body {
   margin: 0;
+  width: 100vw;
+  height: 100vh;
 }
 </style>
