@@ -1,6 +1,6 @@
 <template>
-  <section>
-    <ul id="saves" :key="state.forceRerender">
+  <section id="savesList">
+    <ul :key="state.forceRerender">
       <li v-for="(save, saveId) in state.saves" :key="saveId">
         <ul>
           <li>Name: {{ save.name }}</li>

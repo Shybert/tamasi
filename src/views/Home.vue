@@ -1,12 +1,18 @@
 <template>
-  <section id="home">
-    <Modal v-if="showNewSaveModal" @closeModal="showNewSaveModal = false">
-      <template slot="title">New Save</template>
-      <template slot="main"><NewSave @createdSave="showNewSaveModal = false" /></template>
-    </Modal>
+  <div id="home">
+    <section id="saves">
+      <Modal v-if="showNewSaveModal" @closeModal="showNewSaveModal = false">
+        <template v-slot:title>New Save</template>
+        <template v-slot:main>
+          <NewSave @createdSave="showNewSaveModal = false" />
+        </template>
+      </Modal>
 
-    <SavesList @newSave="showNewSaveModal = true" />
-  </section>
+      <SavesList @newSave="showNewSaveModal = true" />
+    </section>
+
+    <section id="saveInfo"></section>
+  </div>
 </template>
 
 <script lang="ts">
@@ -24,3 +30,15 @@ export default createComponent({
   }
 })
 </script>
+
+<style lang="scss" scoped>
+#home {
+  display: flex;
+}
+#saves {
+  width: 40%;
+}
+#saveInfo {
+  width: 60%;
+}
+</style>
