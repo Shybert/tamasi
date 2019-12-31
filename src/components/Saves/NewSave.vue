@@ -6,7 +6,10 @@
         game.name
       }}</option>
     </select>
-    <button @click="localCreateSave" id="createSave">Create New Save</button>
+
+    <BaseButton @click="localCreateSave" id="createSave">
+      Create New Save
+    </BaseButton>
   </section>
 </template>
 
@@ -14,9 +17,11 @@
 import { createComponent, ref } from '@vue/composition-api'
 import { createSave } from '@/store/savesStore'
 import { getGames } from '@/store/gamesData'
+import BaseButton from '@/components/base/BaseButton.vue'
 
 export default createComponent({
   name: 'NewSave',
+  components: { BaseButton },
   setup(props, ctx) {
     const games = getGames()
 
