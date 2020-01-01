@@ -10,9 +10,6 @@
           </li>
         </ul>
       </li>
-      <li>
-        <button @click="$emit('newSave')">New Save</button>
-      </li>
     </ul>
   </section>
 </template>
