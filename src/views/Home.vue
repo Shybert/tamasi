@@ -2,8 +2,8 @@
   <div id="home">
     <section id="saves">
       <Modal v-if="showNewSaveModal" @closeModal="showNewSaveModal = false">
-        <template v-slot:title>New Save</template>
-        <template v-slot:main>
+        <template #title>New Save</template>
+        <template #main>
           <NewSave @createdSave="showNewSaveModal = false" />
         </template>
       </Modal>
