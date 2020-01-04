@@ -1,7 +1,7 @@
 <template>
   <div id="home">
     <section id="saves">
-      <Modal v-if="showNewSaveModal" @closeModal="showNewSaveModal = false">
+      <Modal :show="showNewSaveModal" @closeModal="showNewSaveModal = false">
         <template #title>New Save</template>
         <template #main>
           <NewSave @createdSave="showNewSaveModal = false" />

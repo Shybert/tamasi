@@ -1,14 +1,14 @@
 <template>
-  <transition name="modal" appear>
-    <div id="modalContainer" @click="$emit('closeModal')">
-      <div id="modalContent" @click.stop>
-        <div id="modalTitle">
-          <h2><slot name="title">Why didn't you pass a title?</slot></h2>
-        </div>
+  <transition name="modal">
+    <div v-if="show" id="modalContainer" @click="$emit('closeModal')">
+      <section id="modalContent" @click.stop>
+        <h2 id="modalTitle">
+          <slot name="title">Why didn't you pass a title?</slot>
+        </h2>
         <div id="modalMain">
           <slot name="main">There should be something here...</slot>
         </div>
-      </div>
+      </section>
     </div>
   </transition>
 </template>
@@ -17,7 +17,8 @@
 import { createComponent } from '@vue/composition-api'
 
 export default createComponent({
-  name: 'Modal'
+  name: 'Modal',
+  props: { show: Boolean }
 })
 </script>
 
