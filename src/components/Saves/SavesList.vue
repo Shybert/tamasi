@@ -1,12 +1,15 @@
 <template>
   <section id="savesList">
-    <ul :key="state.forceRerender">
-      <li v-for="(save, saveId) in state.saves" :key="saveId">
+    <ul>
+      <li v-for="(game, index) in gamesWithSaves" :key="game.id">
+        {{ game.shortName ? game.shortName : game.name }}
         <ul>
-          <li>Name: {{ save.name }}</li>
-          <li>Game: {{ save.gameId }}</li>
-          <li>
-            <router-link :to="`/overlay/${saveId}`">Overlay</router-link>
+          <li
+            v-for="save in gamesWithSaves[index].saves"
+            @click="selectSave(save.id)"
+            :key="save.id"
+          >
+            {{ save.name }}
           </li>
         </ul>
       </li>
@@ -15,15 +18,25 @@
 </template>
 
 <script lang="ts">
-import { createComponent } from '@vue/composition-api'
+import { createComponent, computed } from '@vue/composition-api'
 import { useSavesStore } from '@/store/savesStore'
 
 export default createComponent({
   name: 'SavesList',
-  setup() {
+  setup(props, ctx) {
     const savesStore = useSavesStore()
+    const gamesWithSaves = computed(() =>
+      savesStore.state.value.games.filter(game => game.saves.length !== 0)
+    )
+
+    function selectSave(saveId: string): void {
+      savesStore.state.value.selectedSaveId = saveId
+      ctx.root.$router.push({ path: '/overlay' })
+    }
+
     return {
-      state: savesStore.state
+      gamesWithSaves,
+      selectSave
     }
   }
 })

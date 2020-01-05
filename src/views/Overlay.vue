@@ -5,23 +5,22 @@
 </template>
 
 <script lang="ts">
-import { createComponent, onUnmounted } from '@vue/composition-api'
-import { previousArrayValue, nextArrayValue } from '@/utils/arrayUtils'
-import Timer from '@/utils/timer'
 // eslint does not properly detect TS interface usage
 // eslint-disable-next-line no-unused-vars
-import { useSavesStore, ISave } from '../store/savesStore'
+import { createComponent, onUnmounted, Ref } from '@vue/composition-api'
+import { previousArrayIndex, nextArrayIndex } from '@/utils/arrayUtils'
+import Timer from '@/utils/timer'
+// eslint-disable-next-line no-unused-vars
+import { selectedSave, ISave } from '../store/savesStore'
 import BossInfo from '@/components/BossInfo.vue'
 import { remote } from 'electron'
 const { globalShortcut } = remote
 
 function previousBoss(save: ISave): void {
-  const bossIds = Object.keys(save.bosses)
-  save.selected = previousArrayValue(bossIds, bossIds.indexOf(save.selected))
+  save.selected = previousArrayIndex(save.bosses, save.selected)
 }
 function nextBoss(save: ISave): void {
-  const bossIds = Object.keys(save.bosses)
-  save.selected = nextArrayValue(bossIds, bossIds.indexOf(save.selected))
+  save.selected = nextArrayIndex(save.bosses, save.selected)
 }
 function incrementDeaths(save: ISave): void {
   save.bosses[save.selected].deaths += 1
@@ -34,24 +33,23 @@ export default createComponent({
   name: 'Overlay',
   components: { BossInfo },
   setup(props, ctx) {
-    const savesStore = useSavesStore()
-    const saveId: string = ctx.root.$route.params.saveId
-    const save = savesStore.state.value.saves[saveId]
+    // There will always be a selected save in the overlay.
+    const save = selectedSave as Ref<ISave>
 
     const timer = new Timer()
-    timer.on('tick', (time: number) => incrementTime(save, time))
+    timer.on('tick', (time: number) => incrementTime(save.value, time))
 
     globalShortcut.register('Home', () => {
       if (!timer.isRunning()) ctx.root.$router.push({ path: `/` })
     })
     globalShortcut.register('PageUp', () => {
-      if (!timer.isRunning()) previousBoss(save)
+      if (!timer.isRunning()) previousBoss(save.value)
     })
     globalShortcut.register('PageDown', () => {
-      if (!timer.isRunning()) nextBoss(save)
+      if (!timer.isRunning()) nextBoss(save.value)
     })
     globalShortcut.register('End', () => {
-      incrementDeaths(save)
+      incrementDeaths(save.value)
     })
     globalShortcut.register('Insert', () => {
       timer.switch()
@@ -61,7 +59,7 @@ export default createComponent({
       globalShortcut.unregisterAll()
     })
 
-    return { saveId, save }
+    return { save }
   }
 })
 </script>

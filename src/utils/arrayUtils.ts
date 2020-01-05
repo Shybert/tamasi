@@ -1,16 +1,7 @@
-export function previousArrayValue<ArrayType>(
-  array: ArrayType[],
-  index: number
-): ArrayType {
-  if (index === 0) index = array.length
-  index -= 1
-  return array[index]
+export function previousArrayIndex(array: any[], index: number): number {
+  if (index === 0) return array.length - 1
+  return index - 1
 }
-export function nextArrayValue<ArrayType>(
-  array: ArrayType[],
-  index: number
-): ArrayType {
-  index += 1
-  index = index % array.length
-  return array[index]
+export function nextArrayIndex(array: any[], index: number): number {
+  return (index + 1) % array.length
 }

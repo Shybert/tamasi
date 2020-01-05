@@ -11,7 +11,7 @@ Vue.use(Router)
 const routes = [
   { path: '/', component: Home as VueConstructor<Vue>, props: true },
   {
-    path: '/overlay/:saveId',
+    path: '/overlay',
     component: Overlay as VueConstructor<Vue>,
     props: true
   }
