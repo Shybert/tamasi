@@ -25,7 +25,7 @@ export default createComponent({
     const savesStore = useSavesStore()
 
     const saveName = ref('')
-    const selectedGame = ref(savesStore.state.value.games[0].id)
+    const selectedGame = ref(savesStore.state.games[0].id)
 
     function localCreateSave(): void {
       createSave(selectedGame.value, saveName.value)

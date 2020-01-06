@@ -26,11 +26,11 @@ export default createComponent({
   setup(props, ctx) {
     const savesStore = useSavesStore()
     const gamesWithSaves = computed(() =>
-      savesStore.state.value.games.filter(game => game.saves.length !== 0)
+      savesStore.state.games.filter(game => game.saves.length !== 0)
     )
 
     function selectSave(saveId: string): void {
-      savesStore.state.value.selectedSaveId = saveId
+      savesStore.state.selectedSaveId = saveId
       ctx.root.$router.push({ path: '/overlay' })
     }
 
