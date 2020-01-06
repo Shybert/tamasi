@@ -5,7 +5,10 @@ interface IStore<State> {
   state: Ref<State>
 }
 
-export function createStore<State>(id: string, state: State): IStore<State> {
+export function createStore<State>(
+  id: string,
+  state: State
+): () => IStore<State> {
   const savedState = localStorage.getItem(`${id}State`)
   const store: IStore<State> = {
     id,
@@ -16,5 +19,5 @@ export function createStore<State>(id: string, state: State): IStore<State> {
     localStorage.setItem(`${id}State`, JSON.stringify(store.state.value))
   })
 
-  return store
+  return () => store
 }

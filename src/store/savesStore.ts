@@ -214,12 +214,11 @@ const savesState: ISavesState = {
   selectedSaveId: ''
 }
 
-const store = createStore('saves', savesState)
-export function useSavesStore() {
-  return store
-}
+export const useSavesStore = createStore('saves', savesState)
 
 export function createSave(gameId: string, saveName: string): boolean {
+  const store = useSavesStore()
+
   const game = store.state.value.games.find(game => game.id === gameId)
   if (!game) return false
 
@@ -230,6 +229,8 @@ export function createSave(gameId: string, saveName: string): boolean {
 }
 
 export const selectedSave = computed(() => {
+  const store = useSavesStore()
+
   for (const game of store.state.value.games) {
     const selectedSave = game.saves.find(
       save => save.id === store.state.value.selectedSaveId
