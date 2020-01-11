@@ -1,6 +1,6 @@
 <template>
   <div id="titleBar">
-    <div>DSDT</div>
+    <div>Tamasi</div>
 
     <div id="minimizeWindow" @click="minimizeWindow" class="titleBarButton">
       Minimize

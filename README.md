@@ -1,4 +1,4 @@
-# dsdt
+# Tamasi
 
 ## Project setup
 

@@ -10,8 +10,8 @@ const isDevelopment: boolean = process.env.NODE_ENV !== 'production'
 
 // Set correct userData path
 isDevelopment
-  ? app.setPath('userData', path.join(app.getPath('appData'), 'dsdt-dev'))
-  : app.setPath('userData', path.join(app.getPath('appData'), 'dsdt'))
+  ? app.setPath('userData', path.join(app.getPath('appData'), 'tamasi-dev'))
+  : app.setPath('userData', path.join(app.getPath('appData'), 'tamasi'))
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
