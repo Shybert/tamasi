@@ -1,6 +1,7 @@
 <template>
   <section id="newSave">
-    <input id="saveName" v-model="saveName" placeholder="Save Name" required />
+    <BaseLabel for="newSaveName">Save name</BaseLabel>
+    <BaseInputText id="newSaveName" v-model="saveName" />
     <select v-model="selectedGame">
       <option v-for="game in state.games" :value="game.id" :key="game.id">
         {{ game.name }}
@@ -17,10 +18,12 @@
 import { createComponent, ref } from '@vue/composition-api'
 import { useSavesStore, createSave } from '@/store/savesStore'
 import BaseButton from '@/components/base/BaseButton.vue'
+import BaseLabel from '@/components/base/BaseLabel.vue'
+import BaseInputText from '@/components/base/BaseInputText.vue'
 
 export default createComponent({
   name: 'NewSave',
-  components: { BaseButton },
+  components: { BaseButton, BaseLabel, BaseInputText },
   setup(props, ctx) {
     const savesStore = useSavesStore()
 
