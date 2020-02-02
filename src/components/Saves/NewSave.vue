@@ -2,11 +2,13 @@
   <section id="newSave">
     <BaseLabel for="newSaveName">Save name</BaseLabel>
     <BaseInputText id="newSaveName" v-model="saveName" />
-    <select v-model="selectedGame">
-      <option v-for="game in state.games" :value="game.id" :key="game.id">
-        {{ game.name }}
-      </option>
-    </select>
+
+    <BaseLabel for="newSaveGame">Game</BaseLabel>
+    <BaseSelect
+      id="newSaveGame"
+      v-model="selectedGame"
+      :options="gameOptions"
+    />
 
     <BaseButton @click="localCreateSave" id="createSave">
       Create New Save
@@ -15,20 +17,26 @@
 </template>
 
 <script lang="ts">
-import { createComponent, ref } from '@vue/composition-api'
+import { createComponent, ref, computed } from '@vue/composition-api'
 import { useSavesStore, createSave } from '@/store/savesStore'
 import BaseButton from '@/components/base/BaseButton.vue'
 import BaseLabel from '@/components/base/BaseLabel.vue'
 import BaseInputText from '@/components/base/BaseInputText.vue'
+import BaseSelect from '@/components/base/BaseSelect.vue'
 
 export default createComponent({
   name: 'NewSave',
-  components: { BaseButton, BaseLabel, BaseInputText },
+  components: { BaseButton, BaseLabel, BaseInputText, BaseSelect },
   setup(props, ctx) {
     const savesStore = useSavesStore()
 
     const saveName = ref('')
     const selectedGame = ref(savesStore.state.games[0].id)
+    const gameOptions = computed(() =>
+      savesStore.state.games.map(game => {
+        return { label: game.name, value: game.id }
+      })
+    )
 
     function localCreateSave(): void {
       createSave(selectedGame.value, saveName.value)
@@ -36,7 +44,7 @@ export default createComponent({
     }
 
     return {
-      state: savesStore.state,
+      gameOptions,
       saveName,
       selectedGame,
       localCreateSave
