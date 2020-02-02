@@ -14,6 +14,8 @@ export default createComponent({
 
 <style lang="scss" scoped>
 button {
+  display: block;
+  margin: auto;
   padding: 0.9em 1em;
   border: none;
   border-radius: 3px;
