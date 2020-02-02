@@ -21,6 +21,7 @@ input {
   background-color: $inputColor;
   color: $highEmphasisText;
   border: none;
+  margin-bottom: 1em;
 }
 input:focus {
   outline: 1px solid $primaryColor;
