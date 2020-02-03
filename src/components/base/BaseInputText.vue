@@ -17,6 +17,8 @@ export default createComponent({
 
 <style lang="scss" scoped>
 input {
+  box-sizing: border-box;
+  width: 250px;
   padding: 1em;
   background-color: $inputColor;
   color: $highEmphasisText;

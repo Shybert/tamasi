@@ -117,6 +117,8 @@ export default createComponent({
   background-color: $inputColor;
   position: relative;
   margin-bottom: 1em;
+  width: 250px;
+  box-sizing: border-box;
 }
 .select:focus {
   outline: 1px solid $primaryColor;
