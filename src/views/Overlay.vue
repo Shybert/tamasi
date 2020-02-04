@@ -52,7 +52,7 @@ export default createComponent({
       incrementDeaths(save.value)
     })
     globalShortcut.register('Insert', () => {
-      timer.switch()
+      timer.toggle()
     })
     onUnmounted(() => {
       timer.stop()

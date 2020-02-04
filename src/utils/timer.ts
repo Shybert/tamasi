@@ -22,7 +22,7 @@ export default class Timer extends EventEmitter {
     }
   }
 
-  public switch(): void {
+  public toggle(): void {
     this.isRunning() ? this.stop() : this.start()
   }
 
