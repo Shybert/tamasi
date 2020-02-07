@@ -43,6 +43,12 @@ export default createComponent({
 #home {
   display: flex;
 }
+#saves,
+#save {
+  padding: 0.5em;
+  box-sizing: border-box;
+  overflow: auto;
+}
 #saves {
   width: 40%;
 }
