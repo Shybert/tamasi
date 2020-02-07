@@ -10,7 +10,9 @@
 
       <SavesList />
 
-      <BaseButton @click="showNewSaveModal = true">+ New Save</BaseButton>
+      <BaseButton id="newSaveButton" @click="showNewSaveModal = true">
+        + New Save
+      </BaseButton>
     </section>
 
     <section id="save">
@@ -44,11 +46,12 @@ export default createComponent({
 #saves {
   width: 40%;
 }
+#newSaveButton {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+}
 #save {
   width: 60%;
-}
-
-button {
-  width: 100%;
 }
 </style>
