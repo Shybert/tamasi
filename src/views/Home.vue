@@ -13,7 +13,9 @@
       <BaseButton @click="showNewSaveModal = true">+ New Save</BaseButton>
     </section>
 
-    <section id="saveInfo"></section>
+    <section id="save">
+      <SaveInfo />
+    </section>
   </div>
 </template>
 
@@ -23,10 +25,11 @@ import BaseButton from '@/components/base/BaseButton.vue'
 import Modal from '@/components/Modal.vue'
 import NewSave from '@/components/Saves/NewSave.vue'
 import SavesList from '@/components/Saves/SavesList.vue'
+import SaveInfo from '@/components/Saves/SaveInfo.vue'
 
 export default createComponent({
   name: 'Home',
-  components: { BaseButton, Modal, NewSave, SavesList },
+  components: { BaseButton, Modal, NewSave, SavesList, SaveInfo },
   setup() {
     const showNewSaveModal = ref(false)
     return { showNewSaveModal }
@@ -41,7 +44,7 @@ export default createComponent({
 #saves {
   width: 40%;
 }
-#saveInfo {
+#save {
   width: 60%;
 }
 
