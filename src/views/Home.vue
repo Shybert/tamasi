@@ -45,12 +45,15 @@ export default createComponent({
 }
 #saves,
 #save {
+  height: calc(100vh - #{$titleBarHeight});
+  max-height: calc(100vh - #{$titleBarHeight});
   padding: 0.5em;
   box-sizing: border-box;
   overflow: auto;
 }
 #saves {
-  width: 40%;
+  background-color: $overlayColor;
+  width: 30%;
 }
 #newSaveButton {
   position: sticky;
@@ -58,6 +61,6 @@ export default createComponent({
   width: 100%;
 }
 #save {
-  width: 60%;
+  width: 70%;
 }
 </style>
