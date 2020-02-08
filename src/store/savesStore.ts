@@ -33,7 +33,9 @@ function generateSave(bossNames: string[], saveName: string): ISave {
 
   const save: ISave = {
     id: crypto.randomBytes(16).toString('hex'),
-    name: saveName,
+    // If the provided save name is an empty string, a default name shoud be used
+    // Having an empty string as the save name messes up the UI in certain places
+    name: saveName ? saveName : 'Save',
     bosses,
     selected: 0
   }
