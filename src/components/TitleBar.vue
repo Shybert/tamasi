@@ -2,39 +2,35 @@
   <div id="titleBar">
     <div>Tamasi</div>
 
-    <div id="minimizeWindow" @click="minimizeWindow" class="titleBarButton">
-      Minimize
+    <div @click="minimizeWindow" id="minimizeWindow" class="titleBarButton">
+      <IconHorizontalLine name="Minimize" />
     </div>
 
     <div
-      id="maximizeWindow"
-      v-if="!isWindowMaximized"
-      @click="maximizeWindow"
+      @click="isWindowMaximized ? unmaximizeWindow() : maximizeWindow()"
       class="titleBarButton"
     >
-      Maximize
-    </div>
-    <div
-      id="unmaximizeWindow"
-      v-if="isWindowMaximized"
-      @click="unmaximizeWindow"
-      class="titleBarButton"
-    >
-      Unmaximize
+      <IconSquare name="Change window size" />
     </div>
 
-    <div id="closeWindow" @click="closeWindow" class="titleBarButton">
-      Close
+    <div @click="closeWindow" class="titleBarButton">
+      <IconX name="Close" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { createComponent, ref } from '@vue/composition-api'
+import { IconHorizontalLine, IconSquare, IconX } from '@/components/icons/icons'
 import { remote } from 'electron'
 
 export default createComponent({
   name: 'TitleBar',
+  components: {
+    IconSquare,
+    IconHorizontalLine,
+    IconX
+  },
   setup() {
     const window = remote.getCurrentWindow()
     let isWindowMaximized = ref(window.isMaximized())
@@ -83,11 +79,13 @@ export default createComponent({
 
 .titleBarButton {
   -webkit-app-region: no-drag;
+  display: flex;
+  align-items: center;
+}
+.titleBarButton:hover {
+  background-color: $primaryColorLight;
 }
 #minimizeWindow {
   margin-left: auto;
-}
-#closeWindow:hover {
-  background-color: red;
 }
 </style>
