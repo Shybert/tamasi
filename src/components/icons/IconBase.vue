@@ -1,5 +1,5 @@
 <template>
-  <svg :width="width" :height="height" :aria-labelledby="name">
+  <svg :width="width" :height="height" :aria-labelledby="name" :role="role">
     <title :id="name">{{ name }}</title>
     <g :stroke="strokeColor" :fill="fillColor">
       <slot></slot>
@@ -16,6 +16,10 @@ export default createComponent({
     name: {
       type: String,
       required: true
+    },
+    role: {
+      type: String,
+      default: 'presentation'
     },
     width: {
       type: [String, Number],

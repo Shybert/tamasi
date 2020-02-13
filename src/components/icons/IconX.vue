@@ -1,5 +1,5 @@
 <template>
-  <IconBase width="10" height="10" :name="name">
+  <IconBase width="10" height="10" :name="name" :role="role">
     <line x1="0" x2="10" y1="10" y2="0" />
     <line x1="0" x2="10" y1="0" y2="10" />
   </IconBase>
@@ -16,6 +16,10 @@ export default createComponent({
     name: {
       type: String,
       required: true
+    },
+    role: {
+      type: String,
+      default: 'presentation'
     }
   }
 })

@@ -3,18 +3,18 @@
     <div>Tamasi</div>
 
     <div @click="minimizeWindow" id="minimizeWindow" class="titleBarButton">
-      <IconHorizontalLine name="Minimize" />
+      <IconHorizontalLine name="Minimize" role="button" />
     </div>
 
     <div
       @click="isWindowMaximized ? unmaximizeWindow() : maximizeWindow()"
       class="titleBarButton"
     >
-      <IconSquare name="Change window size" />
+      <IconSquare name="Change window size" role="button" />
     </div>
 
     <div @click="closeWindow" class="titleBarButton">
-      <IconX name="Close" />
+      <IconX name="Close" role="button" />
     </div>
   </div>
 </template>
