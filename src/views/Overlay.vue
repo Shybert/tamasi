@@ -13,8 +13,27 @@ import Timer from '@/utils/timer'
 // eslint-disable-next-line no-unused-vars
 import { selectedSave, ISave } from '../store/savesStore'
 import BossInfo from '@/components/BossInfo.vue'
-import { remote } from 'electron'
-const { globalShortcut } = remote
+import { ipcRenderer } from 'electron'
+
+function removeListeners() {
+  const channels = [
+    'home',
+    'previousBoss',
+    'nextBoss',
+    'incrementDeaths',
+    'toggleTimer'
+  ]
+  channels.forEach(channel => ipcRenderer.removeAllListeners(channel))
+}
+function initializeOverlay() {
+  // Remove listeners in case they weren't properly removed
+  removeListeners()
+  ipcRenderer.send('initializeOverlay')
+}
+function closeOverlay() {
+  removeListeners()
+  ipcRenderer.send('closeOverlay')
+}
 
 function previousBoss(save: ISave): void {
   save.selected = previousArrayIndex(save.bosses, save.selected)
@@ -33,30 +52,32 @@ export default createComponent({
   name: 'Overlay',
   components: { BossInfo },
   setup(props, ctx) {
+    initializeOverlay()
+
     // There will always be a selected save in the overlay.
     const save = selectedSave as Ref<ISave>
 
     const timer = new Timer()
     timer.on('tick', (time: number) => incrementTime(save.value, time))
 
-    globalShortcut.register('Home', () => {
+    ipcRenderer.on('home', () => {
       if (!timer.isRunning()) ctx.root.$router.push({ path: `/` })
     })
-    globalShortcut.register('PageUp', () => {
+    ipcRenderer.on('previousBoss', () => {
       if (!timer.isRunning()) previousBoss(save.value)
     })
-    globalShortcut.register('PageDown', () => {
+    ipcRenderer.on('nextBoss', () => {
       if (!timer.isRunning()) nextBoss(save.value)
     })
-    globalShortcut.register('End', () => {
+    ipcRenderer.on('incrementDeaths', () => {
       incrementDeaths(save.value)
     })
-    globalShortcut.register('Insert', () => {
+    ipcRenderer.on('toggleTimer', () => {
       timer.toggle()
     })
     onUnmounted(() => {
       timer.stop()
-      globalShortcut.unregisterAll()
+      closeOverlay()
     })
 
     return { save }

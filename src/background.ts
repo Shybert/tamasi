@@ -1,7 +1,7 @@
 'use strict'
 
 import * as path from 'path'
-import { app, protocol, BrowserWindow } from 'electron'
+import { app, protocol, BrowserWindow, globalShortcut, ipcMain } from 'electron'
 import {
   createProtocol,
   installVueDevtools
@@ -82,3 +82,21 @@ if (isDevelopment) {
     process.on('SIGTERM', () => app.quit())
   }
 }
+
+// Overlay
+function initializeOverlay() {
+  // Unregister global shortcuts in case they weren't properly unregistered
+  globalShortcut.unregisterAll()
+
+  globalShortcut.register('Home', () => win?.webContents.send('home'))
+  globalShortcut.register('PageUp', () => win?.webContents.send('previousBoss'))
+  globalShortcut.register('PageDown', () => win?.webContents.send('nextBoss'))
+  globalShortcut.register('End', () => win?.webContents.send('incrementDeaths'))
+  globalShortcut.register('Insert', () => win?.webContents.send('toggleTimer'))
+}
+function closeOverlay() {
+  globalShortcut.unregisterAll()
+}
+
+ipcMain.on('initializeOverlay', initializeOverlay)
+ipcMain.on('closeOverlay', closeOverlay)
