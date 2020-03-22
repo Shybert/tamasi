@@ -84,6 +84,9 @@ if (isDevelopment) {
 }
 
 // Overlay
+let formerWidth: number | null = null
+let formerHeight: number | null = null
+
 function initializeOverlay() {
   // Unregister global shortcuts in case they weren't properly unregistered
   globalShortcut.unregisterAll()
@@ -93,9 +96,19 @@ function initializeOverlay() {
   globalShortcut.register('PageDown', () => win?.webContents.send('nextBoss'))
   globalShortcut.register('End', () => win?.webContents.send('incrementDeaths'))
   globalShortcut.register('Insert', () => win?.webContents.send('toggleTimer'))
+
+  if (!win) return
+  win.setAlwaysOnTop(true)
+  ;[formerWidth, formerHeight] = win.getSize()
+  win.setSize(330, 110)
 }
+
 function closeOverlay() {
   globalShortcut.unregisterAll()
+
+  if (!win) return
+  win.setAlwaysOnTop(false)
+  win.setSize(formerWidth ?? 800, formerHeight ?? 600)
 }
 
 ipcMain.on('initializeOverlay', initializeOverlay)
