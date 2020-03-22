@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <TitleBar />
+    <TitleBar v-if="!isOverlay" />
     <div id="content">
       <router-view></router-view>
     </div>
@@ -8,12 +8,17 @@
 </template>
 
 <script lang="ts">
-import { createComponent } from '@vue/composition-api'
+import { createComponent, ref, watch } from '@vue/composition-api'
 import TitleBar from '@/components/TitleBar.vue'
 
 export default createComponent({
   name: 'App',
-  components: { TitleBar }
+  components: { TitleBar },
+  setup(props, ctx) {
+    const isOverlay = ref(false)
+    watch(() => (isOverlay.value = ctx.root.$route.path.startsWith('/overlay')))
+    return { isOverlay }
+  }
 })
 </script>
 
