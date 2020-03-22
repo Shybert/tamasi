@@ -12,7 +12,7 @@ import { previousArrayIndex, nextArrayIndex } from '@/utils/arrayUtils'
 import Timer from '@/utils/timer'
 // eslint-disable-next-line no-unused-vars
 import { selectedSave, ISave } from '../store/savesStore'
-import BossInfo from '@/components/BossInfo.vue'
+import BossInfo from '@/components/Overlay/BossInfo.vue'
 import { ipcRenderer } from 'electron'
 
 function removeListeners() {
@@ -84,3 +84,12 @@ export default createComponent({
   }
 })
 </script>
+
+<style lang="scss" scoped>
+#overlay {
+  -webkit-app-region: drag;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+}
+</style>

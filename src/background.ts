@@ -100,7 +100,7 @@ function initializeOverlay() {
   if (!win) return
   win.setAlwaysOnTop(true)
   ;[formerWidth, formerHeight] = win.getSize()
-  win.setSize(330, 110)
+  win.setSize(330, 95)
 }
 
 function closeOverlay() {
