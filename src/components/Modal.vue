@@ -29,6 +29,7 @@ export default createComponent({
   left: 0;
   width: 100vw;
   height: calc(100vh - #{$titleBarHeight});
+  z-index: 1;
   display: flex;
   justify-content: center;
   align-items: center;
