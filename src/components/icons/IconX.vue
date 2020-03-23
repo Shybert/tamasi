@@ -1,7 +1,7 @@
 <template>
-  <IconBase width="10" height="10" :name="name" :role="role">
-    <line x1="0" x2="10" y1="10" y2="0" />
-    <line x1="0" x2="10" y1="0" y2="10" />
+  <IconBase :width="width" :height="height" :name="name" :role="role">
+    <line x1="0" :x2="width" :y1="height" y2="0" :stroke-width="strokeWidth" />
+    <line x1="0" :x2="width" y1="0" :y2="height" :stroke-width="strokeWidth" />
   </IconBase>
 </template>
 
@@ -20,6 +20,18 @@ export default createComponent({
     role: {
       type: String,
       default: 'presentation'
+    },
+    width: {
+      type: [String, Number],
+      default: 16
+    },
+    height: {
+      type: [String, Number],
+      default: 16
+    },
+    strokeWidth: {
+      type: [String, Number],
+      default: 4
     }
   }
 })

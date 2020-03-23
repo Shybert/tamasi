@@ -1,6 +1,13 @@
 <template>
   <IconBase :width="width" :height="height" :name="name" :role="role">
-    <rect x="0" y="0" :width="width" :height="height" stroke-width="1" />
+    <rect
+      x="0"
+      y="0"
+      :width="width"
+      :height="height"
+      :fill="fill"
+      :stroke-width="strokeWidth"
+    />
   </IconBase>
 </template>
 
@@ -9,7 +16,7 @@ import { createComponent } from '@vue/composition-api'
 import IconBase from '@/components/icons/IconBase.vue'
 
 export default createComponent({
-  name: 'IconHorizontalLine',
+  name: 'IconRectangle',
   components: { IconBase },
   props: {
     name: {
@@ -25,6 +32,14 @@ export default createComponent({
       default: 16
     },
     height: {
+      type: [String, Number],
+      default: 16
+    },
+    fill: {
+      type: String,
+      default: 'transparent'
+    },
+    strokeWidth: {
       type: [String, Number],
       default: 4
     }

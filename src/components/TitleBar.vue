@@ -3,31 +3,48 @@
     <div>Tamasi</div>
 
     <div @click="minimizeWindow" id="minimizeWindow" class="titleBarButton">
-      <IconHorizontalLine name="Minimize" role="button" />
+      <IconHorizontalLine name="Minimize" role="button" width="10" height="1" />
     </div>
 
     <div
       @click="isWindowMaximized ? unmaximizeWindow() : maximizeWindow()"
       class="titleBarButton"
     >
-      <IconSquare name="Change window size" role="button" />
+      <IconRectangle
+        name="Change window size"
+        role="button"
+        width="10"
+        height="10"
+        fill="transparent"
+        strokeWidth="2"
+      />
     </div>
 
     <div @click="closeWindow" class="titleBarButton">
-      <IconX name="Close" role="button" />
+      <IconX
+        name="Close"
+        role="button"
+        width="10"
+        height="10"
+        strokeWidth="1"
+      />
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { createComponent, ref } from '@vue/composition-api'
-import { IconHorizontalLine, IconSquare, IconX } from '@/components/icons/icons'
+import {
+  IconHorizontalLine,
+  IconRectangle,
+  IconX
+} from '@/components/icons/icons'
 import { remote } from 'electron'
 
 export default createComponent({
   name: 'TitleBar',
   components: {
-    IconSquare,
+    IconRectangle,
     IconHorizontalLine,
     IconX
   },
