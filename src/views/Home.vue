@@ -52,7 +52,7 @@ export default createComponent({
   overflow: auto;
 }
 #saves {
-  background-color: $overlayColor;
+  background-color: $gray500;
   width: 30%;
 }
 #newSaveButton {

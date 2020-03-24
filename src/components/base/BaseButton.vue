@@ -20,12 +20,12 @@ button {
   border: none;
   border-radius: 3px;
   cursor: pointer;
-  background-color: $primaryColor;
+  background-color: $primaryColor500;
   transition: background-color 0.25s;
   color: $highEmphasisText;
-  box-shadow: 0 4px 1px -1px $primaryColorExtraDark;
+  box-shadow: 0 4px 1px -1px $primaryColor800;
 }
 button:hover {
-  background-color: $primaryColorDark;
+  background-color: $primaryColor600;
 }
 </style>

@@ -114,14 +114,14 @@ export default createComponent({
 
 <style lang="scss" scoped>
 .select {
-  background-color: $inputColor;
+  background-color: $gray300;
   position: relative;
   margin-bottom: 1em;
   width: 250px;
   box-sizing: border-box;
 }
 .select:focus {
-  outline: 1px solid $primaryColor;
+  outline: 1px solid $primaryColor500;
   outline-offset: 0.5px;
 }
 .selected,
@@ -129,24 +129,24 @@ export default createComponent({
   padding: 0.5em 1em;
 }
 .options {
-  background-color: $inputColor;
+  background-color: $gray300;
   position: absolute;
   width: 100%;
   overflow: auto;
-  outline: 1px solid $primaryColor;
+  outline: 1px solid $primaryColor500;
   outline-offset: 0.5px;
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
 .options:focus {
-  outline: 1px solid $primaryColor;
+  outline: 1px solid $primaryColor500;
   outline-offset: 0.5px;
 }
 .option {
   margin-left: 0;
 }
 .highlighted {
-  background-color: $primaryColor;
+  background-color: $primaryColor500;
 }
 </style>

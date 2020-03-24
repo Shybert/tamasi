@@ -85,7 +85,7 @@ export default createComponent({
   -webkit-user-select: none;
   display: flex;
   height: $titleBarHeight;
-  background-color: $primaryColor;
+  background-color: $primaryColor500;
 }
 #titleBar div {
   box-sizing: border-box;
@@ -100,7 +100,7 @@ export default createComponent({
   align-items: center;
 }
 .titleBarButton:hover {
-  background-color: $primaryColorLight;
+  background-color: $primaryColor300;
 }
 #minimizeWindow {
   margin-left: auto;

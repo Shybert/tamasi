@@ -1,14 +1,24 @@
 $titleBarHeight: 1.9em;
 
-$baseColor: #101010;
-$surfaceColor: #121212;
-$overlayColor: #181818;
-$inputColor: #292929;
+$gray100: #5e5e5e;
+$gray200: #4d4d4d;
+$gray300: #292929;
+$gray400: #232323;
+$gray500: #1b1b1b;
+$gray600: #050505;
+$gray700: #101010;
+$gray800: #121212;
+$gray900: #181818;
 
-$primaryColorLight: #ec1313;
-$primaryColor: #bd0f0f;
-$primaryColorDark: #b30f0f;
-$primaryColorExtraDark: #760a0a;
+$primaryColor100: #f37272;
+$primaryColor200: #f04242;
+$primaryColor300: #ec1313;
+$primaryColor400: #d41111;
+$primaryColor500: #bd0f0f;
+$primaryColor600: #af0e0e;
+$primaryColor700: #960d0d;
+$primaryColor800: #760a0a;
+$primaryColor900: #5e0808;
 
 $highEmphasisText: #ffffffde;
 $mediumEmphasisText: #ffffff99;

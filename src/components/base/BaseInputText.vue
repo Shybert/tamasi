@@ -20,13 +20,13 @@ input {
   box-sizing: border-box;
   width: 250px;
   padding: 1em;
-  background-color: $inputColor;
+  background-color: $gray300;
   color: $highEmphasisText;
   border: none;
   margin-bottom: 1em;
 }
 input:focus {
-  outline: 1px solid $primaryColor;
+  outline: 1px solid $primaryColor500;
   outline-offset: 0.5px;
 }
 </style>

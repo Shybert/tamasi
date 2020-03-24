@@ -38,7 +38,7 @@ export default createComponent({
 #modalContent {
   max-width: 80%;
   max-height: 80%;
-  background-color: $overlayColor;
+  background-color: $gray500;
   padding: 2em;
 }
 

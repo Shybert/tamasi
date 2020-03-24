@@ -28,7 +28,7 @@ export default createComponent({
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: $surfaceColor;
+  background-color: $gray800;
   color: $highEmphasisText;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
