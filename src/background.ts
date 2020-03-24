@@ -83,6 +83,14 @@ if (isDevelopment) {
   }
 }
 
+// Title bar
+ipcMain.on('minimizeWindow', () => win?.minimize())
+ipcMain.on('changeWindowMaximization', () => {
+  if (!win) return
+  win.isMaximized() ? win.unmaximize() : win.maximize()
+})
+ipcMain.on('closeWindow', () => win?.close())
+
 // Overlay
 let formerWidth: number | null = null
 let formerHeight: number | null = null

@@ -6,10 +6,7 @@
       <IconHorizontalLine name="Minimize" role="button" width="10" height="1" />
     </div>
 
-    <div
-      @click="isWindowMaximized ? unmaximizeWindow() : maximizeWindow()"
-      class="titleBarButton"
-    >
+    <div @click="changeWindowMaximization" class="titleBarButton">
       <IconRectangle
         name="Change window size"
         role="button"
@@ -33,13 +30,13 @@
 </template>
 
 <script lang="ts">
-import { createComponent, ref } from '@vue/composition-api'
+import { createComponent } from '@vue/composition-api'
 import {
   IconHorizontalLine,
   IconRectangle,
   IconX
 } from '@/components/icons/icons'
-import { remote } from 'electron'
+import { ipcRenderer } from 'electron'
 
 export default createComponent({
   name: 'TitleBar',
@@ -49,30 +46,19 @@ export default createComponent({
     IconX
   },
   setup() {
-    const window = remote.getCurrentWindow()
-    let isWindowMaximized = ref(window.isMaximized())
-
-    window.on('maximize', () => (isWindowMaximized.value = true))
-    window.on('unmaximize', () => (isWindowMaximized.value = false))
-
     function minimizeWindow(): void {
-      window.minimize()
+      ipcRenderer.send('minimizeWindow')
     }
-    function maximizeWindow(): void {
-      window.maximize()
-    }
-    function unmaximizeWindow(): void {
-      window.unmaximize()
+    function changeWindowMaximization(): void {
+      ipcRenderer.send('changeWindowMaximization')
     }
     function closeWindow(): void {
-      window.close()
+      ipcRenderer.send('closeWindow')
     }
 
     return {
-      isWindowMaximized,
       minimizeWindow,
-      maximizeWindow,
-      unmaximizeWindow,
+      changeWindowMaximization,
       closeWindow
     }
   }
