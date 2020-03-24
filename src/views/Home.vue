@@ -42,11 +42,10 @@ export default createComponent({
 <style lang="scss" scoped>
 #home {
   display: flex;
+  height: 100%;
 }
 #saves,
 #save {
-  height: calc(100vh - #{$titleBarHeight});
-  max-height: calc(100vh - #{$titleBarHeight});
   padding: 0.5em;
   box-sizing: border-box;
   overflow: auto;

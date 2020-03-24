@@ -35,6 +35,7 @@ export default createComponent({
 
 #content {
   flex: 1 1 auto;
+  height: calc(100vh - #{$titleBarHeight});
 }
 </style>
 <style>

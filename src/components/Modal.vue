@@ -37,10 +37,10 @@ export default createComponent({
 <style lang="scss" scoped>
 #modalContainer {
   position: fixed;
-  top: $titleBarHeight;
+  top: 0;
   left: 0;
   width: 100vw;
-  height: calc(100vh - #{$titleBarHeight});
+  height: 100vh;
   z-index: 1;
   display: flex;
   justify-content: center;

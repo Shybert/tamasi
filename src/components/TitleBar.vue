@@ -71,12 +71,12 @@ export default createComponent({
   -webkit-user-select: none;
   display: flex;
   height: $titleBarHeight;
+  line-height: $titleBarHeight;
   background-color: $primaryColor500;
+  z-index: 10;
 }
 #titleBar div {
   box-sizing: border-box;
-  height: $titleBarHeight;
-  line-height: $titleBarHeight;
   padding: 0 0.5em;
 }
 
