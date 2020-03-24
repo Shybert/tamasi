@@ -1,7 +1,17 @@
 <template>
   <transition name="modal">
-    <div v-if="show" id="modalContainer" @click="$emit('closeModal')">
-      <section id="modalContent" @click.stop>
+    <div v-if="show" id="modalContainer" @click.self="$emit('closeModal')">
+      <section id="modalContent">
+        <IconX
+          name="Close modal"
+          role="button"
+          width="20"
+          height="20"
+          strokeWidth="4"
+          id="closeModalButton"
+          @click.native="$emit('closeModal')"
+        />
+
         <h2 id="modalTitle">
           <slot name="title">Why didn't you pass a title?</slot>
         </h2>
@@ -15,9 +25,11 @@
 
 <script lang="ts">
 import { createComponent } from '@vue/composition-api'
+import { IconX } from '@/components/icons/icons'
 
 export default createComponent({
   name: 'Modal',
+  components: { IconX },
   props: { show: Boolean }
 })
 </script>
@@ -36,10 +48,24 @@ export default createComponent({
   background-color: rgba(0, 0, 0, 0.3);
 }
 #modalContent {
+  position: relative;
   max-width: 80%;
   max-height: 80%;
   background-color: $gray500;
   padding: 2em;
+}
+#modalTitle {
+  margin-top: 0;
+}
+
+#closeModalButton {
+  position: absolute;
+  top: 1.6em;
+  right: 1.6em;
+  color: $gray200;
+}
+#closeModalButton:hover {
+  color: $gray100;
 }
 
 .modal-enter,
