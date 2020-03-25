@@ -63,6 +63,7 @@ export default createComponent({
   top: 1.6em;
   right: 1.6em;
   color: $gray200;
+  cursor: pointer;
 }
 #closeModalButton:hover {
   color: $gray100;
