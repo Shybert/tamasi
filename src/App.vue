@@ -38,11 +38,19 @@ export default createComponent({
   height: calc(100vh - #{$titleBarHeight});
 }
 </style>
-<style>
+<style lang="scss">
 html,
 body {
   margin: 0;
   width: 100vw;
   height: 100vh;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: $gray200;
+  border-radius: 4px;
 }
 </style>

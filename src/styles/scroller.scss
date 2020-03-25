@@ -1,0 +1,10 @@
+.scroller {
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.scroller::-webkit-scrollbar-thumb {
+  visibility: hidden;
+}
+.scroller:hover::-webkit-scrollbar-thumb {
+  visibility: visible;
+}
