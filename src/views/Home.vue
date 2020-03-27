@@ -1,6 +1,6 @@
 <template>
   <div id="home">
-    <section id="saves">
+    <section id="saves" class="scroller">
       <Modal :show="showNewSaveModal" @closeModal="showNewSaveModal = false">
         <template #title>New Save</template>
         <template #main>
@@ -8,7 +8,7 @@
         </template>
       </Modal>
 
-      <SavesList />
+      <SavesList id="savesList" />
 
       <BaseButton id="newSaveButton" @click="showNewSaveModal = true">
         + New Save
@@ -40,26 +40,29 @@ export default createComponent({
 </script>
 
 <style lang="scss" scoped>
+@import '@/styles/scroller';
+
 #home {
   display: flex;
   height: 100%;
 }
-#saves,
-#save {
-  padding: 0.5em;
-  box-sizing: border-box;
-  overflow: auto;
-}
+
 #saves {
   background-color: $gray500;
   width: 30%;
+  max-width: 17em;
+}
+#savesList {
+  padding: 0.5em;
 }
 #newSaveButton {
+  width: 90%;
   position: sticky;
-  bottom: 0;
-  width: 100%;
+  bottom: 1em;
+  margin-bottom: 1em;
 }
+
 #save {
-  width: 70%;
+  flex-grow: 1;
 }
 </style>

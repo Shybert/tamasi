@@ -13,12 +13,13 @@ export interface ISave {
   bosses: ISaveBoss[]
   selected: number
 }
-interface IGame {
+export interface IGame {
   id: string
   name: string
   shortName?: string
   bosses: string[]
   saves: ISave[]
+  collapseSaves: boolean
 }
 
 function generateSave(bossNames: string[], saveName: string): ISave {
@@ -53,7 +54,8 @@ const savesState: ISavesState = {
       id: 'DeS',
       name: "Demon's Souls",
       bosses: [],
-      saves: []
+      saves: [],
+      collapseSaves: false
     },
     {
       id: 'DS1',
@@ -86,7 +88,8 @@ const savesState: ISavesState = {
         'Black Dragon Kalameet',
         'Gwyn, Lord of Cinder'
       ],
-      saves: []
+      saves: [],
+      collapseSaves: false
     },
     {
       id: 'DS2',
@@ -134,7 +137,8 @@ const savesState: ISavesState = {
         'Burnt Ivory King',
         "Lud, the King's Pet & Zallen, the King's Pet"
       ],
-      saves: []
+      saves: [],
+      collapseSaves: false
     },
     {
       id: 'DS3',
@@ -166,13 +170,15 @@ const savesState: ISavesState = {
         'Spear of the Church',
         'Slave Knight Gael'
       ],
-      saves: []
+      saves: [],
+      collapseSaves: false
     },
     {
       id: 'Bb',
       name: 'Bloodborne',
       bosses: [],
-      saves: []
+      saves: [],
+      collapseSaves: false
     },
     {
       id: 'Sekiro',
@@ -210,7 +216,8 @@ const savesState: ISavesState = {
         'Placeholder 29',
         'Placeholder 30'
       ],
-      saves: []
+      saves: [],
+      collapseSaves: false
     }
   ],
   selectedSaveId: ''
