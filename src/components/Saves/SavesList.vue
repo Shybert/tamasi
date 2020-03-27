@@ -1,5 +1,5 @@
 <template>
-  <section id="savesList">
+  <section>
     <ul class="games">
       <li v-for="game in gamesWithSaves" :key="game.id">
         <div

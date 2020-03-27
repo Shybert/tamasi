@@ -1,21 +1,21 @@
 <template>
   <transition name="modal">
-    <div v-if="show" id="modalContainer" @click.self="$emit('closeModal')">
-      <section id="modalContent">
+    <div v-if="show" class="modalContainer" @click.self="$emit('closeModal')">
+      <section class="modalContent">
         <IconX
           name="Close modal"
           role="button"
           width="20"
           height="20"
           strokeWidth="4"
-          id="closeModalButton"
+          class="closeModalButton"
           @click.native="$emit('closeModal')"
         />
 
-        <h2 id="modalTitle">
+        <h2 class="modalTitle">
           <slot name="title">Why didn't you pass a title?</slot>
         </h2>
-        <div id="modalMain">
+        <div class="modalMain">
           <slot name="main">There should be something here...</slot>
         </div>
       </section>
@@ -35,7 +35,7 @@ export default createComponent({
 </script>
 
 <style lang="scss" scoped>
-#modalContainer {
+.modalContainer {
   position: fixed;
   top: 0;
   left: 0;
@@ -47,25 +47,25 @@ export default createComponent({
   align-items: center;
   background-color: rgba(0, 0, 0, 0.3);
 }
-#modalContent {
+.modalContent {
   position: relative;
   max-width: 80%;
   max-height: 80%;
   background-color: $gray500;
   padding: 2em;
 }
-#modalTitle {
+.modalTitle {
   margin-top: 0;
 }
 
-#closeModalButton {
+.closeModalButton {
   position: absolute;
   top: 1.6em;
   right: 1.6em;
   color: $gray200;
   cursor: pointer;
 }
-#closeModalButton:hover {
+.closeModalButton:hover {
   color: $gray100;
 }
 

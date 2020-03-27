@@ -1,6 +1,6 @@
 <template>
   <svg :width="width" :height="height" :aria-labelledby="name" :role="role">
-    <title :id="name">{{ name }}</title>
+    <title>{{ name }}</title>
     <g :stroke="strokeColor" :fill="fillColor">
       <slot></slot>
     </g>

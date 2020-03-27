@@ -1,11 +1,16 @@
 <template>
-  <section id="saveInfo">
+  <section>
     <div v-if="!selectedSave">No save selected!</div>
 
     <div v-else>
-      <h2 id="saveName">{{ selectedSave.name }}</h2>
-      <div id="gameName">{{ currentGame.name }}</div>
-      <router-link id="openOverlay" to="/overlay" v-slot="{ navigate }">
+      <h2 class="saveName">{{ selectedSave.name }}</h2>
+      <div class="gameName">{{ currentGame.name }}</div>
+
+      <router-link
+        class="openOverlayButton"
+        to="/overlay"
+        v-slot="{ navigate }"
+      >
         <BaseButton @click="navigate">Open overlay</BaseButton>
       </router-link>
     </div>
@@ -27,19 +32,20 @@ export default createComponent({
 </script>
 
 <style lang="scss" scoped>
-#saveName,
-#gameName {
+.saveName,
+.gameName {
   text-align: center;
 }
-#saveName {
+.saveName {
   margin-bottom: 0;
 }
-#gameName {
+.gameName {
   color: $mediumEmphasisText;
   font-style: italic;
   font-size: 75%;
 }
-#openOverlay {
+
+.openOverlayButton {
   margin-top: 0.5em;
 }
 </style>

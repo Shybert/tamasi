@@ -1,5 +1,5 @@
 <template>
-  <section id="newSave">
+  <section>
     <BaseLabel>
       <template #label>Save name</template>
       <template #inputElement><BaseInputText v-model="saveName"/></template>
@@ -12,7 +12,7 @@
       </template>
     </BaseLabel>
 
-    <BaseButton @click="localCreateSave" id="createSave">
+    <BaseButton @click="localCreateSave">
       Create New Save
     </BaseButton>
   </section>

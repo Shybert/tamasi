@@ -1,12 +1,12 @@
 <template>
-  <section id="bossInfo">
-    <h2 id="bossName">{{ bossInfo.name }}</h2>
+  <section class="bossInfo">
+    <h2 class="bossName">{{ bossInfo.name }}</h2>
 
-    <div id="bossDeaths">
-      <span id="deathCount">{{ bossInfo.deaths }}</span> deaths
+    <div class="bossDeaths">
+      <span class="bossDeathCounter">{{ bossInfo.deaths }}</span> deaths
     </div>
 
-    <div id="bossTime">{{ formattedTime }}</div>
+    <div class="bossTime">{{ formattedTime }}</div>
   </section>
 </template>
 
@@ -34,11 +34,11 @@ export default createComponent({
 </script>
 
 <style lang="scss" scoped>
-#bossInfo {
+.bossInfo {
   padding: 0.8em 0.5em;
 }
 
-#bossName {
+.bossName {
   margin: 0;
   font-size: 1.3em;
   text-align: center;
@@ -46,17 +46,17 @@ export default createComponent({
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-#bossDeaths {
+.bossDeaths {
   display: inline-block;
   width: 40%;
 }
-#bossTime {
+.bossTime {
   display: inline-block;
   width: 60%;
   text-align: right;
 }
-#deathCount,
-#bossTime {
+.bossDeathCounter,
+.bossTime {
   font-size: 2em;
 }
 </style>
