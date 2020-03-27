@@ -1,5 +1,5 @@
 <template>
-  <div id="titleBar">
+  <section id="titleBar">
     <div>Tamasi</div>
 
     <div @click="minimizeWindow" id="minimizeWindow" class="titleBarButton">
@@ -26,7 +26,7 @@
         strokeWidth="1"
       />
     </div>
-  </div>
+  </section>
 </template>
 
 <script lang="ts">
@@ -39,7 +39,7 @@ import {
 import { ipcRenderer } from 'electron'
 
 export default createComponent({
-  name: 'TitleBar',
+  name: 'TheTitleBar',
   components: {
     IconRectangle,
     IconHorizontalLine,
