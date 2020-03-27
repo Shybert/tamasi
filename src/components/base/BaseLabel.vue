@@ -1,6 +1,9 @@
 <template>
   <label>
-    <slot>Label</slot>
+    <div class="label">
+      <slot name="label">Label</slot>
+    </div>
+    <slot name="inputElement">Input element missing!</slot>
   </label>
 </template>
 
@@ -13,8 +16,7 @@ export default createComponent({
 </script>
 
 <style lang="scss" scoped>
-label {
-  display: block;
+.label {
   margin-bottom: 0.6em;
 }
 </style>

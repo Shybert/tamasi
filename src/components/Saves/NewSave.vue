@@ -1,14 +1,16 @@
 <template>
   <section id="newSave">
-    <BaseLabel for="newSaveName">Save name</BaseLabel>
-    <BaseInputText id="newSaveName" v-model="saveName" />
+    <BaseLabel>
+      <template #label>Save name</template>
+      <template #inputElement><BaseInputText v-model="saveName"/></template>
+    </BaseLabel>
 
-    <BaseLabel for="newSaveGame">Game</BaseLabel>
-    <BaseSelect
-      id="newSaveGame"
-      v-model="selectedGame"
-      :options="gameOptions"
-    />
+    <BaseLabel>
+      <template #label>Game</template>
+      <template #inputElement>
+        <BaseSelect v-model="selectedGame" :options="gameOptions" />
+      </template>
+    </BaseLabel>
 
     <BaseButton @click="localCreateSave" id="createSave">
       Create New Save
