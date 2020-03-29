@@ -19,14 +19,14 @@
 </template>
 
 <script lang="ts">
-import { createComponent, ref, computed } from '@vue/composition-api'
+import { defineComponent, ref, computed } from '@vue/composition-api'
 import { useSavesStore, createSave } from '@/store/savesStore'
 import BaseButton from '@/components/base/BaseButton.vue'
 import BaseLabel from '@/components/base/BaseLabel.vue'
 import BaseInputText from '@/components/base/BaseInputText.vue'
 import BaseSelect from '@/components/base/BaseSelect.vue'
 
-export default createComponent({
+export default defineComponent({
   name: 'NewSave',
   components: { BaseButton, BaseLabel, BaseInputText, BaseSelect },
   setup(props, ctx) {

@@ -18,11 +18,11 @@
 </template>
 
 <script lang="ts">
-import { createComponent } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import { currentGame, selectedSave } from '@/store/savesStore'
 import BaseButton from '@/components/base/BaseButton.vue'
 
-export default createComponent({
+export default defineComponent({
   name: 'SaveInfo',
   components: { BaseButton },
   setup() {

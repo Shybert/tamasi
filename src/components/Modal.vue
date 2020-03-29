@@ -24,10 +24,10 @@
 </template>
 
 <script lang="ts">
-import { createComponent } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import { IconX } from '@/components/icons/icons'
 
-export default createComponent({
+export default defineComponent({
   name: 'Modal',
   components: { IconX },
   props: { show: Boolean },

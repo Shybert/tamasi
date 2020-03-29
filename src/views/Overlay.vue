@@ -7,7 +7,7 @@
 <script lang="ts">
 // eslint does not properly detect TS interface usage
 // eslint-disable-next-line no-unused-vars
-import { createComponent, onUnmounted, Ref } from '@vue/composition-api'
+import { defineComponent, onUnmounted, Ref } from '@vue/composition-api'
 import { previousArrayIndex, nextArrayIndex } from '@/utils/arrayUtils'
 import Timer from '@/utils/timer'
 // eslint-disable-next-line no-unused-vars
@@ -48,7 +48,7 @@ function incrementTime(save: Save, time: number): void {
   save.bosses[save.selected].time += time
 }
 
-export default createComponent({
+export default defineComponent({
   name: 'Overlay',
   components: { BossInfo },
   setup(props, ctx) {

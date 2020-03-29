@@ -32,13 +32,13 @@
 </template>
 
 <script lang="ts">
-import { createComponent, computed } from '@vue/composition-api'
+import { defineComponent, computed } from '@vue/composition-api'
 // eslint does not properly detect TS interface usage
 // eslint-disable-next-line no-unused-vars
 import { useSavesStore, Game, Save } from '@/store/savesStore'
 import { IconAngle } from '@/components/icons/icons'
 
-export default createComponent({
+export default defineComponent({
   name: 'SavesList',
   components: { IconAngle },
   setup() {

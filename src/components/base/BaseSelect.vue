@@ -35,7 +35,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, ref } from '@vue/composition-api'
+import { defineComponent, ref } from '@vue/composition-api'
 
 function distanceToBottom(element: HTMLElement) {
   return window.innerHeight - element.getBoundingClientRect().bottom
@@ -50,7 +50,7 @@ interface Props {
   options: Option[]
 }
 
-export default createComponent({
+export default defineComponent({
   name: 'BaseSelect',
   props: { value: String, options: Array },
   setup(props: Props, ctx) {

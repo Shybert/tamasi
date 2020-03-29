@@ -5,10 +5,10 @@
 </template>
 
 <script lang="ts">
-import { createComponent } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import IconBase from '@/components/icons/IconBase.vue'
 
-export default createComponent({
+export default defineComponent({
   name: 'IconHorizontalLine',
   components: { IconBase },
   props: {

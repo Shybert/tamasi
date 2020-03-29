@@ -1,4 +1,4 @@
-import { reactive, watch } from '@vue/composition-api'
+import { reactive, watchEffect } from '@vue/composition-api'
 
 interface Store<State> {
   id: string
@@ -15,7 +15,7 @@ export function createStore<State>(
     state: savedState ? reactive(JSON.parse(savedState)) : reactive(state),
   }
 
-  watch(() => {
+  watchEffect(() => {
     localStorage.setItem(`${id}State`, JSON.stringify(store.state))
   })
 

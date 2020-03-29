@@ -8,15 +8,17 @@
 </template>
 
 <script lang="ts">
-import { createComponent, ref, watch } from '@vue/composition-api'
+import { defineComponent, ref, watchEffect } from '@vue/composition-api'
 import TheTitleBar from '@/components/TheTitleBar.vue'
 
-export default createComponent({
+export default defineComponent({
   name: 'App',
   components: { TheTitleBar },
   setup(props, ctx) {
     const isOverlay = ref(false)
-    watch(() => (isOverlay.value = ctx.root.$route.path.startsWith('/overlay')))
+    watchEffect(
+      () => (isOverlay.value = ctx.root.$route.path.startsWith('/overlay'))
+    )
     return { isOverlay }
   },
 })

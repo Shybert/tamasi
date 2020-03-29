@@ -30,7 +30,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import {
   IconHorizontalLine,
   IconRectangle,
@@ -38,7 +38,7 @@ import {
 } from '@/components/icons/icons'
 import { ipcRenderer } from 'electron'
 
-export default createComponent({
+export default defineComponent({
   name: 'TheTitleBar',
   components: {
     IconRectangle,

@@ -22,14 +22,14 @@
 </template>
 
 <script lang="ts">
-import { createComponent, ref } from '@vue/composition-api'
+import { defineComponent, ref } from '@vue/composition-api'
 import BaseButton from '@/components/base/BaseButton.vue'
 import Modal from '@/components/Modal.vue'
 import NewSave from '@/components/Saves/NewSave.vue'
 import SavesList from '@/components/Saves/SavesList.vue'
 import SaveInfo from '@/components/Saves/SaveInfo.vue'
 
-export default createComponent({
+export default defineComponent({
   name: 'Home',
   components: { BaseButton, Modal, NewSave, SavesList, SaveInfo },
   setup() {
