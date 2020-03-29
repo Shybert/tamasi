@@ -41,21 +41,21 @@ function distanceToBottom(element: HTMLElement) {
   return window.innerHeight - element.getBoundingClientRect().bottom
 }
 
-interface IOption {
+interface Option {
   label: string
   value: string
 }
-interface IProps {
+interface Props {
   value: string
-  options: IOption[]
+  options: Option[]
 }
 
 export default createComponent({
   name: 'BaseSelect',
   props: { value: String, options: Array },
-  setup(props: IProps, ctx) {
+  setup(props: Props, ctx) {
     const selected = ref(
-      props.options.findIndex(option => option.value === props.value)
+      props.options.findIndex((option) => option.value === props.value)
     )
     const highlighted = ref(selected.value)
 
@@ -106,9 +106,9 @@ export default createComponent({
       root,
       maxHeight,
       close,
-      toggle
+      toggle,
     }
-  }
+  },
 })
 </script>
 

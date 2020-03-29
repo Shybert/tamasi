@@ -1,6 +1,6 @@
 import { reactive, watch } from '@vue/composition-api'
 
-interface IStore<State> {
+interface Store<State> {
   id: string
   state: State
 }
@@ -8,11 +8,11 @@ interface IStore<State> {
 export function createStore<State>(
   id: string,
   state: State
-): () => IStore<State> {
+): () => Store<State> {
   const savedState = localStorage.getItem(`${id}State`)
-  const store: IStore<State> = {
+  const store: Store<State> = {
     id,
-    state: savedState ? reactive(JSON.parse(savedState)) : reactive(state)
+    state: savedState ? reactive(JSON.parse(savedState)) : reactive(state),
   }
 
   watch(() => {

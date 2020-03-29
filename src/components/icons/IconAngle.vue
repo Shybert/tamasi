@@ -15,12 +15,12 @@ export default createComponent({
   props: {
     name: {
       type: String,
-      required: true
+      required: true,
     },
     role: {
       type: String,
-      default: 'presentation'
-    }
-  }
+      default: 'presentation',
+    },
+  },
 })
 </script>

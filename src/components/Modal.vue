@@ -30,7 +30,7 @@ import { IconX } from '@/components/icons/icons'
 export default createComponent({
   name: 'Modal',
   components: { IconX },
-  props: { show: Boolean }
+  props: { show: Boolean },
 })
 </script>
 

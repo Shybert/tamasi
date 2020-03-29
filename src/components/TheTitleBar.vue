@@ -34,7 +34,7 @@ import { createComponent } from '@vue/composition-api'
 import {
   IconHorizontalLine,
   IconRectangle,
-  IconX
+  IconX,
 } from '@/components/icons/icons'
 import { ipcRenderer } from 'electron'
 
@@ -43,7 +43,7 @@ export default createComponent({
   components: {
     IconRectangle,
     IconHorizontalLine,
-    IconX
+    IconX,
   },
   setup() {
     function minimizeWindow(): void {
@@ -59,9 +59,9 @@ export default createComponent({
     return {
       minimizeWindow,
       changeWindowMaximization,
-      closeWindow
+      closeWindow,
     }
-  }
+  },
 })
 </script>
 

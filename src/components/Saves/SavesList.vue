@@ -35,7 +35,7 @@
 import { createComponent, computed } from '@vue/composition-api'
 // eslint does not properly detect TS interface usage
 // eslint-disable-next-line no-unused-vars
-import { useSavesStore, IGame, ISave } from '@/store/savesStore'
+import { useSavesStore, Game, Save } from '@/store/savesStore'
 import { IconAngle } from '@/components/icons/icons'
 
 export default createComponent({
@@ -44,12 +44,12 @@ export default createComponent({
   setup() {
     const savesStore = useSavesStore()
     const gamesWithSaves = computed(() =>
-      savesStore.state.games.filter(game => game.saves.length !== 0)
+      savesStore.state.games.filter((game) => game.saves.length !== 0)
     )
-    function filterSaves(game: IGame): ISave[] {
+    function filterSaves(game: Game): Save[] {
       if (!game.collapseSaves) return game.saves
       return game.saves.filter(
-        save => save.id === savesStore.state.selectedSaveId
+        (save) => save.id === savesStore.state.selectedSaveId
       )
     }
 
@@ -62,9 +62,9 @@ export default createComponent({
       gamesWithSaves,
       filterSaves,
       selectedSave,
-      selectSave
+      selectSave,
     }
-  }
+  },
 })
 </script>
 

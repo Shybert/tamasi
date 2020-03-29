@@ -11,7 +11,7 @@ import { createComponent, onUnmounted, Ref } from '@vue/composition-api'
 import { previousArrayIndex, nextArrayIndex } from '@/utils/arrayUtils'
 import Timer from '@/utils/timer'
 // eslint-disable-next-line no-unused-vars
-import { selectedSave, ISave } from '../store/savesStore'
+import { selectedSave, Save } from '../store/savesStore'
 import BossInfo from '@/components/Overlay/BossInfo.vue'
 import { ipcRenderer } from 'electron'
 
@@ -21,9 +21,9 @@ function removeListeners() {
     'previousBoss',
     'nextBoss',
     'incrementDeaths',
-    'toggleTimer'
+    'toggleTimer',
   ]
-  channels.forEach(channel => ipcRenderer.removeAllListeners(channel))
+  channels.forEach((channel) => ipcRenderer.removeAllListeners(channel))
 }
 function initializeOverlay() {
   // Remove listeners in case they weren't properly removed
@@ -35,16 +35,16 @@ function closeOverlay() {
   ipcRenderer.send('closeOverlay')
 }
 
-function previousBoss(save: ISave): void {
+function previousBoss(save: Save): void {
   save.selected = previousArrayIndex(save.bosses, save.selected)
 }
-function nextBoss(save: ISave): void {
+function nextBoss(save: Save): void {
   save.selected = nextArrayIndex(save.bosses, save.selected)
 }
-function incrementDeaths(save: ISave): void {
+function incrementDeaths(save: Save): void {
   save.bosses[save.selected].deaths += 1
 }
-function incrementTime(save: ISave, time: number): void {
+function incrementTime(save: Save, time: number): void {
   save.bosses[save.selected].time += time
 }
 
@@ -55,7 +55,7 @@ export default createComponent({
     initializeOverlay()
 
     // There will always be a selected save in the overlay.
-    const save = selectedSave as Ref<ISave>
+    const save = selectedSave as Ref<Save>
 
     const timer = new Timer()
     timer.on('tick', (time: number) => incrementTime(save.value, time))
@@ -81,7 +81,7 @@ export default createComponent({
     })
 
     return { save }
-  }
+  },
 })
 </script>
 

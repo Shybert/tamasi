@@ -2,7 +2,7 @@
   <section>
     <BaseLabel>
       <template #label>Save name</template>
-      <template #inputElement><BaseInputText v-model="saveName"/></template>
+      <template #inputElement><BaseInputText v-model="saveName" /></template>
     </BaseLabel>
 
     <BaseLabel>
@@ -35,7 +35,7 @@ export default createComponent({
     const saveName = ref('')
     const selectedGame = ref(savesStore.state.games[0].id)
     const gameOptions = computed(() =>
-      savesStore.state.games.map(game => {
+      savesStore.state.games.map((game) => {
         return { label: game.name, value: game.id }
       })
     )
@@ -49,8 +49,8 @@ export default createComponent({
       gameOptions,
       saveName,
       selectedGame,
-      localCreateSave
+      localCreateSave,
     }
-  }
+  },
 })
 </script>

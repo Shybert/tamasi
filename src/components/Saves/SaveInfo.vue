@@ -27,7 +27,7 @@ export default createComponent({
   components: { BaseButton },
   setup() {
     return { currentGame, selectedSave }
-  }
+  },
 })
 </script>
 

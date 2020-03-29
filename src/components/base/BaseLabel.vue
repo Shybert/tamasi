@@ -11,7 +11,7 @@
 import { createComponent } from '@vue/composition-api'
 
 export default createComponent({
-  name: 'BaseLabel'
+  name: 'BaseLabel',
 })
 </script>
 

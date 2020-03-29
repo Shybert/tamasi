@@ -9,17 +9,18 @@ export default class Timer extends EventEmitter {
   }
 
   public start(): void {
+    if (this.isRunning()) return
+
     // Initialize previous interval time with current time to calculate time differences
     this.previousTime = Date.now()
-
     this.interval = window.setInterval(() => this.timer(), 50)
   }
 
   public stop(): void {
-    if (this.isRunning()) {
-      clearInterval(this.interval)
-      this.reset()
-    }
+    if (!this.isRunning()) return
+
+    clearInterval(this.interval)
+    this.reset()
   }
 
   public toggle(): void {
@@ -29,10 +30,11 @@ export default class Timer extends EventEmitter {
   private timer(): void {
     /* Add the number of milliseconds since the last iteration using the system clock
     to prevent the timer getting out of sync */
+    // this.previousTime is never undefined in timer()
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const elapsedMilliseconds = Date.now() - this.previousTime!
     this.emit('tick', elapsedMilliseconds)
 
-    // Set a new previous time for use in the next interval
     this.previousTime = Date.now()
   }
 

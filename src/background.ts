@@ -4,7 +4,7 @@ import * as path from 'path'
 import { app, protocol, BrowserWindow, globalShortcut, ipcMain } from 'electron'
 import {
   createProtocol,
-  installVueDevtools
+  installVueDevtools,
 } from 'vue-cli-plugin-electron-builder/lib'
 const isDevelopment: boolean = process.env.NODE_ENV !== 'production'
 
@@ -19,14 +19,14 @@ let win: BrowserWindow | null
 
 // Standard scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
-  { scheme: 'app', privileges: { secure: true, standard: true } }
+  { scheme: 'app', privileges: { secure: true, standard: true } },
 ])
 function createWindow() {
   // Create the browser window.
   win = new BrowserWindow({
     show: false,
     frame: false,
-    webPreferences: { nodeIntegration: true }
+    webPreferences: { nodeIntegration: true },
   })
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
@@ -39,7 +39,7 @@ function createWindow() {
     win.loadURL('app://./index.html')
   }
 
-  win.once('ready-to-show', () => win!.show())
+  win.once('ready-to-show', win.show)
 
   win.on('closed', () => (win = null))
 }
@@ -75,7 +75,7 @@ app.on('ready', async () => {
 // Exit cleanly on request from parent process in development mode.
 if (isDevelopment) {
   if (process.platform === 'win32') {
-    process.on('message', data => {
+    process.on('message', (data) => {
       if (data === 'graceful-exit') app.quit()
     })
   } else {

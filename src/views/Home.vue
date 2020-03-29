@@ -35,7 +35,7 @@ export default createComponent({
   setup() {
     const showNewSaveModal = ref(false)
     return { showNewSaveModal }
-  }
+  },
 })
 </script>
 

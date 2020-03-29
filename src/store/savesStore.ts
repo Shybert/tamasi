@@ -2,60 +2,60 @@ import { createStore } from './store'
 import { computed } from '@vue/composition-api'
 import * as crypto from 'crypto'
 
-export interface ISaveBoss {
+export interface SaveBoss {
   name: string
   time: number
   deaths: number
 }
-export interface ISave {
+export interface Save {
   id: string
   name: string
-  bosses: ISaveBoss[]
+  bosses: SaveBoss[]
   selected: number
 }
-export interface IGame {
+export interface Game {
   id: string
   name: string
   shortName?: string
   bosses: string[]
-  saves: ISave[]
+  saves: Save[]
   collapseSaves: boolean
 }
 
-function generateSave(bossNames: string[], saveName: string): ISave {
-  const bosses: ISaveBoss[] = []
-  bossNames.forEach(bossName => {
+function generateSave(bossNames: string[], saveName: string): Save {
+  const bosses: SaveBoss[] = []
+  bossNames.forEach((bossName) => {
     bosses.push({
       name: bossName,
       time: 0,
-      deaths: 0
+      deaths: 0,
     })
   })
 
-  const save: ISave = {
+  const save: Save = {
     id: crypto.randomBytes(16).toString('hex'),
     // If the provided save name is an empty string, a default name shoud be used
     // Having an empty string as the save name messes up the UI in certain places
     name: saveName ? saveName : 'Save',
     bosses,
-    selected: 0
+    selected: 0,
   }
 
   return save
 }
 
-interface ISavesState {
-  games: IGame[]
+interface SavesState {
+  games: Game[]
   selectedSaveId: string
 }
-const savesState: ISavesState = {
+const savesState: SavesState = {
   games: [
     {
       id: 'DeS',
       name: "Demon's Souls",
       bosses: [],
       saves: [],
-      collapseSaves: false
+      collapseSaves: false,
     },
     {
       id: 'DS1',
@@ -86,10 +86,10 @@ const savesState: ISavesState = {
         'Knight Artorias',
         'Manus, Father of the Abyss',
         'Black Dragon Kalameet',
-        'Gwyn, Lord of Cinder'
+        'Gwyn, Lord of Cinder',
       ],
       saves: [],
-      collapseSaves: false
+      collapseSaves: false,
     },
     {
       id: 'DS2',
@@ -135,10 +135,10 @@ const savesState: ISavesState = {
         'Smelter Demon',
         "Aava, the King's Pet",
         'Burnt Ivory King',
-        "Lud, the King's Pet & Zallen, the King's Pet"
+        "Lud, the King's Pet & Zallen, the King's Pet",
       ],
       saves: [],
-      collapseSaves: false
+      collapseSaves: false,
     },
     {
       id: 'DS3',
@@ -168,17 +168,17 @@ const savesState: ISavesState = {
         'The Demon Prince',
         'Darkeater Midir',
         'Spear of the Church',
-        'Slave Knight Gael'
+        'Slave Knight Gael',
       ],
       saves: [],
-      collapseSaves: false
+      collapseSaves: false,
     },
     {
       id: 'Bb',
       name: 'Bloodborne',
       bosses: [],
       saves: [],
-      collapseSaves: false
+      collapseSaves: false,
     },
     {
       id: 'Sekiro',
@@ -214,13 +214,13 @@ const savesState: ISavesState = {
         'Placeholder 27',
         'Placeholder 28',
         'Placeholder 29',
-        'Placeholder 30'
+        'Placeholder 30',
       ],
       saves: [],
-      collapseSaves: false
-    }
+      collapseSaves: false,
+    },
   ],
-  selectedSaveId: ''
+  selectedSaveId: '',
 }
 
 export const useSavesStore = createStore('saves', savesState)
@@ -228,7 +228,7 @@ export const useSavesStore = createStore('saves', savesState)
 export function createSave(gameId: string, saveName: string): boolean {
   const store = useSavesStore()
 
-  const game = store.state.games.find(game => game.id === gameId)
+  const game = store.state.games.find((game) => game.id === gameId)
   if (!game) return false
 
   const bossNames = game.bosses
@@ -240,8 +240,8 @@ export function createSave(gameId: string, saveName: string): boolean {
 export const currentGame = computed(() => {
   const store = useSavesStore()
 
-  return store.state.games.find(game =>
-    game.saves.find(save => save.id === store.state.selectedSaveId)
+  return store.state.games.find((game) =>
+    game.saves.find((save) => save.id === store.state.selectedSaveId)
   )
 })
 
@@ -249,6 +249,6 @@ export const selectedSave = computed(() => {
   const store = useSavesStore()
 
   return currentGame.value?.saves.find(
-    save => save.id === store.state.selectedSaveId
+    (save) => save.id === store.state.selectedSaveId
   )
 })

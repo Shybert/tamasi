@@ -18,7 +18,7 @@ export default createComponent({
     const isOverlay = ref(false)
     watch(() => (isOverlay.value = ctx.root.$route.path.startsWith('/overlay')))
     return { isOverlay }
-  }
+  },
 })
 </script>
 

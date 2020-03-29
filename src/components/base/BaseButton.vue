@@ -8,7 +8,7 @@
 import { createComponent } from '@vue/composition-api'
 
 export default createComponent({
-  name: 'BaseButton'
+  name: 'BaseButton',
 })
 </script>
 

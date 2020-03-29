@@ -14,20 +14,20 @@ export default createComponent({
   props: {
     name: {
       type: String,
-      required: true
+      required: true,
     },
     role: {
       type: String,
-      default: 'presentation'
+      default: 'presentation',
     },
     width: {
       type: [String, Number],
-      default: 16
+      default: 16,
     },
     height: {
       type: [String, Number],
-      default: 4
-    }
-  }
+      default: 4,
+    },
+  },
 })
 </script>

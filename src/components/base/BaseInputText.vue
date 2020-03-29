@@ -11,7 +11,7 @@ import { createComponent } from '@vue/composition-api'
 
 export default createComponent({
   name: 'BaseInputText',
-  props: { value: String }
+  props: { value: String },
 })
 </script>
 

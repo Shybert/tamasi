@@ -13,8 +13,8 @@ const routes = [
   {
     path: '/overlay',
     component: Overlay as VueConstructor<Vue>,
-    props: true
-  }
+    props: true,
+  },
 ]
 
 export default new Router({ routes })
