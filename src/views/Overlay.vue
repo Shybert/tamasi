@@ -5,12 +5,9 @@
 </template>
 
 <script lang="ts">
-// eslint does not properly detect TS interface usage
-// eslint-disable-next-line no-unused-vars
 import { defineComponent, onUnmounted, Ref } from '@vue/composition-api'
 import { previousArrayIndex, nextArrayIndex } from '@/utils/arrayUtils'
 import Timer from '@/utils/timer'
-// eslint-disable-next-line no-unused-vars
 import { selectedSave, Save } from '../store/savesStore'
 import BossInfo from '@/components/Overlay/BossInfo.vue'
 import { ipcRenderer } from 'electron'

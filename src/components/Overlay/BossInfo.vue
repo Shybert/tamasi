@@ -12,8 +12,6 @@
 
 <script lang="ts">
 import { defineComponent, computed } from '@vue/composition-api'
-// eslint does not properly detect TS interface usage
-// eslint-disable-next-line no-unused-vars
 import { SaveBoss } from '@/store/savesStore'
 import formatBossTime from '@/utils/formatBossTime'
 
@@ -22,7 +20,6 @@ interface Props {
 }
 export default defineComponent({
   name: 'BossInfo',
-  // Can be removed when switching to Vue 3
   props: {
     bossInfo: Object,
   },
