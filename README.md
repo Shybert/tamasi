@@ -17,6 +17,7 @@ Download a release from the [releases](https://github.com/Shybert/tamasi/release
 ## Built with
 
 - [Vue](https://vuejs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
 - [Electron](https://www.electronjs.org/)
 - [Node.js](https://nodejs.org/)
 
