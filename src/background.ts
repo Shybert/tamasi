@@ -6,6 +6,7 @@ import {
   createProtocol,
   installVueDevtools,
 } from 'vue-cli-plugin-electron-builder/lib'
+declare const __static: string
 const isDevelopment: boolean = process.env.NODE_ENV !== 'production'
 
 // Set correct userData path
@@ -24,6 +25,7 @@ protocol.registerSchemesAsPrivileged([
 function createWindow() {
   // Create the browser window.
   win = new BrowserWindow({
+    icon: path.join(__static, 'icon.png'),
     show: false,
     frame: false,
     webPreferences: { nodeIntegration: true },
