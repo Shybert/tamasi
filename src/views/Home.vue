@@ -8,7 +8,7 @@
         </template>
       </Modal>
 
-      <SavesList class="savesList" />
+      <SaveList class="saveList" />
 
       <BaseButton class="newSaveButton" @click="showNewSaveModal = true">
         + New Save
@@ -26,12 +26,12 @@ import { defineComponent, ref } from '@vue/composition-api'
 import BaseButton from '@/components/base/BaseButton.vue'
 import Modal from '@/components/Modal.vue'
 import NewSave from '@/components/Saves/NewSave.vue'
-import SavesList from '@/components/Saves/SavesList.vue'
+import SaveList from '@/components/Saves/SaveList.vue'
 import SaveInfo from '@/components/Saves/SaveInfo.vue'
 
 export default defineComponent({
   name: 'Home',
-  components: { BaseButton, Modal, NewSave, SavesList, SaveInfo },
+  components: { BaseButton, Modal, NewSave, SaveList, SaveInfo },
   setup() {
     const showNewSaveModal = ref(false)
     return { showNewSaveModal }
@@ -52,7 +52,7 @@ export default defineComponent({
   width: 30%;
   max-width: 17em;
 }
-.savesList {
+.saveList {
   padding: 0.5em;
 }
 .newSaveButton {
