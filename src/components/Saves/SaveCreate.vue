@@ -12,9 +12,7 @@
       </template>
     </BaseLabel>
 
-    <BaseButton @click="localCreateSave">
-      Create New Save
-    </BaseButton>
+    <BaseButton @click="localCreateSave">Create New Save</BaseButton>
   </section>
 </template>
 
@@ -27,9 +25,9 @@ import BaseInputText from '@/components/base/BaseInputText.vue'
 import BaseSelect from '@/components/base/BaseSelect.vue'
 
 export default defineComponent({
-  name: 'NewSave',
+  name: 'SaveCreate',
   components: { BaseButton, BaseLabel, BaseInputText, BaseSelect },
-  setup(props, ctx) {
+  setup(props, { emit }) {
     const savesStore = useSavesStore()
 
     const saveName = ref('')
@@ -42,7 +40,7 @@ export default defineComponent({
 
     function localCreateSave(): void {
       createSave(selectedGame.value, saveName.value)
-      ctx.emit('createdSave')
+      emit('createdSave')
     }
 
     return {

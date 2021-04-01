@@ -4,7 +4,7 @@
       <Modal :show="showNewSaveModal" @closeModal="showNewSaveModal = false">
         <template #title>New Save</template>
         <template #main>
-          <NewSave @createdSave="showNewSaveModal = false" />
+          <SaveCreate @createdSave="showNewSaveModal = false" />
         </template>
       </Modal>
 
@@ -25,13 +25,13 @@
 import { defineComponent, ref } from '@vue/composition-api'
 import BaseButton from '@/components/base/BaseButton.vue'
 import Modal from '@/components/Modal.vue'
-import NewSave from '@/components/Saves/NewSave.vue'
+import SaveCreate from '@/components/Saves/SaveCreate.vue'
 import SaveList from '@/components/Saves/SaveList.vue'
 import SaveInfo from '@/components/Saves/SaveInfo.vue'
 
 export default defineComponent({
   name: 'Home',
-  components: { BaseButton, Modal, NewSave, SaveList, SaveInfo },
+  components: { BaseButton, Modal, SaveCreate, SaveList, SaveInfo },
   setup() {
     const showNewSaveModal = ref(false)
     return { showNewSaveModal }
