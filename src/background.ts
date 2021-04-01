@@ -2,9 +2,7 @@
 
 import * as path from 'path'
 import { app, protocol, BrowserWindow, globalShortcut, ipcMain } from 'electron'
-import {
-  createProtocol,
-} from 'vue-cli-plugin-electron-builder/lib'
+import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 declare const __static: string
 const isDevelopment: boolean = process.env.NODE_ENV !== 'production'
