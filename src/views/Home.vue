@@ -11,7 +11,7 @@
       <SaveList class="saveList" />
 
       <BaseButton class="newSaveButton" @click="showNewSaveModal = true">
-        + New Save
+        New Save
       </BaseButton>
     </section>
 
