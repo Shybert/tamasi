@@ -29,11 +29,6 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(props) {
-    return {
-      game: props.game,
-    }
-  },
 })
 </script>
 

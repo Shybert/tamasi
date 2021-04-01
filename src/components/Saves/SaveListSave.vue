@@ -30,8 +30,6 @@ export default defineComponent({
     }
 
     return {
-      save: props.save,
-      selectedSaveId: props.selectedSaveId,
       selectSave,
     }
   },
