@@ -63,6 +63,8 @@ export default defineComponent({
 }
 
 .save {
+  padding: 1em;
   flex-grow: 1;
+  overflow: auto;
 }
 </style>
