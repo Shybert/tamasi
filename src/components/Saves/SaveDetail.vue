@@ -1,37 +1,39 @@
 <template>
-  <section>
-    <div v-if="!selectedSave">No save selected!</div>
+  <section class="save">
+    <header>
+      <h2 class="saveName">{{ save.name }}</h2>
+      <h3 class="gameName">{{ gameName }}</h3>
 
-    <div v-else class="save">
-      <header>
-        <h2 class="saveName">{{ selectedSave.name }}</h2>
-        <h3 class="gameName">{{ currentGame.name }}</h3>
+      <router-link
+        class="openOverlayButton"
+        to="/overlay"
+        v-slot="{ navigate }"
+      >
+        <BaseButton @click="navigate">Open overlay</BaseButton>
+      </router-link>
+    </header>
 
-        <router-link
-          class="openOverlayButton"
-          to="/overlay"
-          v-slot="{ navigate }"
-        >
-          <BaseButton @click="navigate">Open overlay</BaseButton>
-        </router-link>
-      </header>
-
-      <BossTable :bosses="selectedSave.bosses" class="bossTable" />
-    </div>
+    <BossTable :bosses="save.bosses" class="bossTable" />
   </section>
 </template>
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { currentGame, selectedSave } from '@/store/savesStore'
 import BaseButton from '@/components/base/BaseButton.vue'
 import BossTable from '@/components/Saves/BossTable.vue'
 
 export default defineComponent({
-  name: 'SaveInfo',
+  name: 'SaveDetail',
   components: { BaseButton, BossTable },
-  setup() {
-    return { currentGame, selectedSave }
+  props: {
+    save: {
+      type: Object,
+      required: true,
+    },
+    gameName: {
+      type: String,
+      required: true,
+    },
   },
 })
 </script>
