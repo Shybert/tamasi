@@ -17,7 +17,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent, PropType } from '@vue/composition-api'
+import { Game } from '@/store/savesStore'
 import { IconAngle } from '@/components/icons/icons'
 
 export default defineComponent({
@@ -25,7 +26,7 @@ export default defineComponent({
   components: { IconAngle },
   props: {
     game: {
-      type: Object,
+      type: Object as PropType<Game>,
       required: true,
     },
   },

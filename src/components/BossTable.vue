@@ -18,14 +18,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent, PropType } from '@vue/composition-api'
+import { SaveBoss } from '@/store/savesStore'
 import formatBossTime from '@/utils/formatBossTime'
 
 export default defineComponent({
   name: 'BossTable',
   props: {
     bosses: {
-      type: Array,
+      type: Array as PropType<SaveBoss[]>,
       required: true,
     },
   },

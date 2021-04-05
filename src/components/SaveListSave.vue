@@ -10,13 +10,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent, PropType } from '@vue/composition-api'
+import { Save } from '@/store/savesStore'
 
 export default defineComponent({
   name: 'SaveListSave',
   props: {
     save: {
-      type: Object,
+      type: Object as PropType<Save>,
       required: true,
     },
     selectedSaveId: {

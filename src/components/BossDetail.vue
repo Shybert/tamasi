@@ -11,16 +11,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from '@vue/composition-api'
+import { defineComponent, computed, PropType } from '@vue/composition-api'
+import { SaveBoss } from '@/store/savesStore'
 import formatBossTime from '@/utils/formatBossTime'
 
 export default defineComponent({
   name: 'BossDetail',
   props: {
-    boss: Object,
+    boss: {
+      type: Object as PropType<SaveBoss>,
+      required: true,
+    },
   },
   setup(props) {
-    const formattedTime = computed(() => formatBossTime(props.boss?.time))
+    const formattedTime = computed(() => formatBossTime(props.boss.time))
     return { formattedTime }
   },
 })
