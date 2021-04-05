@@ -30,9 +30,9 @@ import { defineComponent, ref } from '@vue/composition-api'
 import { currentGame, selectedSave } from '@/store/savesStore'
 import BaseButton from '@/components/base/BaseButton.vue'
 import Modal from '@/components/Modal.vue'
-import SaveCreate from '@/components/Saves/SaveCreate.vue'
-import SaveList from '@/components/Saves/SaveList.vue'
-import SaveDetail from '@/components/Saves/SaveDetail.vue'
+import SaveCreate from '@/components/SaveCreate.vue'
+import SaveList from '@/components/SaveList.vue'
+import SaveDetail from '@/components/SaveDetail.vue'
 
 export default defineComponent({
   name: 'Home',

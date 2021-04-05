@@ -9,7 +9,7 @@ import { defineComponent, onUnmounted, Ref } from '@vue/composition-api'
 import { previousArrayIndex, nextArrayIndex } from '@/utils/arrayUtils'
 import Timer from '@/utils/timer'
 import { selectedSave, Save } from '../store/savesStore'
-import BossDetail from '@/components/Overlay/BossDetail.vue'
+import BossDetail from '@/components/BossDetail.vue'
 import { ipcRenderer } from 'electron'
 
 function removeListeners() {

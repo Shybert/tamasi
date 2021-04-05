@@ -20,7 +20,7 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 import BaseButton from '@/components/base/BaseButton.vue'
-import BossTable from '@/components/Saves/BossTable.vue'
+import BossTable from '@/components/BossTable.vue'
 
 export default defineComponent({
   name: 'SaveDetail',

@@ -19,8 +19,8 @@
 <script lang="ts">
 import { defineComponent, computed } from '@vue/composition-api'
 import { useSavesStore, Game, Save } from '@/store/savesStore'
-import SaveListGame from '@/components/Saves/SaveListGame.vue'
-import SaveListSave from '@/components/Saves/SaveListSave.vue'
+import SaveListGame from '@/components/SaveListGame.vue'
+import SaveListSave from '@/components/SaveListSave.vue'
 
 export default defineComponent({
   name: 'SaveList',
