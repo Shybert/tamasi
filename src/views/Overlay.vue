@@ -1,6 +1,6 @@
 <template>
   <section id="overlay">
-    <BossInfo :bossInfo="save.bosses[save.selected]" />
+    <BossDetail :boss="save.bosses[save.selected]" />
   </section>
 </template>
 
@@ -9,7 +9,7 @@ import { defineComponent, onUnmounted, Ref } from '@vue/composition-api'
 import { previousArrayIndex, nextArrayIndex } from '@/utils/arrayUtils'
 import Timer from '@/utils/timer'
 import { selectedSave, Save } from '../store/savesStore'
-import BossInfo from '@/components/Overlay/BossInfo.vue'
+import BossDetail from '@/components/Overlay/BossDetail.vue'
 import { ipcRenderer } from 'electron'
 
 function removeListeners() {
@@ -47,7 +47,7 @@ function incrementTime(save: Save, time: number): void {
 
 export default defineComponent({
   name: 'Overlay',
-  components: { BossInfo },
+  components: { BossDetail },
   setup(props, ctx) {
     initializeOverlay()
 

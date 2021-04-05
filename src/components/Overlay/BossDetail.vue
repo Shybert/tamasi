@@ -1,41 +1,37 @@
 <template>
-  <section class="bossInfo">
-    <h2 class="bossName">{{ bossInfo.name }}</h2>
+  <section class="boss">
+    <h2 class="name">{{ boss.name }}</h2>
 
-    <div class="bossDeaths">
-      <span class="bossDeathCounter">{{ bossInfo.deaths }}</span> deaths
+    <div class="deaths">
+      <span class="deathCounter">{{ boss.deaths }}</span> deaths
     </div>
 
-    <div class="bossTime">{{ formattedTime }}</div>
+    <div class="time">{{ formattedTime }}</div>
   </section>
 </template>
 
 <script lang="ts">
 import { defineComponent, computed } from '@vue/composition-api'
-import { SaveBoss } from '@/store/savesStore'
 import formatBossTime from '@/utils/formatBossTime'
 
-interface Props {
-  bossInfo: SaveBoss
-}
 export default defineComponent({
-  name: 'BossInfo',
+  name: 'BossDetail',
   props: {
-    bossInfo: Object,
+    boss: Object,
   },
-  setup(props: Props) {
-    const formattedTime = computed(() => formatBossTime(props.bossInfo.time))
+  setup(props) {
+    const formattedTime = computed(() => formatBossTime(props.boss?.time))
     return { formattedTime }
   },
 })
 </script>
 
 <style lang="scss" scoped>
-.bossInfo {
+.boss {
   padding: 0.8em 0.5em;
 }
 
-.bossName {
+.name {
   margin: 0;
   font-size: 1.3em;
   text-align: center;
@@ -43,17 +39,17 @@ export default defineComponent({
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.bossDeaths {
+.deaths {
   display: inline-block;
   width: 40%;
 }
-.bossTime {
+.time {
   display: inline-block;
   width: 60%;
   text-align: right;
 }
-.bossDeathCounter,
-.bossTime {
+.deathCounter,
+.time {
   font-size: 2em;
 }
 </style>
